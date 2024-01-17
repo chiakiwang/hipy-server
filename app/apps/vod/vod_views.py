@@ -15,7 +15,7 @@ from sqlalchemy.orm import Session
 from .gen_vod import Vod
 from common import error_code
 from common.resp import respVodJson, respErrorJson, abort
-from urllib.parse import quote
+from urllib.parse import quote, unquote
 import requests
 from apps.permission.models.user import Users
 
@@ -90,6 +90,8 @@ def vod_generate(*, api: str = "", request: Request,
     q = getParams('q')
     ad_remove = getParams('adRemove')
     ad_url = getParams('url')
+    ad_headers = getParams('headers')
+    ad_name = getParams('name') or 'm3u8'
 
     extend = extend or api_ext
     vod.setExtendInfo(extend)
@@ -125,12 +127,24 @@ def vod_generate(*, api: str = "", request: Request,
         logger.info(f'加载爬虫源:{rule_title}')
 
     if is_proxy:
+        # 测试地址:
+        # http://192.168.31.49:5707/api/v1/vod/base_spider?proxy=1&do=py&url=https://s1.bfzycdn.com/video/renmindemingyi/%E7%AC%AC07%E9%9B%86/index.m3u8&adRemove=reg:/video/adjump(.*?)ts
         if ad_remove.startswith('reg:') and ad_url.endswith('.m3u8'):
+            headers = {}
+            if ad_headers:
+                try:
+                    headers = json.loads(unquote(ad_headers))
+                except:
+                    pass
+
             try:
-                r = requests.get(ad_url)
+                r = requests.get(ad_url, headers=headers)
                 text = r.text
-                text = vod.replaceAll(text, ad_remove[:4], '')
-                return Response(status_code=200, media_type='video/MP2T', content=text)
+                # text = vod.replaceAll(text, ad_remove[4:], '')
+                m3u8_text = vod.fixAdM3u8(text, ad_url, ad_remove)
+                # return Response(status_code=200, media_type='video/MP2T', content=m3u8_text)
+                media_type = 'text/plain' if 'txt' in ad_name else 'video/MP2T'
+                return Response(status_code=200, media_type=media_type, content=m3u8_text)
             except Exception as e:
                 error_msg = f"localProxy执行ad_remove发生内部服务器错误:{e}"
                 logger.error(error_msg)
