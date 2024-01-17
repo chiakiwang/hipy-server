@@ -1,0 +1,83 @@
+2023-12-26 22:15:50 [INFO] Started server process [39412]
+2023-12-26 22:15:50 [INFO] Waiting for application startup.
+2023-12-26 22:15:50 [INFO] 初始化定时任务状态成功
+2023-12-26 22:15:50 [INFO] 定时任务【demo:测试】将在10秒钟后运行.下次执行时间为:2023-12-26 22:16:00.580016
+2023-12-26 22:15:50 [INFO] 定时任务【demo2:测试2】将在10秒钟后运行.下次执行时间为:2023-12-26 22:16:00.590108
+2023-12-26 22:15:50 [INFO] 可转债打新查询 func_args 序列化列表发生错误:malformed node or string: None
+2023-12-26 22:15:50 [INFO] 定时任务【kzz:可转债打新查询】将在10秒钟后运行.下次执行时间为:2023-12-26 22:16:00.590108
+2023-12-26 22:15:50 [INFO] Application startup complete.
+2023-12-26 22:15:50 [INFO] Uvicorn running on http://0.0.0.0:5707 (Press CTRL+C to quit)
+2023-12-26 22:16:04 [INFO] jobname=测试|jobtrigger=cron[month='*', day='*', hour='*', minute='20', second='30']|jobtime=2023-12-26 22:16:00+08:00|retval=None
+2023-12-26 22:16:04 [INFO] jobname=测试2|jobtrigger=cron[month='*', day='*', hour='*', minute='10', second='30']|jobtime=2023-12-26 22:16:00+08:00|retval=None
+2023-12-26 22:16:04 [INFO] jobname=可转债打新查询|jobtrigger=cron[month='*', day='1/1', hour='8', minute='0', second='0']|jobtime=2023-12-26 22:16:00+08:00|retval=None
+2023-12-26 22:17:08 [INFO] Shutting down
+2023-12-26 22:17:08 [INFO] Waiting for application shutdown.
+2023-12-26 22:17:09 [INFO] Application shutdown complete.
+2023-12-26 22:17:09 [INFO] Finished server process [39412]
+2023-12-26 22:17:13 [INFO] Started server process [40488]
+2023-12-26 22:17:13 [INFO] Waiting for application startup.
+2023-12-26 22:17:13 [INFO] 初始化定时任务状态成功
+2023-12-26 22:17:13 [INFO] 定时任务【demo:测试】将在10秒钟后运行.下次执行时间为:2023-12-26 22:17:23.821199
+2023-12-26 22:17:13 [INFO] 定时任务【demo2:测试2】将在10秒钟后运行.下次执行时间为:2023-12-26 22:17:23.831209
+2023-12-26 22:17:13 [INFO] 可转债打新查询 func_args 序列化列表发生错误:malformed node or string: None
+2023-12-26 22:17:13 [INFO] 定时任务【kzz:可转债打新查询】将在10秒钟后运行.下次执行时间为:2023-12-26 22:17:23.832271
+2023-12-26 22:17:13 [INFO] Application startup complete.
+2023-12-26 22:17:13 [INFO] Uvicorn running on http://0.0.0.0:5707 (Press CTRL+C to quit)
+2023-12-26 22:17:13 [INFO] =========测试缓存是否生效,仅第一次访问无缓存时出现此提示=========
+2023-12-26 22:17:13 [INFO] 请求:GET | /api/v1/system/config-setting/key/login_with_captcha | 127.0.0.1 | 响应:200 | 耗时: 18ms
+2023-12-26 22:17:13 [INFO] 127.0.0.1:63941 - "GET /api/v1/system/config-setting/key/login_with_captcha HTTP/1.1" 200
+2023-12-26 22:17:14 [INFO] 请求:GET | /api/v1/system/config-setting/key/login_with_captcha | 127.0.0.1 | 响应:200 | 耗时: 2ms
+2023-12-26 22:17:14 [INFO] 127.0.0.1:63941 - "GET /api/v1/system/config-setting/key/login_with_captcha HTTP/1.1" 200
+2023-12-26 22:17:29 [INFO] jobname=测试|jobtrigger=cron[month='*', day='*', hour='*', minute='20', second='30']|jobtime=2023-12-26 22:17:23+08:00|retval=None
+2023-12-26 22:17:29 [INFO] jobname=测试2|jobtrigger=cron[month='*', day='*', hour='*', minute='10', second='30']|jobtime=2023-12-26 22:17:23+08:00|retval=None
+2023-12-26 22:17:29 [INFO] jobname=可转债打新查询|jobtrigger=cron[month='*', day='1/1', hour='8', minute='0', second='0']|jobtime=2023-12-26 22:17:23+08:00|retval=None
+2023-12-26 22:20:30 [INFO] demo_task.py执行一次定时任务 2023-12-26 22:20:30 ......
+2023-12-26 22:20:30 [INFO] jobname=测试|jobtrigger=cron[month='*', day='*', hour='*', minute='20', second='30']|jobtime=2023-12-26 22:20:30+08:00|retval=None
+2023-12-26 22:33:53 [INFO] 127.0.0.1:49399 - "OPTIONS /api/v1/user/login HTTP/1.1" 200
+2023-12-26 22:33:53 [INFO] =========测试缓存是否生效,仅第一次访问无缓存时出现此提示=========
+2023-12-26 22:33:54 [INFO] 请求:POST | /api/v1/user/login | 127.0.0.1 | 响应:200 | 耗时: 404ms
+2023-12-26 22:33:54 [INFO] 127.0.0.1:49399 - "POST /api/v1/user/login HTTP/1.1" 200
+2023-12-26 22:33:54 [INFO] 127.0.0.1:49399 - "OPTIONS /api/v1/user/info HTTP/1.1" 200
+2023-12-26 22:33:54 [INFO] 请求:GET | /api/v1/user/info | 127.0.0.1 | 响应:200 | 耗时: 31ms
+2023-12-26 22:33:54 [INFO] 127.0.0.1:49399 - "GET /api/v1/user/info HTTP/1.1" 200
+2023-12-26 22:33:54 [INFO] 127.0.0.1:49399 - "OPTIONS /api/v1/user/routers HTTP/1.1" 200
+2023-12-26 22:33:54 [INFO] 请求:GET | /api/v1/user/routers | 127.0.0.1 | 响应:200 | 耗时: 10ms
+2023-12-26 22:33:54 [INFO] 127.0.0.1:49399 - "GET /api/v1/user/routers HTTP/1.1" 200
+2023-12-26 22:33:54 [INFO] 请求:GET | /media/images/avatar/5ce5f4fa-ff60-47c0-9414-d332b12b99b3. | 127.0.0.1 | 响应:304 | 耗时: 3ms
+2023-12-26 22:33:54 [INFO] 127.0.0.1:49407 - "GET /images/avatar/5ce5f4fa-ff60-47c0-9414-d332b12b99b3.?imageView2/1/w/80/h/80 HTTP/1.1" 304
+2023-12-26 22:34:07 [INFO] 127.0.0.1:49795 - "OPTIONS /api/v1/monitor/job/file/importData?updateSupport=0 HTTP/1.1" 200
+2023-12-26 22:34:07 [INFO] 请求:POST | /api/v1/monitor/job/file/importData | 127.0.0.1 | 响应:200 | 耗时: 14ms
+2023-12-26 22:34:07 [INFO] 127.0.0.1:49795 - "POST /api/v1/monitor/job/file/importData?updateSupport=0 HTTP/1.1" 200
+2023-12-26 23:10:30 [INFO] demo_task.py执行一次定时任务 2023-12-26 23:10:30 ......
+2023-12-26 23:10:30 [INFO] jobname=测试2|jobtrigger=cron[month='*', day='*', hour='*', minute='10', second='30']|jobtime=2023-12-26 23:10:30+08:00|retval=None
+2023-12-26 23:20:30 [INFO] demo_task.py执行一次定时任务 2023-12-26 23:20:30 ......
+2023-12-26 23:20:30 [INFO] jobname=测试|jobtrigger=cron[month='*', day='*', hour='*', minute='20', second='30']|jobtime=2023-12-26 23:20:30+08:00|retval=None
+2023-12-27 00:02:41 [INFO] Shutting down
+2023-12-27 00:02:41 [INFO] Waiting for application shutdown.
+2023-12-27 00:02:42 [INFO] Application shutdown complete.
+2023-12-27 00:02:42 [INFO] Finished server process [40488]
+2023-12-27 00:02:45 [INFO] Started server process [50080]
+2023-12-27 00:02:45 [INFO] Waiting for application startup.
+2023-12-27 00:02:46 [INFO] 初始化定时任务状态成功
+2023-12-27 00:02:46 [INFO] 定时任务【demo:测试】将在10秒钟后运行.下次执行时间为:2023-12-27 00:02:56.019997
+2023-12-27 00:02:46 [INFO] 定时任务【demo2:测试2】将在10秒钟后运行.下次执行时间为:2023-12-27 00:02:56.029004
+2023-12-27 00:02:46 [INFO] 可转债打新查询 func_args 序列化列表发生错误:malformed node or string: None
+2023-12-27 00:02:46 [INFO] 定时任务【kzz:可转债打新查询】将在10秒钟后运行.下次执行时间为:2023-12-27 00:02:56.030006
+2023-12-27 00:02:46 [INFO] Application startup complete.
+2023-12-27 00:02:46 [INFO] Uvicorn running on http://0.0.0.0:5707 (Press CTRL+C to quit)
+2023-12-27 00:02:54 [INFO] Shutting down
+2023-12-27 00:03:10 [INFO] Started server process [39272]
+2023-12-27 00:03:10 [INFO] Waiting for application startup.
+2023-12-27 00:03:11 [INFO] 初始化定时任务状态成功
+2023-12-27 00:03:11 [INFO] Application startup complete.
+2023-12-27 00:03:11 [INFO] Uvicorn running on http://0.0.0.0:5707 (Press CTRL+C to quit)
+2023-12-27 00:03:13 [INFO] Shutting down
+2023-12-27 00:10:57 [INFO] Started server process [42780]
+2023-12-27 00:10:57 [INFO] Waiting for application startup.
+2023-12-27 00:10:57 [INFO] 初始化定时任务状态成功
+2023-12-27 00:10:57 [INFO] 定时任务【demo:测试】将在10秒钟后运行.下次执行时间为:2023-12-27 00:11:07.654604
+2023-12-27 00:10:57 [INFO] 定时任务【demo2:测试2】将在10秒钟后运行.下次执行时间为:2023-12-27 00:11:07.661604
+2023-12-27 00:10:57 [INFO] 可转债打新查询 func_args 序列化列表发生错误:unexpected EOF while parsing (<unknown>, line 0)
+2023-12-27 00:10:57 [INFO] 定时任务【kzz:可转债打新查询】将在10秒钟后运行.下次执行时间为:2023-12-27 00:11:07.661604
+2023-12-27 00:10:57 [INFO] Application startup complete.
+2023-12-27 00:10:57 [INFO] Uvicorn running on http://0.0.0.0:5707 (Press CTRL+C to quit)

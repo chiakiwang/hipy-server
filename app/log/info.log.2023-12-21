@@ -1,0 +1,635 @@
+2023-12-20 22:32:23 [INFO] Started server process [112896]
+2023-12-20 22:32:23 [INFO] Waiting for application startup.
+2023-12-20 22:32:23 [INFO] 初始化定时任务状态成功
+2023-12-20 22:32:23 [INFO] 定时任务【demo:测试】将在10秒钟后运行.下次执行时间为:2023-12-20 22:32:33.179353
+2023-12-20 22:32:23 [INFO] 定时任务【demo2:测试2】将在10秒钟后运行.下次执行时间为:2023-12-20 22:32:33.186372
+2023-12-20 22:32:23 [INFO] _automatic_task执行错误,请升级数据库:1 validation error for JobSchema
+func_args
+  none is not an allowed value (type=type_error.none.not_allowed)
+2023-12-20 22:32:23 [INFO] Application startup complete.
+2023-12-20 22:32:23 [INFO] Uvicorn running on http://0.0.0.0:5707 (Press CTRL+C to quit)
+2023-12-20 22:32:36 [INFO] jobname=测试|jobtrigger=cron[month='*', day='*', hour='*', minute='20', second='30']|jobtime=2023-12-20 22:32:33+08:00|retval=None
+2023-12-20 22:32:36 [INFO] jobname=测试2|jobtrigger=cron[month='*', day='*', hour='*', minute='10', second='30']|jobtime=2023-12-20 22:32:33+08:00|retval=None
+2023-12-20 22:32:39 [INFO] Shutting down
+2023-12-20 22:32:50 [INFO] Started server process [113772]
+2023-12-20 22:32:50 [INFO] Waiting for application startup.
+2023-12-20 22:32:50 [INFO] 初始化定时任务状态成功
+2023-12-20 22:32:50 [INFO] 定时任务【demo:测试】将在10秒钟后运行.下次执行时间为:2023-12-20 22:33:00.380064
+2023-12-20 22:32:50 [INFO] 定时任务【demo2:测试2】将在10秒钟后运行.下次执行时间为:2023-12-20 22:33:00.387061
+2023-12-20 22:32:50 [INFO] 可转债打新查询 func_args 序列化列表发生错误:unexpected EOF while parsing (<unknown>, line 0)
+2023-12-20 22:32:50 [INFO] 定时任务【kzz:可转债打新查询】将在10秒钟后运行.下次执行时间为:2023-12-20 22:33:00.387061
+2023-12-20 22:32:50 [INFO] Application startup complete.
+2023-12-20 22:32:50 [INFO] Uvicorn running on http://0.0.0.0:5707 (Press CTRL+C to quit)
+2023-12-20 22:32:55 [INFO] Shutting down
+2023-12-20 22:43:46 [INFO] Started server process [1740]
+2023-12-20 22:43:46 [INFO] Waiting for application startup.
+2023-12-20 22:43:46 [INFO] 初始化定时任务状态成功
+2023-12-20 22:43:46 [INFO] Application startup complete.
+2023-12-20 22:43:46 [INFO] Uvicorn running on http://0.0.0.0:5707 (Press CTRL+C to quit)
+2023-12-20 22:45:25 [INFO] Shutting down
+2023-12-20 22:45:26 [INFO] Waiting for application shutdown.
+2023-12-20 22:45:26 [INFO] Application shutdown complete.
+2023-12-20 22:45:26 [INFO] Finished server process [1740]
+2023-12-20 22:45:28 [INFO] Started server process [6172]
+2023-12-20 22:45:28 [INFO] Waiting for application startup.
+2023-12-20 22:45:28 [INFO] 初始化定时任务状态成功
+2023-12-20 22:45:28 [INFO] 定时任务【demo:测试】将在10秒钟后运行.下次执行时间为:2023-12-20 22:45:38.178465
+2023-12-20 22:45:28 [INFO] 定时任务【demo2:测试2】将在10秒钟后运行.下次执行时间为:2023-12-20 22:45:38.188470
+2023-12-20 22:45:28 [INFO] _automatic_task执行错误,请升级数据库:1 validation error for JobSchema
+func_args
+  none is not an allowed value (type=type_error.none.not_allowed)
+2023-12-20 22:45:28 [INFO] Application startup complete.
+2023-12-20 22:45:28 [INFO] Uvicorn running on http://0.0.0.0:5707 (Press CTRL+C to quit)
+2023-12-20 22:45:41 [INFO] jobname=测试|jobtrigger=cron[month='*', day='*', hour='*', minute='20', second='30']|jobtime=2023-12-20 22:45:38+08:00|retval=None
+2023-12-20 22:45:41 [INFO] jobname=测试2|jobtrigger=cron[month='*', day='*', hour='*', minute='10', second='30']|jobtime=2023-12-20 22:45:38+08:00|retval=None
+2023-12-20 22:45:42 [INFO] Shutting down
+2023-12-20 22:45:42 [INFO] Waiting for application shutdown.
+2023-12-20 22:45:51 [INFO] Started server process [11416]
+2023-12-20 22:45:51 [INFO] Waiting for application startup.
+2023-12-20 22:45:51 [INFO] 初始化定时任务状态成功
+2023-12-20 22:45:51 [INFO] Application startup complete.
+2023-12-20 22:45:51 [INFO] Uvicorn running on http://0.0.0.0:5707 (Press CTRL+C to quit)
+2023-12-20 22:46:11 [INFO] Shutting down
+2023-12-20 22:46:12 [INFO] Waiting for application shutdown.
+2023-12-20 22:46:12 [INFO] Application shutdown complete.
+2023-12-20 22:46:12 [INFO] Finished server process [11416]
+2023-12-20 22:46:14 [INFO] Started server process [14832]
+2023-12-20 22:46:14 [INFO] Waiting for application startup.
+2023-12-20 22:46:14 [INFO] 初始化定时任务状态成功
+2023-12-20 22:46:14 [INFO] 定时任务【demo:测试】将在10秒钟后运行.下次执行时间为:2023-12-20 22:46:24.205081
+2023-12-20 22:46:14 [INFO] 定时任务【demo2:测试2】将在10秒钟后运行.下次执行时间为:2023-12-20 22:46:24.212081
+2023-12-20 22:46:14 [INFO] _automatic_task执行错误,请升级数据库:1 validation error for JobSchema
+func_args
+  none is not an allowed value (type=type_error.none.not_allowed)
+2023-12-20 22:46:14 [INFO] Application startup complete.
+2023-12-20 22:46:14 [INFO] Uvicorn running on http://0.0.0.0:5707 (Press CTRL+C to quit)
+2023-12-20 22:46:27 [INFO] jobname=测试|jobtrigger=cron[month='*', day='*', hour='*', minute='20', second='30']|jobtime=2023-12-20 22:46:24+08:00|retval=None
+2023-12-20 22:46:27 [INFO] jobname=测试2|jobtrigger=cron[month='*', day='*', hour='*', minute='10', second='30']|jobtime=2023-12-20 22:46:24+08:00|retval=None
+2023-12-20 22:48:04 [INFO] Shutting down
+2023-12-20 22:48:04 [INFO] Waiting for application shutdown.
+2023-12-20 22:48:04 [INFO] Application shutdown complete.
+2023-12-20 22:48:04 [INFO] Finished server process [14832]
+2023-12-20 22:48:06 [INFO] Started server process [16540]
+2023-12-20 22:48:06 [INFO] Waiting for application startup.
+2023-12-20 22:48:07 [INFO] 初始化定时任务状态成功
+2023-12-20 22:48:07 [INFO] 定时任务【demo:测试】将在10秒钟后运行.下次执行时间为:2023-12-20 22:48:17.023837
+2023-12-20 22:48:07 [INFO] 定时任务【demo2:测试2】将在10秒钟后运行.下次执行时间为:2023-12-20 22:48:17.029765
+2023-12-20 22:48:07 [INFO] 可转债打新查询 func_args 序列化列表发生错误:malformed node or string: None
+2023-12-20 22:48:07 [INFO] 定时任务【kzz:可转债打新查询】将在10秒钟后运行.下次执行时间为:2023-12-20 22:48:17.029765
+2023-12-20 22:48:07 [INFO] Application startup complete.
+2023-12-20 22:48:07 [INFO] Uvicorn running on http://0.0.0.0:5707 (Press CTRL+C to quit)
+2023-12-20 22:48:20 [INFO] jobname=测试|jobtrigger=cron[month='*', day='*', hour='*', minute='20', second='30']|jobtime=2023-12-20 22:48:17+08:00|retval=None
+2023-12-20 22:48:20 [INFO] jobname=测试2|jobtrigger=cron[month='*', day='*', hour='*', minute='10', second='30']|jobtime=2023-12-20 22:48:17+08:00|retval=None
+2023-12-20 22:48:20 [INFO] jobname=可转债打新查询|jobtrigger=cron[month='*', day='1/1', hour='8', minute='0', second='0']|jobtime=2023-12-20 22:48:17+08:00|retval=None
+2023-12-20 22:48:52 [INFO] Shutting down
+2023-12-20 22:48:52 [INFO] Waiting for application shutdown.
+2023-12-20 22:48:53 [INFO] Application shutdown complete.
+2023-12-20 22:48:53 [INFO] Finished server process [16540]
+2023-12-20 22:48:55 [INFO] Started server process [6924]
+2023-12-20 22:48:55 [INFO] Waiting for application startup.
+2023-12-20 22:48:55 [INFO] 初始化定时任务状态成功
+2023-12-20 22:48:55 [INFO] 定时任务【demo:测试】将在10秒钟后运行.下次执行时间为:2023-12-20 22:49:05.343257
+2023-12-20 22:48:55 [INFO] 定时任务【demo2:测试2】将在10秒钟后运行.下次执行时间为:2023-12-20 22:49:05.350256
+2023-12-20 22:48:55 [INFO] 可转债打新查询 func_args 序列化列表发生错误:unexpected EOF while parsing (<unknown>, line 0)
+2023-12-20 22:48:55 [INFO] 定时任务【kzz:可转债打新查询】将在10秒钟后运行.下次执行时间为:2023-12-20 22:49:05.350256
+2023-12-20 22:48:55 [INFO] Application startup complete.
+2023-12-20 22:48:55 [INFO] Uvicorn running on http://0.0.0.0:5707 (Press CTRL+C to quit)
+2023-12-20 22:49:08 [INFO] jobname=测试|jobtrigger=cron[month='*', day='*', hour='*', minute='20', second='30']|jobtime=2023-12-20 22:49:05+08:00|retval=None
+2023-12-20 22:49:08 [INFO] jobname=测试2|jobtrigger=cron[month='*', day='*', hour='*', minute='10', second='30']|jobtime=2023-12-20 22:49:05+08:00|retval=None
+2023-12-20 22:49:08 [INFO] jobname=可转债打新查询|jobtrigger=cron[month='*', day='1/1', hour='8', minute='0', second='0']|jobtime=2023-12-20 22:49:05+08:00|retval=None
+2023-12-20 22:49:17 [INFO] Shutting down
+2023-12-20 22:49:17 [INFO] Waiting for application shutdown.
+2023-12-20 22:49:18 [INFO] Application shutdown complete.
+2023-12-20 22:49:18 [INFO] Finished server process [6924]
+2023-12-20 22:49:20 [INFO] Started server process [11000]
+2023-12-20 22:49:20 [INFO] Waiting for application startup.
+2023-12-20 22:49:20 [INFO] 初始化定时任务状态成功
+2023-12-20 22:49:20 [INFO] Application startup complete.
+2023-12-20 22:49:20 [INFO] Uvicorn running on http://0.0.0.0:5707 (Press CTRL+C to quit)
+2023-12-20 22:52:06 [INFO] Shutting down
+2023-12-20 22:52:06 [INFO] Waiting for application shutdown.
+2023-12-20 22:52:06 [INFO] Application shutdown complete.
+2023-12-20 22:52:06 [INFO] Finished server process [11000]
+2023-12-20 22:52:08 [INFO] Started server process [3044]
+2023-12-20 22:52:08 [INFO] Waiting for application startup.
+2023-12-20 22:52:08 [INFO] 初始化定时任务状态成功
+2023-12-20 22:52:08 [INFO] Application startup complete.
+2023-12-20 22:52:08 [INFO] Uvicorn running on http://0.0.0.0:5707 (Press CTRL+C to quit)
+2023-12-20 23:10:45 [INFO] Shutting down
+2023-12-20 23:10:45 [INFO] Waiting for application shutdown.
+2023-12-20 23:10:45 [INFO] Application shutdown complete.
+2023-12-20 23:10:45 [INFO] Finished server process [3044]
+2023-12-20 23:10:48 [INFO] Started server process [8956]
+2023-12-20 23:10:48 [INFO] Waiting for application startup.
+2023-12-20 23:10:48 [INFO] 初始化定时任务状态成功
+2023-12-20 23:10:48 [INFO] Application startup complete.
+2023-12-20 23:10:48 [INFO] Uvicorn running on http://0.0.0.0:5707 (Press CTRL+C to quit)
+2023-12-20 23:12:24 [INFO] Shutting down
+2023-12-20 23:12:24 [INFO] Waiting for application shutdown.
+2023-12-20 23:12:24 [INFO] Application shutdown complete.
+2023-12-20 23:12:24 [INFO] Finished server process [8956]
+2023-12-20 23:12:26 [INFO] Started server process [9944]
+2023-12-20 23:12:26 [INFO] Waiting for application startup.
+2023-12-20 23:12:26 [INFO] 初始化定时任务状态成功
+2023-12-20 23:12:26 [INFO] Application startup complete.
+2023-12-20 23:12:26 [INFO] Uvicorn running on http://0.0.0.0:5707 (Press CTRL+C to quit)
+2023-12-20 23:14:02 [INFO] Shutting down
+2023-12-20 23:14:02 [INFO] Waiting for application shutdown.
+2023-12-20 23:14:02 [INFO] Application shutdown complete.
+2023-12-20 23:14:02 [INFO] Finished server process [9944]
+2023-12-20 23:14:04 [INFO] Started server process [21748]
+2023-12-20 23:14:04 [INFO] Waiting for application startup.
+2023-12-20 23:14:04 [INFO] 初始化定时任务状态成功
+2023-12-20 23:14:04 [INFO] Application startup complete.
+2023-12-20 23:14:04 [INFO] Uvicorn running on http://0.0.0.0:5707 (Press CTRL+C to quit)
+2023-12-20 23:22:29 [INFO] Shutting down
+2023-12-20 23:22:29 [INFO] Waiting for application shutdown.
+2023-12-20 23:22:29 [INFO] Application shutdown complete.
+2023-12-20 23:22:29 [INFO] Finished server process [21748]
+2023-12-20 23:22:31 [INFO] Started server process [24164]
+2023-12-20 23:22:31 [INFO] Waiting for application startup.
+2023-12-20 23:22:31 [INFO] 初始化定时任务状态成功
+2023-12-20 23:22:31 [INFO] Application startup complete.
+2023-12-20 23:22:31 [INFO] Uvicorn running on http://0.0.0.0:5707 (Press CTRL+C to quit)
+2023-12-20 23:24:00 [INFO] Shutting down
+2023-12-20 23:24:00 [INFO] Waiting for application shutdown.
+2023-12-20 23:24:00 [INFO] Application shutdown complete.
+2023-12-20 23:24:00 [INFO] Finished server process [24164]
+2023-12-20 23:24:03 [INFO] Started server process [15172]
+2023-12-20 23:24:03 [INFO] Waiting for application startup.
+2023-12-20 23:24:03 [INFO] 初始化定时任务状态成功
+2023-12-20 23:24:03 [INFO] Application startup complete.
+2023-12-20 23:24:03 [INFO] Uvicorn running on http://0.0.0.0:5707 (Press CTRL+C to quit)
+2023-12-20 23:24:39 [INFO] Shutting down
+2023-12-20 23:24:39 [INFO] Waiting for application shutdown.
+2023-12-20 23:24:39 [INFO] Application shutdown complete.
+2023-12-20 23:24:39 [INFO] Finished server process [15172]
+2023-12-20 23:24:41 [INFO] Started server process [9660]
+2023-12-20 23:24:41 [INFO] Waiting for application startup.
+2023-12-20 23:24:41 [INFO] 初始化定时任务状态成功
+2023-12-20 23:24:41 [INFO] Application startup complete.
+2023-12-20 23:24:41 [INFO] Uvicorn running on http://0.0.0.0:5707 (Press CTRL+C to quit)
+2023-12-20 23:27:44 [INFO] Shutting down
+2023-12-20 23:27:44 [INFO] Waiting for application shutdown.
+2023-12-20 23:27:44 [INFO] Application shutdown complete.
+2023-12-20 23:27:44 [INFO] Finished server process [9660]
+2023-12-20 23:27:46 [INFO] Started server process [23184]
+2023-12-20 23:27:46 [INFO] Waiting for application startup.
+2023-12-20 23:27:46 [INFO] 初始化定时任务状态成功
+2023-12-20 23:27:46 [INFO] Application startup complete.
+2023-12-20 23:27:46 [INFO] Uvicorn running on http://0.0.0.0:5707 (Press CTRL+C to quit)
+2023-12-20 23:34:21 [INFO] Shutting down
+2023-12-20 23:34:21 [INFO] Waiting for application shutdown.
+2023-12-20 23:34:21 [INFO] Application shutdown complete.
+2023-12-20 23:34:21 [INFO] Finished server process [23184]
+2023-12-20 23:34:23 [INFO] Started server process [4572]
+2023-12-20 23:34:23 [INFO] Waiting for application startup.
+2023-12-20 23:34:23 [INFO] 初始化定时任务状态成功
+2023-12-20 23:34:23 [INFO] Application startup complete.
+2023-12-20 23:34:23 [INFO] Uvicorn running on http://0.0.0.0:5707 (Press CTRL+C to quit)
+2023-12-20 23:41:05 [INFO] Shutting down
+2023-12-20 23:41:05 [INFO] Waiting for application shutdown.
+2023-12-20 23:41:05 [INFO] Application shutdown complete.
+2023-12-20 23:41:05 [INFO] Finished server process [4572]
+2023-12-20 23:41:07 [INFO] Started server process [22644]
+2023-12-20 23:41:07 [INFO] Waiting for application startup.
+2023-12-20 23:41:07 [INFO] 初始化定时任务状态成功
+2023-12-20 23:41:07 [INFO] Application startup complete.
+2023-12-20 23:41:07 [INFO] Uvicorn running on http://0.0.0.0:5707 (Press CTRL+C to quit)
+2023-12-20 23:45:03 [INFO] Shutting down
+2023-12-20 23:45:03 [INFO] Waiting for application shutdown.
+2023-12-20 23:45:03 [INFO] Application shutdown complete.
+2023-12-20 23:45:03 [INFO] Finished server process [22644]
+2023-12-20 23:45:05 [INFO] Started server process [26180]
+2023-12-20 23:45:05 [INFO] Waiting for application startup.
+2023-12-20 23:45:05 [INFO] 初始化定时任务状态成功
+2023-12-20 23:45:05 [INFO] Application startup complete.
+2023-12-20 23:45:05 [INFO] Uvicorn running on http://0.0.0.0:5707 (Press CTRL+C to quit)
+2023-12-20 23:47:23 [INFO] Shutting down
+2023-12-20 23:47:24 [INFO] Waiting for application shutdown.
+2023-12-20 23:47:24 [INFO] Application shutdown complete.
+2023-12-20 23:47:24 [INFO] Finished server process [26180]
+2023-12-20 23:47:26 [INFO] Started server process [26040]
+2023-12-20 23:47:26 [INFO] Waiting for application startup.
+2023-12-20 23:47:26 [INFO] 初始化定时任务状态成功
+2023-12-20 23:47:26 [INFO] Application startup complete.
+2023-12-20 23:47:26 [INFO] Uvicorn running on http://0.0.0.0:5707 (Press CTRL+C to quit)
+2023-12-20 23:50:41 [INFO] Shutting down
+2023-12-20 23:50:41 [INFO] Waiting for application shutdown.
+2023-12-20 23:50:41 [INFO] Application shutdown complete.
+2023-12-20 23:50:41 [INFO] Finished server process [26040]
+2023-12-20 23:50:43 [INFO] Started server process [9484]
+2023-12-20 23:50:43 [INFO] Waiting for application startup.
+2023-12-20 23:50:43 [INFO] 初始化定时任务状态成功
+2023-12-20 23:50:43 [INFO] Application startup complete.
+2023-12-20 23:50:43 [INFO] Uvicorn running on http://0.0.0.0:5707 (Press CTRL+C to quit)
+2023-12-20 23:52:55 [INFO] Shutting down
+2023-12-20 23:52:56 [INFO] Waiting for application shutdown.
+2023-12-20 23:52:56 [INFO] Application shutdown complete.
+2023-12-20 23:52:56 [INFO] Finished server process [9484]
+2023-12-20 23:52:58 [INFO] Started server process [22220]
+2023-12-20 23:52:58 [INFO] Waiting for application startup.
+2023-12-20 23:52:58 [INFO] 初始化定时任务状态成功
+2023-12-20 23:52:58 [INFO] Application startup complete.
+2023-12-20 23:52:58 [INFO] Uvicorn running on http://0.0.0.0:5707 (Press CTRL+C to quit)
+2023-12-20 23:57:25 [INFO] Shutting down
+2023-12-20 23:57:25 [INFO] Waiting for application shutdown.
+2023-12-20 23:57:25 [INFO] Application shutdown complete.
+2023-12-20 23:57:25 [INFO] Finished server process [22220]
+2023-12-20 23:57:27 [INFO] Started server process [24052]
+2023-12-20 23:57:27 [INFO] Waiting for application startup.
+2023-12-20 23:57:27 [INFO] 初始化定时任务状态成功
+2023-12-20 23:57:27 [INFO] Application startup complete.
+2023-12-20 23:57:27 [INFO] Uvicorn running on http://0.0.0.0:5707 (Press CTRL+C to quit)
+2023-12-20 23:59:28 [INFO] Shutting down
+2023-12-21 00:00:13 [INFO] Started server process [28988]
+2023-12-21 00:00:13 [INFO] Waiting for application startup.
+2023-12-21 00:00:13 [INFO] 初始化定时任务状态成功
+2023-12-21 00:00:13 [INFO] Application startup complete.
+2023-12-21 00:00:13 [INFO] Uvicorn running on http://0.0.0.0:5707 (Press CTRL+C to quit)
+2023-12-21 00:04:32 [INFO] Shutting down
+2023-12-21 00:04:32 [INFO] Waiting for application shutdown.
+2023-12-21 00:04:32 [INFO] Application shutdown complete.
+2023-12-21 00:04:32 [INFO] Finished server process [28988]
+2023-12-21 00:04:34 [INFO] Started server process [29644]
+2023-12-21 00:04:34 [INFO] Waiting for application startup.
+2023-12-21 00:04:34 [INFO] 初始化定时任务状态成功
+2023-12-21 00:04:34 [INFO] Application startup complete.
+2023-12-21 00:04:34 [INFO] Uvicorn running on http://0.0.0.0:5707 (Press CTRL+C to quit)
+2023-12-21 00:05:56 [INFO] Shutting down
+2023-12-21 00:10:16 [INFO] Started server process [28808]
+2023-12-21 00:10:16 [INFO] Waiting for application startup.
+2023-12-21 00:10:16 [INFO] 初始化定时任务状态成功
+2023-12-21 00:10:16 [INFO] Application startup complete.
+2023-12-21 00:10:16 [INFO] Uvicorn running on http://0.0.0.0:5707 (Press CTRL+C to quit)
+2023-12-21 00:12:42 [INFO] Shutting down
+2023-12-21 00:12:42 [INFO] Waiting for application shutdown.
+2023-12-21 00:12:42 [INFO] Application shutdown complete.
+2023-12-21 00:12:42 [INFO] Finished server process [28808]
+2023-12-21 00:12:44 [INFO] Started server process [25572]
+2023-12-21 00:12:44 [INFO] Waiting for application startup.
+2023-12-21 00:12:44 [INFO] 初始化定时任务状态成功
+2023-12-21 00:12:44 [INFO] Application startup complete.
+2023-12-21 00:12:44 [INFO] Uvicorn running on http://0.0.0.0:5707 (Press CTRL+C to quit)
+2023-12-21 00:16:54 [INFO] Shutting down
+2023-12-21 00:16:54 [INFO] Waiting for application shutdown.
+2023-12-21 00:16:54 [INFO] Application shutdown complete.
+2023-12-21 00:16:54 [INFO] Finished server process [25572]
+2023-12-21 00:16:56 [INFO] Started server process [30120]
+2023-12-21 00:16:56 [INFO] Waiting for application startup.
+2023-12-21 00:16:56 [INFO] 初始化定时任务状态成功
+2023-12-21 00:16:56 [INFO] Application startup complete.
+2023-12-21 00:16:56 [INFO] Uvicorn running on http://0.0.0.0:5707 (Press CTRL+C to quit)
+2023-12-21 00:17:30 [INFO] Shutting down
+2023-12-21 00:17:30 [INFO] Waiting for application shutdown.
+2023-12-21 00:17:30 [INFO] Application shutdown complete.
+2023-12-21 00:17:30 [INFO] Finished server process [30120]
+2023-12-21 00:17:32 [INFO] Started server process [30036]
+2023-12-21 00:17:32 [INFO] Waiting for application startup.
+2023-12-21 00:17:32 [INFO] 初始化定时任务状态成功
+2023-12-21 00:17:32 [INFO] Application startup complete.
+2023-12-21 00:17:32 [INFO] Uvicorn running on http://0.0.0.0:5707 (Press CTRL+C to quit)
+2023-12-21 00:18:41 [INFO] =========测试缓存是否生效,仅第一次访问无缓存时出现此提示=========
+2023-12-21 00:18:41 [INFO] 请求:GET | /api/v1/system/config-setting/key/login_with_captcha | 127.0.0.1 | 响应:200 | 耗时: 130ms
+2023-12-21 00:18:41 [INFO] 127.0.0.1:56946 - "GET /api/v1/system/config-setting/key/login_with_captcha HTTP/1.1" 200
+2023-12-21 00:18:43 [INFO] 请求:GET | /api/v1/system/config-setting/key/login_with_captcha | 127.0.0.1 | 响应:200 | 耗时: 2ms
+2023-12-21 00:18:43 [INFO] 127.0.0.1:56946 - "GET /api/v1/system/config-setting/key/login_with_captcha HTTP/1.1" 200
+2023-12-21 00:18:56 [INFO] 127.0.0.1:56971 - "OPTIONS /api/v1/user/login HTTP/1.1" 200
+2023-12-21 00:18:56 [INFO] =========测试缓存是否生效,仅第一次访问无缓存时出现此提示=========
+2023-12-21 00:18:56 [INFO] 请求:POST | /api/v1/user/login | 127.0.0.1 | 响应:200 | 耗时: 352ms
+2023-12-21 00:18:56 [INFO] 127.0.0.1:56971 - "POST /api/v1/user/login HTTP/1.1" 200
+2023-12-21 00:18:56 [INFO] 请求:GET | /api/v1/system/config-setting/key/login_with_captcha | 127.0.0.1 | 响应:200 | 耗时: 1ms
+2023-12-21 00:18:56 [INFO] 127.0.0.1:56971 - "GET /api/v1/system/config-setting/key/login_with_captcha HTTP/1.1" 200
+2023-12-21 00:19:48 [INFO] 请求:POST | /api/v1/user/login | 127.0.0.1 | 响应:200 | 耗时: 234ms
+2023-12-21 00:19:48 [INFO] 127.0.0.1:57024 - "POST /api/v1/user/login HTTP/1.1" 200
+2023-12-21 00:19:48 [INFO] 127.0.0.1:57024 - "OPTIONS /api/v1/user/info HTTP/1.1" 200
+2023-12-21 00:19:48 [INFO] 请求:GET | /api/v1/user/info | 127.0.0.1 | 响应:200 | 耗时: 16ms
+2023-12-21 00:19:48 [INFO] 127.0.0.1:57024 - "GET /api/v1/user/info HTTP/1.1" 200
+2023-12-21 00:19:48 [INFO] 127.0.0.1:57024 - "OPTIONS /api/v1/user/routers HTTP/1.1" 200
+2023-12-21 00:19:48 [INFO] 请求:GET | /api/v1/user/routers | 127.0.0.1 | 响应:200 | 耗时: 8ms
+2023-12-21 00:19:48 [INFO] 127.0.0.1:57024 - "GET /api/v1/user/routers HTTP/1.1" 200
+2023-12-21 00:19:53 [INFO] 请求:GET | /api/v1/user/info | 127.0.0.1 | 响应:200 | 耗时: 7ms
+2023-12-21 00:19:53 [INFO] 127.0.0.1:57024 - "GET /api/v1/user/info HTTP/1.1" 200
+2023-12-21 00:19:53 [INFO] 请求:GET | /api/v1/user/routers | 127.0.0.1 | 响应:200 | 耗时: 5ms
+2023-12-21 00:19:53 [INFO] 127.0.0.1:57024 - "GET /api/v1/user/routers HTTP/1.1" 200
+2023-12-21 00:20:00 [INFO] 127.0.0.1:57056 - "OPTIONS /api/v1/permission/user?page=1&limit=20 HTTP/1.1" 200
+2023-12-21 00:20:00 [INFO] 127.0.0.1:57057 - "OPTIONS /api/v1/system/dict/type/permission_user_status HTTP/1.1" 200
+2023-12-21 00:20:00 [INFO] 127.0.0.1:57058 - "OPTIONS /api/v1/system/dict/type/permission_user_sex HTTP/1.1" 200
+2023-12-21 00:20:00 [INFO] 127.0.0.1:57059 - "OPTIONS /api/v1/permission/role/select/list HTTP/1.1" 200
+2023-12-21 00:20:00 [INFO] 请求:GET | /api/v1/permission/user | 127.0.0.1 | 响应:200 | 耗时: 82ms
+2023-12-21 00:20:00 [INFO] 请求:GET | /api/v1/permission/role/select/list | 127.0.0.1 | 响应:200 | 耗时: 79ms
+2023-12-21 00:20:00 [INFO] 127.0.0.1:57057 - "GET /api/v1/permission/user?page=1&limit=20 HTTP/1.1" 200
+2023-12-21 00:20:00 [INFO] 127.0.0.1:57058 - "GET /api/v1/permission/role/select/list HTTP/1.1" 200
+2023-12-21 00:20:00 [INFO] 127.0.0.1:57058 - "OPTIONS /api/v1/system/config-setting/key/user_init_roles HTTP/1.1" 200
+2023-12-21 00:20:00 [INFO] 请求:GET | /api/v1/system/dict/type/permission_user_status | 127.0.0.1 | 响应:200 | 耗时: 162ms
+2023-12-21 00:20:00 [INFO] 127.0.0.1:57056 - "GET /api/v1/system/dict/type/permission_user_status HTTP/1.1" 200
+2023-12-21 00:20:00 [INFO] 请求:GET | /api/v1/system/dict/type/permission_user_sex | 127.0.0.1 | 响应:200 | 耗时: 161ms
+2023-12-21 00:20:00 [INFO] 127.0.0.1:57059 - "GET /api/v1/system/dict/type/permission_user_sex HTTP/1.1" 200
+2023-12-21 00:20:00 [INFO] =========测试缓存是否生效,仅第一次访问无缓存时出现此提示=========
+2023-12-21 00:20:00 [INFO] 请求:GET | /api/v1/system/config-setting/key/user_init_roles | 127.0.0.1 | 响应:200 | 耗时: 5ms
+2023-12-21 00:20:00 [INFO] 127.0.0.1:57058 - "GET /api/v1/system/config-setting/key/user_init_roles HTTP/1.1" 200
+2023-12-21 00:20:02 [INFO] 127.0.0.1:57058 - "OPTIONS /api/v1/permission/menu HTTP/1.1" 200
+2023-12-21 00:20:02 [INFO] 127.0.0.1:57059 - "OPTIONS /api/v1/system/dict/type/com_default_status HTTP/1.1" 200
+2023-12-21 00:20:02 [INFO] 请求:GET | /api/v1/permission/menu | 127.0.0.1 | 响应:200 | 耗时: 13ms
+2023-12-21 00:20:02 [INFO] 127.0.0.1:57059 - "GET /api/v1/permission/menu HTTP/1.1" 200
+2023-12-21 00:20:02 [INFO] 请求:GET | /api/v1/system/dict/type/com_default_status | 127.0.0.1 | 响应:200 | 耗时: 14ms
+2023-12-21 00:20:02 [INFO] 127.0.0.1:57058 - "GET /api/v1/system/dict/type/com_default_status HTTP/1.1" 200
+2023-12-21 00:20:04 [INFO] 127.0.0.1:57058 - "OPTIONS /api/v1/permission/role?page=1&page_size=20 HTTP/1.1" 200
+2023-12-21 00:20:04 [INFO] 请求:GET | /api/v1/system/dict/type/com_default_status | 127.0.0.1 | 响应:200 | 耗时: 2ms
+2023-12-21 00:20:04 [INFO] 127.0.0.1:57059 - "GET /api/v1/system/dict/type/com_default_status HTTP/1.1" 200
+2023-12-21 00:20:04 [INFO] 请求:GET | /api/v1/permission/role | 127.0.0.1 | 响应:200 | 耗时: 10ms
+2023-12-21 00:20:04 [INFO] 127.0.0.1:57058 - "GET /api/v1/permission/role?page=1&page_size=20 HTTP/1.1" 200
+2023-12-21 00:20:05 [INFO] 127.0.0.1:57058 - "OPTIONS /api/v1/permission/perm-label?page=1&page_size=20 HTTP/1.1" 200
+2023-12-21 00:20:05 [INFO] 请求:GET | /api/v1/permission/role/select/list | 127.0.0.1 | 响应:200 | 耗时: 3ms
+2023-12-21 00:20:05 [INFO] 127.0.0.1:57059 - "GET /api/v1/permission/role/select/list HTTP/1.1" 200
+2023-12-21 00:20:05 [INFO] 请求:GET | /api/v1/system/dict/type/com_default_status | 127.0.0.1 | 响应:200 | 耗时: 4ms
+2023-12-21 00:20:05 [INFO] 127.0.0.1:57068 - "GET /api/v1/system/dict/type/com_default_status HTTP/1.1" 200
+2023-12-21 00:20:05 [INFO] 请求:GET | /api/v1/permission/perm-label | 127.0.0.1 | 响应:200 | 耗时: 7ms
+2023-12-21 00:20:05 [INFO] 127.0.0.1:57058 - "GET /api/v1/permission/perm-label?page=1&page_size=20 HTTP/1.1" 200
+2023-12-21 00:20:12 [INFO] 请求:GET | /api/v1/permission/role/select/list | 127.0.0.1 | 响应:200 | 耗时: 5ms
+2023-12-21 00:20:12 [INFO] 127.0.0.1:57078 - "GET /api/v1/permission/role/select/list HTTP/1.1" 200
+2023-12-21 00:20:12 [INFO] 请求:GET | /api/v1/permission/perm-label | 127.0.0.1 | 响应:200 | 耗时: 17ms
+2023-12-21 00:20:12 [INFO] 127.0.0.1:57077 - "GET /api/v1/permission/perm-label?page=1&page_size=20 HTTP/1.1" 200
+2023-12-21 00:20:12 [INFO] 请求:GET | /api/v1/system/dict/type/com_default_status | 127.0.0.1 | 响应:200 | 耗时: 16ms
+2023-12-21 00:20:12 [INFO] 127.0.0.1:57079 - "GET /api/v1/system/dict/type/com_default_status HTTP/1.1" 200
+2023-12-21 00:20:18 [INFO] 请求:GET | /api/v1/permission/role/select/list | 127.0.0.1 | 响应:200 | 耗时: 4ms
+2023-12-21 00:20:18 [INFO] 127.0.0.1:57091 - "GET /api/v1/permission/role/select/list HTTP/1.1" 200
+2023-12-21 00:20:18 [INFO] 请求:GET | /api/v1/system/dict/type/com_default_status | 127.0.0.1 | 响应:200 | 耗时: 14ms
+2023-12-21 00:20:18 [INFO] 请求:GET | /api/v1/permission/perm-label | 127.0.0.1 | 响应:200 | 耗时: 17ms
+2023-12-21 00:20:18 [INFO] 127.0.0.1:57092 - "GET /api/v1/system/dict/type/com_default_status HTTP/1.1" 200
+2023-12-21 00:20:18 [INFO] 127.0.0.1:57090 - "GET /api/v1/permission/perm-label?page=1&page_size=20 HTTP/1.1" 200
+2023-12-21 00:20:20 [INFO] 127.0.0.1:57090 - "OPTIONS /api/v1/system/config-setting?page=1&page_size=20 HTTP/1.1" 200
+2023-12-21 00:20:20 [INFO] 请求:GET | /api/v1/system/dict/type/com_default_status | 127.0.0.1 | 响应:200 | 耗时: 2ms
+2023-12-21 00:20:20 [INFO] 127.0.0.1:57092 - "GET /api/v1/system/dict/type/com_default_status HTTP/1.1" 200
+2023-12-21 00:20:20 [INFO] 请求:GET | /api/v1/system/config-setting | 127.0.0.1 | 响应:200 | 耗时: 8ms
+2023-12-21 00:20:20 [INFO] 127.0.0.1:57090 - "GET /api/v1/system/config-setting?page=1&page_size=20 HTTP/1.1" 200
+2023-12-21 00:20:22 [INFO] 127.0.0.1:57090 - "OPTIONS /api/v1/system/dict/data?page=1&page_size=20 HTTP/1.1" 200
+2023-12-21 00:20:22 [INFO] 请求:GET | /api/v1/system/dict/type/com_default_status | 127.0.0.1 | 响应:200 | 耗时: 1ms
+2023-12-21 00:20:22 [INFO] 127.0.0.1:57092 - "GET /api/v1/system/dict/type/com_default_status HTTP/1.1" 200
+2023-12-21 00:20:22 [INFO] 请求:GET | /api/v1/system/dict/data | 127.0.0.1 | 响应:200 | 耗时: 8ms
+2023-12-21 00:20:22 [INFO] 127.0.0.1:57090 - "GET /api/v1/system/dict/data?page=1&page_size=20 HTTP/1.1" 200
+2023-12-21 00:20:28 [INFO] 请求:GET | /api/v1/system/dict/data | 127.0.0.1 | 响应:200 | 耗时: 10ms
+2023-12-21 00:20:28 [INFO] 127.0.0.1:57107 - "GET /api/v1/system/dict/data?page=1&page_size=20 HTTP/1.1" 200
+2023-12-21 00:20:28 [INFO] 请求:GET | /api/v1/system/dict/type/com_default_status | 127.0.0.1 | 响应:200 | 耗时: 9ms
+2023-12-21 00:20:28 [INFO] 127.0.0.1:57108 - "GET /api/v1/system/dict/type/com_default_status HTTP/1.1" 200
+2023-12-21 00:20:32 [INFO] 127.0.0.1:57108 - "OPTIONS /api/v1/hiker/hiker_developer?page=1&page_size=20 HTTP/1.1" 200
+2023-12-21 00:20:32 [INFO] 请求:GET | /api/v1/system/dict/type/com_default_status | 127.0.0.1 | 响应:200 | 耗时: 3ms
+2023-12-21 00:20:32 [INFO] 127.0.0.1:57107 - "GET /api/v1/system/dict/type/com_default_status HTTP/1.1" 200
+2023-12-21 00:20:32 [INFO] 请求:GET | /api/v1/hiker/hiker_developer | 127.0.0.1 | 响应:200 | 耗时: 5ms
+2023-12-21 00:20:32 [INFO] 127.0.0.1:57107 - "GET /api/v1/hiker/hiker_developer?page=1&page_size=20 HTTP/1.1" 200
+2023-12-21 00:20:34 [INFO] 请求:GET | /api/v1/hiker/hiker_developer | 127.0.0.1 | 响应:200 | 耗时: 4ms
+2023-12-21 00:20:34 [INFO] 127.0.0.1:57107 - "GET /api/v1/hiker/hiker_developer?page=1&page_size=20 HTTP/1.1" 200
+2023-12-21 00:20:34 [INFO] 请求:GET | /api/v1/system/dict/type/com_default_status | 127.0.0.1 | 响应:200 | 耗时: 6ms
+2023-12-21 00:20:34 [INFO] 127.0.0.1:57108 - "GET /api/v1/system/dict/type/com_default_status HTTP/1.1" 200
+2023-12-21 00:20:39 [INFO] 请求:GET | / | 127.0.0.1 | 响应:200 | 耗时: 3ms
+2023-12-21 00:20:39 [INFO] 127.0.0.1:57126 - "GET / HTTP/1.1" 200
+2023-12-21 00:20:40 [INFO] 请求:GET | /openapi.json | 127.0.0.1 | 响应:200 | 耗时: 89ms
+2023-12-21 00:20:40 [INFO] 127.0.0.1:57126 - "GET /openapi.json HTTP/1.1" 200
+2023-12-21 00:20:40 [INFO] 请求:GET | /blog | 127.0.0.1 | 响应:307 | 耗时: 1ms
+2023-12-21 00:20:40 [INFO] 127.0.0.1:57126 - "GET /blog HTTP/1.1" 307
+2023-12-21 00:20:48 [INFO] 127.0.0.1:57177 - "OPTIONS /api/v1/monitor/server HTTP/1.1" 200
+2023-12-21 00:20:49 [INFO] 请求:GET | /api/v1/monitor/server | 127.0.0.1 | 响应:200 | 耗时: 1085ms
+2023-12-21 00:20:49 [INFO] 127.0.0.1:57177 - "GET /api/v1/monitor/server HTTP/1.1" 200
+2023-12-21 00:22:42 [INFO] Shutting down
+2023-12-21 00:22:42 [INFO] Waiting for application shutdown.
+2023-12-21 00:24:01 [INFO] Started server process [30652]
+2023-12-21 00:24:01 [INFO] Waiting for application startup.
+2023-12-21 00:24:01 [INFO] 初始化定时任务状态成功
+2023-12-21 00:24:01 [INFO] Application startup complete.
+2023-12-21 00:24:01 [INFO] Uvicorn running on http://0.0.0.0:5707 (Press CTRL+C to quit)
+2023-12-21 00:27:01 [INFO] Shutting down
+2023-12-21 00:27:50 [INFO] Started server process [12492]
+2023-12-21 00:27:50 [INFO] Waiting for application startup.
+2023-12-21 00:27:50 [INFO] 初始化定时任务状态成功
+2023-12-21 00:27:50 [INFO] Application startup complete.
+2023-12-21 00:27:50 [INFO] Uvicorn running on http://0.0.0.0:5707 (Press CTRL+C to quit)
+2023-12-21 00:28:17 [INFO] 请求:GET | /api/v1/user/info | 127.0.0.1 | 响应:200 | 耗时: 81ms
+2023-12-21 00:28:17 [INFO] 127.0.0.1:57828 - "GET /api/v1/user/info HTTP/1.1" 200
+2023-12-21 00:28:18 [INFO] 请求:GET | /api/v1/user/routers | 127.0.0.1 | 响应:200 | 耗时: 7ms
+2023-12-21 00:28:18 [INFO] 127.0.0.1:57828 - "GET /api/v1/user/routers HTTP/1.1" 200
+2023-12-21 00:28:19 [INFO] 请求:GET | /api/v1/monitor/server | 127.0.0.1 | 响应:200 | 耗时: 1080ms
+2023-12-21 00:28:19 [INFO] 127.0.0.1:57828 - "GET /api/v1/monitor/server HTTP/1.1" 200
+2023-12-21 00:28:30 [INFO] 请求:GET | /api/v1/permission/role/select/list | 127.0.0.1 | 响应:200 | 耗时: 5ms
+2023-12-21 00:28:30 [INFO] 127.0.0.1:57858 - "GET /api/v1/permission/role/select/list HTTP/1.1" 200
+2023-12-21 00:28:30 [INFO] 请求:GET | /api/v1/permission/user | 127.0.0.1 | 响应:200 | 耗时: 84ms
+2023-12-21 00:28:30 [INFO] 127.0.0.1:57855 - "GET /api/v1/permission/user?page=1&limit=20 HTTP/1.1" 200
+2023-12-21 00:28:30 [INFO] 请求:GET | /api/v1/system/dict/type/permission_user_sex | 127.0.0.1 | 响应:200 | 耗时: 85ms
+2023-12-21 00:28:30 [INFO] 请求:GET | /api/v1/system/dict/type/permission_user_status | 127.0.0.1 | 响应:200 | 耗时: 86ms
+2023-12-21 00:28:30 [INFO] 127.0.0.1:57857 - "GET /api/v1/system/dict/type/permission_user_sex HTTP/1.1" 200
+2023-12-21 00:28:30 [INFO] 127.0.0.1:57856 - "GET /api/v1/system/dict/type/permission_user_status HTTP/1.1" 200
+2023-12-21 00:28:30 [INFO] 请求:GET | /api/v1/system/config-setting/key/user_init_roles | 127.0.0.1 | 响应:200 | 耗时: 6ms
+2023-12-21 00:28:30 [INFO] 127.0.0.1:57858 - "GET /api/v1/system/config-setting/key/user_init_roles HTTP/1.1" 200
+2023-12-21 00:28:31 [INFO] 请求:GET | /api/v1/system/dict/type/com_default_status | 127.0.0.1 | 响应:200 | 耗时: 7ms
+2023-12-21 00:28:31 [INFO] 127.0.0.1:57856 - "GET /api/v1/system/dict/type/com_default_status HTTP/1.1" 200
+2023-12-21 00:28:31 [INFO] 请求:GET | /api/v1/permission/menu | 127.0.0.1 | 响应:200 | 耗时: 10ms
+2023-12-21 00:28:31 [INFO] 127.0.0.1:57858 - "GET /api/v1/permission/menu HTTP/1.1" 200
+2023-12-21 00:28:32 [INFO] 请求:GET | /api/v1/system/dict/type/com_default_status | 127.0.0.1 | 响应:200 | 耗时: 7ms
+2023-12-21 00:28:32 [INFO] 请求:GET | /api/v1/permission/role | 127.0.0.1 | 响应:200 | 耗时: 8ms
+2023-12-21 00:28:32 [INFO] 127.0.0.1:57856 - "GET /api/v1/system/dict/type/com_default_status HTTP/1.1" 200
+2023-12-21 00:28:32 [INFO] 127.0.0.1:57858 - "GET /api/v1/permission/role?page=1&page_size=20 HTTP/1.1" 200
+2023-12-21 00:28:33 [INFO] 请求:GET | /api/v1/permission/role/select/list | 127.0.0.1 | 响应:200 | 耗时: 3ms
+2023-12-21 00:28:33 [INFO] 127.0.0.1:57856 - "GET /api/v1/permission/role/select/list HTTP/1.1" 200
+2023-12-21 00:28:33 [INFO] 请求:GET | /api/v1/permission/perm-label | 127.0.0.1 | 响应:200 | 耗时: 12ms
+2023-12-21 00:28:33 [INFO] 请求:GET | /api/v1/system/dict/type/com_default_status | 127.0.0.1 | 响应:200 | 耗时: 11ms
+2023-12-21 00:28:33 [INFO] 127.0.0.1:57858 - "GET /api/v1/permission/perm-label?page=1&page_size=20 HTTP/1.1" 200
+2023-12-21 00:28:33 [INFO] 127.0.0.1:57857 - "GET /api/v1/system/dict/type/com_default_status HTTP/1.1" 200
+2023-12-21 00:28:36 [INFO] 请求:GET | /api/v1/system/dict/type/com_default_status | 127.0.0.1 | 响应:200 | 耗时: 2ms
+2023-12-21 00:28:36 [INFO] 127.0.0.1:57858 - "GET /api/v1/system/dict/type/com_default_status HTTP/1.1" 200
+2023-12-21 00:28:36 [INFO] 请求:GET | /api/v1/system/config-setting | 127.0.0.1 | 响应:200 | 耗时: 11ms
+2023-12-21 00:28:36 [INFO] 127.0.0.1:57857 - "GET /api/v1/system/config-setting?page=1&page_size=20 HTTP/1.1" 200
+2023-12-21 00:28:37 [INFO] 请求:GET | /api/v1/system/dict/data | 127.0.0.1 | 响应:200 | 耗时: 10ms
+2023-12-21 00:28:37 [INFO] 127.0.0.1:57857 - "GET /api/v1/system/dict/data?page=1&page_size=20 HTTP/1.1" 200
+2023-12-21 00:28:37 [INFO] 请求:GET | /api/v1/system/dict/type/com_default_status | 127.0.0.1 | 响应:200 | 耗时: 9ms
+2023-12-21 00:28:37 [INFO] 127.0.0.1:57858 - "GET /api/v1/system/dict/type/com_default_status HTTP/1.1" 200
+2023-12-21 00:28:41 [INFO] 请求:GET | /api/v1/hiker/hiker_developer | 127.0.0.1 | 响应:200 | 耗时: 7ms
+2023-12-21 00:28:41 [INFO] 127.0.0.1:57858 - "GET /api/v1/hiker/hiker_developer?page=1&page_size=20 HTTP/1.1" 200
+2023-12-21 00:28:41 [INFO] 请求:GET | /api/v1/system/dict/type/com_default_status | 127.0.0.1 | 响应:200 | 耗时: 8ms
+2023-12-21 00:28:41 [INFO] 127.0.0.1:57857 - "GET /api/v1/system/dict/type/com_default_status HTTP/1.1" 200
+2023-12-21 00:28:42 [INFO] 127.0.0.1:57857 - "OPTIONS /api/v1/hiker/hiker_rule_type?page=1&page_size=20 HTTP/1.1" 200
+2023-12-21 00:28:42 [INFO] 请求:GET | /api/v1/hiker/hiker_rule_type | 127.0.0.1 | 响应:200 | 耗时: 4ms
+2023-12-21 00:28:42 [INFO] 127.0.0.1:57857 - "GET /api/v1/hiker/hiker_rule_type?page=1&page_size=20 HTTP/1.1" 200
+2023-12-21 00:28:43 [INFO] 127.0.0.1:57857 - "OPTIONS /api/v1/hiker/hiker_rule?page=1&page_size=20 HTTP/1.1" 200
+2023-12-21 00:28:43 [INFO] 127.0.0.1:57858 - "OPTIONS /api/v1/system/dict/type/hiker_rule_data_type HTTP/1.1" 200
+2023-12-21 00:28:43 [INFO] 请求:GET | /api/v1/hiker/hiker_rule | 127.0.0.1 | 响应:200 | 耗时: 10ms
+2023-12-21 00:28:43 [INFO] 127.0.0.1:57858 - "GET /api/v1/hiker/hiker_rule?page=1&page_size=20 HTTP/1.1" 200
+2023-12-21 00:28:43 [INFO] 请求:GET | /api/v1/system/dict/type/hiker_rule_data_type | 127.0.0.1 | 响应:200 | 耗时: 19ms
+2023-12-21 00:28:43 [INFO] 127.0.0.1:57857 - "GET /api/v1/system/dict/type/hiker_rule_data_type HTTP/1.1" 200
+2023-12-21 00:28:46 [INFO] 127.0.0.1:57857 - "OPTIONS /api/v1/monitor/job/list?pageNum=1&pageSize=10 HTTP/1.1" 200
+2023-12-21 00:28:46 [INFO] 127.0.0.1:57858 - "OPTIONS /api/v1/system/dict/type/sys_job_group HTTP/1.1" 200
+2023-12-21 00:28:46 [INFO] 127.0.0.1:57884 - "OPTIONS /api/v1/system/dict/type/sys_job_status HTTP/1.1" 200
+2023-12-21 00:28:46 [INFO] 请求:GET | /api/v1/monitor/job/list | 127.0.0.1 | 响应:200 | 耗时: 6ms
+2023-12-21 00:28:46 [INFO] 127.0.0.1:57884 - "GET /api/v1/monitor/job/list?pageNum=1&pageSize=10 HTTP/1.1" 200
+2023-12-21 00:28:46 [INFO] 请求:GET | /api/v1/system/dict/type/sys_job_status | 127.0.0.1 | 响应:200 | 耗时: 15ms
+2023-12-21 00:28:46 [INFO] 请求:GET | /api/v1/system/dict/type/sys_job_group | 127.0.0.1 | 响应:200 | 耗时: 15ms
+2023-12-21 00:28:46 [INFO] 127.0.0.1:57857 - "GET /api/v1/system/dict/type/sys_job_status HTTP/1.1" 200
+2023-12-21 00:28:46 [INFO] 127.0.0.1:57858 - "GET /api/v1/system/dict/type/sys_job_group HTTP/1.1" 200
+2023-12-21 00:28:53 [INFO] 127.0.0.1:57899 - "OPTIONS /api/v1/monitor/logininfor/list?page=1&page_size=10 HTTP/1.1" 200
+2023-12-21 00:28:53 [INFO] 请求:GET | /api/v1/system/dict/type/com_default_status | 127.0.0.1 | 响应:200 | 耗时: 2ms
+2023-12-21 00:28:53 [INFO] 127.0.0.1:57900 - "GET /api/v1/system/dict/type/com_default_status HTTP/1.1" 200
+2023-12-21 00:28:53 [INFO] 请求:GET | /api/v1/monitor/logininfor/list | 127.0.0.1 | 响应:200 | 耗时: 7ms
+2023-12-21 00:28:53 [INFO] 127.0.0.1:57899 - "GET /api/v1/monitor/logininfor/list?page=1&page_size=10 HTTP/1.1" 200
+2023-12-21 00:28:55 [INFO] 127.0.0.1:57899 - "OPTIONS /api/v1/monitor/pip?page=1&page_size=20 HTTP/1.1" 200
+2023-12-21 00:28:56 [INFO] 请求:GET | /api/v1/monitor/pip | 127.0.0.1 | 响应:200 | 耗时: 1064ms
+2023-12-21 00:28:56 [INFO] 127.0.0.1:57899 - "GET /api/v1/monitor/pip?page=1&page_size=20 HTTP/1.1" 200
+2023-12-21 00:28:56 [INFO] 127.0.0.1:57899 - "OPTIONS /api/v1/monitor/cache/getNames HTTP/1.1" 200
+2023-12-21 00:28:56 [INFO] 请求:GET | /api/v1/monitor/cache/getNames | 127.0.0.1 | 响应:200 | 耗时: 5ms
+2023-12-21 00:28:56 [INFO] 127.0.0.1:57899 - "GET /api/v1/monitor/cache/getNames HTTP/1.1" 200
+2023-12-21 00:29:01 [INFO] 请求:GET | / | 127.0.0.1 | 响应:200 | 耗时: 4ms
+2023-12-21 00:29:01 [INFO] 127.0.0.1:57910 - "GET / HTTP/1.1" 200
+2023-12-21 00:29:01 [INFO] 请求:GET | /openapi.json | 127.0.0.1 | 响应:200 | 耗时: 86ms
+2023-12-21 00:29:01 [INFO] 127.0.0.1:57910 - "GET /openapi.json HTTP/1.1" 200
+2023-12-21 00:29:02 [INFO] 请求:GET | /blog | 127.0.0.1 | 响应:307 | 耗时: 0ms
+2023-12-21 00:29:02 [INFO] 127.0.0.1:57910 - "GET /blog HTTP/1.1" 307
+2023-12-21 00:29:11 [INFO] 请求:GET | /api/v1/system/dict/type/permission_user_sex | 127.0.0.1 | 响应:200 | 耗时: 1ms
+2023-12-21 00:29:11 [INFO] 127.0.0.1:57942 - "GET /api/v1/system/dict/type/permission_user_sex HTTP/1.1" 200
+2023-12-21 00:30:32 [INFO] Shutting down
+2023-12-21 00:30:32 [INFO] Waiting for application shutdown.
+2023-12-21 00:30:32 [INFO] Application shutdown complete.
+2023-12-21 00:30:32 [INFO] Finished server process [12492]
+2023-12-21 00:30:34 [INFO] Started server process [28568]
+2023-12-21 00:30:34 [INFO] Waiting for application startup.
+2023-12-21 00:30:34 [INFO] 初始化定时任务状态成功
+2023-12-21 00:30:34 [INFO] Application startup complete.
+2023-12-21 00:30:34 [INFO] Uvicorn running on http://0.0.0.0:5707 (Press CTRL+C to quit)
+2023-12-21 00:34:02 [INFO] Shutting down
+2023-12-21 00:34:02 [INFO] Waiting for application shutdown.
+2023-12-21 00:34:02 [INFO] Application shutdown complete.
+2023-12-21 00:34:02 [INFO] Finished server process [28568]
+2023-12-21 00:34:04 [INFO] Started server process [16532]
+2023-12-21 00:34:04 [INFO] Waiting for application startup.
+2023-12-21 00:34:04 [INFO] 初始化定时任务状态成功
+2023-12-21 00:34:04 [INFO] Application startup complete.
+2023-12-21 00:34:04 [INFO] Uvicorn running on http://0.0.0.0:5707 (Press CTRL+C to quit)
+2023-12-21 00:35:01 [INFO] 127.0.0.1:58460 - "OPTIONS /api/v1/user/info HTTP/1.1" 200
+2023-12-21 00:35:02 [INFO] 请求:GET | /api/v1/user/info | 127.0.0.1 | 响应:200 | 耗时: 16ms
+2023-12-21 00:35:02 [INFO] 127.0.0.1:58460 - "GET /api/v1/user/info HTTP/1.1" 200
+2023-12-21 00:35:02 [INFO] 127.0.0.1:58460 - "OPTIONS /api/v1/user/routers HTTP/1.1" 200
+2023-12-21 00:35:02 [INFO] 请求:GET | /api/v1/user/routers | 127.0.0.1 | 响应:200 | 耗时: 14ms
+2023-12-21 00:35:02 [INFO] 127.0.0.1:58460 - "GET /api/v1/user/routers HTTP/1.1" 200
+2023-12-21 00:35:02 [INFO] 127.0.0.1:58460 - "OPTIONS /api/v1/system/dict/type/permission_user_sex HTTP/1.1" 200
+2023-12-21 00:35:02 [INFO] 请求:GET | /api/v1/system/dict/type/permission_user_sex | 127.0.0.1 | 响应:200 | 耗时: 10ms
+2023-12-21 00:35:02 [INFO] 127.0.0.1:58460 - "GET /api/v1/system/dict/type/permission_user_sex HTTP/1.1" 200
+2023-12-21 00:35:04 [INFO] 127.0.0.1:58460 - "OPTIONS /api/v1/permission/user?page=1&limit=20 HTTP/1.1" 200
+2023-12-21 00:35:04 [INFO] 127.0.0.1:58469 - "OPTIONS /api/v1/system/dict/type/permission_user_status HTTP/1.1" 200
+2023-12-21 00:35:04 [INFO] 127.0.0.1:58470 - "OPTIONS /api/v1/permission/role/select/list HTTP/1.1" 200
+2023-12-21 00:35:04 [INFO] 请求:GET | /api/v1/system/dict/type/permission_user_sex | 127.0.0.1 | 响应:200 | 耗时: 5ms
+2023-12-21 00:35:04 [INFO] 127.0.0.1:58460 - "GET /api/v1/system/dict/type/permission_user_sex HTTP/1.1" 200
+2023-12-21 00:35:04 [INFO] 请求:GET | /api/v1/permission/role/select/list | 127.0.0.1 | 响应:200 | 耗时: 6ms
+2023-12-21 00:35:04 [INFO] 127.0.0.1:58471 - "GET /api/v1/permission/role/select/list HTTP/1.1" 200
+2023-12-21 00:35:04 [INFO] 请求:GET | /api/v1/permission/user | 127.0.0.1 | 响应:200 | 耗时: 31ms
+2023-12-21 00:35:04 [INFO] 127.0.0.1:58469 - "GET /api/v1/permission/user?page=1&limit=20 HTTP/1.1" 200
+2023-12-21 00:35:04 [INFO] 127.0.0.1:58471 - "OPTIONS /api/v1/system/config-setting/key/user_init_roles HTTP/1.1" 200
+2023-12-21 00:35:04 [INFO] 请求:GET | /api/v1/system/dict/type/permission_user_status | 127.0.0.1 | 响应:200 | 耗时: 37ms
+2023-12-21 00:35:04 [INFO] 127.0.0.1:58470 - "GET /api/v1/system/dict/type/permission_user_status HTTP/1.1" 200
+2023-12-21 00:35:04 [INFO] =========测试缓存是否生效,仅第一次访问无缓存时出现此提示=========
+2023-12-21 00:35:04 [INFO] 请求:GET | /api/v1/system/config-setting/key/user_init_roles | 127.0.0.1 | 响应:200 | 耗时: 6ms
+2023-12-21 00:35:04 [INFO] 127.0.0.1:58471 - "GET /api/v1/system/config-setting/key/user_init_roles HTTP/1.1" 200
+2023-12-21 00:35:06 [INFO] 127.0.0.1:58471 - "OPTIONS /api/v1/system/config-setting?page=1&page_size=20 HTTP/1.1" 200
+2023-12-21 00:35:06 [INFO] 127.0.0.1:58470 - "OPTIONS /api/v1/system/dict/type/com_default_status HTTP/1.1" 200
+2023-12-21 00:35:06 [INFO] 请求:GET | /api/v1/system/config-setting | 127.0.0.1 | 响应:200 | 耗时: 10ms
+2023-12-21 00:35:06 [INFO] 127.0.0.1:58470 - "GET /api/v1/system/config-setting?page=1&page_size=20 HTTP/1.1" 200
+2023-12-21 00:35:06 [INFO] 请求:GET | /api/v1/system/dict/type/com_default_status | 127.0.0.1 | 响应:200 | 耗时: 11ms
+2023-12-21 00:35:06 [INFO] 127.0.0.1:58471 - "GET /api/v1/system/dict/type/com_default_status HTTP/1.1" 200
+2023-12-21 00:35:08 [INFO] 127.0.0.1:58471 - "OPTIONS /api/v1/system/dict/data?page=1&page_size=20 HTTP/1.1" 200
+2023-12-21 00:35:08 [INFO] 请求:GET | /api/v1/system/dict/type/com_default_status | 127.0.0.1 | 响应:200 | 耗时: 2ms
+2023-12-21 00:35:08 [INFO] 127.0.0.1:58470 - "GET /api/v1/system/dict/type/com_default_status HTTP/1.1" 200
+2023-12-21 00:35:08 [INFO] 请求:GET | /api/v1/system/dict/data | 127.0.0.1 | 响应:200 | 耗时: 11ms
+2023-12-21 00:35:08 [INFO] 127.0.0.1:58471 - "GET /api/v1/system/dict/data?page=1&page_size=20 HTTP/1.1" 200
+2023-12-21 00:35:09 [INFO] 127.0.0.1:58471 - "OPTIONS /api/v1/hiker/hiker_developer?page=1&page_size=20 HTTP/1.1" 200
+2023-12-21 00:35:09 [INFO] 请求:GET | /api/v1/system/dict/type/com_default_status | 127.0.0.1 | 响应:200 | 耗时: 2ms
+2023-12-21 00:35:09 [INFO] 127.0.0.1:58470 - "GET /api/v1/system/dict/type/com_default_status HTTP/1.1" 200
+2023-12-21 00:35:09 [INFO] 请求:GET | /api/v1/hiker/hiker_developer | 127.0.0.1 | 响应:200 | 耗时: 5ms
+2023-12-21 00:35:09 [INFO] 127.0.0.1:58471 - "GET /api/v1/hiker/hiker_developer?page=1&page_size=20 HTTP/1.1" 200
+2023-12-21 00:37:10 [INFO] Shutting down
+2023-12-21 00:37:10 [INFO] Waiting for application shutdown.
+2023-12-21 00:37:10 [INFO] Application shutdown complete.
+2023-12-21 00:37:10 [INFO] Finished server process [16532]
+2023-12-21 00:37:12 [INFO] Started server process [31376]
+2023-12-21 00:37:12 [INFO] Waiting for application startup.
+2023-12-21 00:37:12 [INFO] 初始化定时任务状态成功
+2023-12-21 00:37:12 [INFO] Application startup complete.
+2023-12-21 00:37:12 [INFO] Uvicorn running on http://0.0.0.0:5707 (Press CTRL+C to quit)
+2023-12-21 00:39:43 [INFO] 请求:GET | /api/v1/user/info | 127.0.0.1 | 响应:200 | 耗时: 17ms
+2023-12-21 00:39:43 [INFO] 127.0.0.1:58920 - "GET /api/v1/user/info HTTP/1.1" 200
+2023-12-21 00:39:43 [INFO] 请求:GET | /api/v1/user/routers | 127.0.0.1 | 响应:200 | 耗时: 18ms
+2023-12-21 00:39:43 [INFO] 127.0.0.1:58920 - "GET /api/v1/user/routers HTTP/1.1" 200
+2023-12-21 00:39:44 [INFO] 请求:GET | /api/v1/hiker/hiker_developer | 127.0.0.1 | 响应:200 | 耗时: 17ms
+2023-12-21 00:39:44 [INFO] 127.0.0.1:58920 - "GET /api/v1/hiker/hiker_developer?page=1&page_size=20 HTTP/1.1" 200
+2023-12-21 00:39:44 [INFO] 请求:GET | /api/v1/system/dict/type/com_default_status | 127.0.0.1 | 响应:200 | 耗时: 19ms
+2023-12-21 00:39:44 [INFO] 127.0.0.1:58927 - "GET /api/v1/system/dict/type/com_default_status HTTP/1.1" 200
+2023-12-21 00:52:09 [INFO] Shutting down
+2023-12-21 00:52:09 [INFO] Waiting for application shutdown.
+2023-12-21 00:52:09 [INFO] Application shutdown complete.
+2023-12-21 00:52:09 [INFO] Finished server process [31376]
+2023-12-21 00:52:11 [INFO] Started server process [33660]
+2023-12-21 00:52:11 [INFO] Waiting for application startup.
+2023-12-21 00:52:11 [INFO] 初始化定时任务状态成功
+2023-12-21 00:52:11 [INFO] 定时任务【demo:测试】将在10秒钟后运行.下次执行时间为:2023-12-21 00:52:21.508685
+2023-12-21 00:52:11 [INFO] 定时任务【demo2:测试2】将在10秒钟后运行.下次执行时间为:2023-12-21 00:52:21.526587
+2023-12-21 00:52:11 [INFO] 可转债打新查询 func_args 序列化列表发生错误:malformed node or string: None
+2023-12-21 00:52:11 [INFO] 定时任务【kzz:可转债打新查询】将在10秒钟后运行.下次执行时间为:2023-12-21 00:52:21.526587
+2023-12-21 00:52:11 [INFO] Application startup complete.
+2023-12-21 00:52:11 [INFO] Uvicorn running on http://0.0.0.0:5707 (Press CTRL+C to quit)
+2023-12-21 00:52:24 [INFO] jobname=测试|jobtrigger=cron[month='*', day='*', hour='*', minute='20', second='30']|jobtime=2023-12-21 00:52:21+08:00|retval=None
+2023-12-21 00:52:24 [INFO] jobname=测试2|jobtrigger=cron[month='*', day='*', hour='*', minute='10', second='30']|jobtime=2023-12-21 00:52:21+08:00|retval=None
+2023-12-21 00:52:24 [INFO] jobname=可转债打新查询|jobtrigger=cron[month='*', day='1/1', hour='8', minute='0', second='0']|jobtime=2023-12-21 00:52:21+08:00|retval=None
+2023-12-21 00:52:47 [INFO] 127.0.0.1:60400 - "OPTIONS /api/v1/user/info HTTP/1.1" 200
+2023-12-21 00:52:47 [INFO] 请求:GET | /api/v1/user/info | 127.0.0.1 | 响应:200 | 耗时: 14ms
+2023-12-21 00:52:47 [INFO] 127.0.0.1:60400 - "GET /api/v1/user/info HTTP/1.1" 200
+2023-12-21 00:52:47 [INFO] 127.0.0.1:60400 - "OPTIONS /api/v1/user/routers HTTP/1.1" 200
+2023-12-21 00:52:47 [INFO] 请求:GET | /api/v1/user/routers | 127.0.0.1 | 响应:200 | 耗时: 8ms
+2023-12-21 00:52:47 [INFO] 127.0.0.1:60400 - "GET /api/v1/user/routers HTTP/1.1" 200
+2023-12-21 00:52:47 [INFO] 127.0.0.1:60400 - "OPTIONS /api/v1/hiker/hiker_developer?page=1&page_size=20 HTTP/1.1" 200
+2023-12-21 00:52:47 [INFO] 127.0.0.1:60407 - "OPTIONS /api/v1/system/dict/type/com_default_status HTTP/1.1" 200
+2023-12-21 00:52:47 [INFO] 请求:GET | /api/v1/hiker/hiker_developer | 127.0.0.1 | 响应:200 | 耗时: 7ms
+2023-12-21 00:52:47 [INFO] 127.0.0.1:60400 - "GET /api/v1/hiker/hiker_developer?page=1&page_size=20 HTTP/1.1" 200
+2023-12-21 00:52:47 [INFO] 请求:GET | /api/v1/system/dict/type/com_default_status | 127.0.0.1 | 响应:200 | 耗时: 11ms
+2023-12-21 00:52:47 [INFO] 127.0.0.1:60407 - "GET /api/v1/system/dict/type/com_default_status HTTP/1.1" 200
+2023-12-21 00:52:50 [INFO] 127.0.0.1:60407 - "OPTIONS /api/v1/monitor/job/list?pageNum=1&pageSize=10 HTTP/1.1" 200
+2023-12-21 00:52:50 [INFO] 127.0.0.1:60400 - "OPTIONS /api/v1/system/dict/type/sys_job_group HTTP/1.1" 200
+2023-12-21 00:52:50 [INFO] 127.0.0.1:60410 - "OPTIONS /api/v1/system/dict/type/sys_job_status HTTP/1.1" 200
+2023-12-21 00:52:50 [INFO] 请求:GET | /api/v1/monitor/job/list | 127.0.0.1 | 响应:200 | 耗时: 6ms
+2023-12-21 00:52:50 [INFO] 127.0.0.1:60400 - "GET /api/v1/monitor/job/list?pageNum=1&pageSize=10 HTTP/1.1" 200
+2023-12-21 00:52:50 [INFO] 请求:GET | /api/v1/system/dict/type/sys_job_group | 127.0.0.1 | 响应:200 | 耗时: 12ms
+2023-12-21 00:52:50 [INFO] 127.0.0.1:60407 - "GET /api/v1/system/dict/type/sys_job_group HTTP/1.1" 200
+2023-12-21 00:52:50 [INFO] 请求:GET | /api/v1/system/dict/type/sys_job_status | 127.0.0.1 | 响应:200 | 耗时: 17ms
+2023-12-21 00:52:50 [INFO] 127.0.0.1:60410 - "GET /api/v1/system/dict/type/sys_job_status HTTP/1.1" 200
+2023-12-21 00:52:52 [INFO] 127.0.0.1:60410 - "OPTIONS /api/v1/monitor/job/15 HTTP/1.1" 200
+2023-12-21 00:52:52 [INFO] 请求:GET | /api/v1/monitor/job/15 | 127.0.0.1 | 响应:200 | 耗时: 3ms
+2023-12-21 00:52:52 [INFO] 127.0.0.1:60410 - "GET /api/v1/monitor/job/15 HTTP/1.1" 200
+2023-12-21 00:54:57 [INFO] Shutting down
+2023-12-21 00:54:58 [INFO] Waiting for application shutdown.
+2023-12-21 00:55:16 [INFO] Started server process [31280]
+2023-12-21 00:55:16 [INFO] Waiting for application startup.
+2023-12-21 00:55:16 [INFO] 初始化定时任务状态成功
+2023-12-21 00:55:16 [INFO] 定时任务【demo:测试】将在10秒钟后运行.下次执行时间为:2023-12-21 00:55:26.453275
+2023-12-21 00:55:16 [INFO] 定时任务【demo2:测试2】将在10秒钟后运行.下次执行时间为:2023-12-21 00:55:26.459946
+2023-12-21 00:55:16 [INFO] 可转债打新查询 func_args 序列化列表发生错误:malformed node or string: None
+2023-12-21 00:55:16 [INFO] 定时任务【kzz:可转债打新查询】将在10秒钟后运行.下次执行时间为:2023-12-21 00:55:26.460275
+2023-12-21 00:55:16 [INFO] Application startup complete.
+2023-12-21 00:55:16 [INFO] Uvicorn running on http://0.0.0.0:5707 (Press CTRL+C to quit)
+2023-12-21 00:55:21 [INFO] 请求:GET | /api/v1/user/info | 127.0.0.1 | 响应:200 | 耗时: 14ms
+2023-12-21 00:55:21 [INFO] 127.0.0.1:60695 - "GET /api/v1/user/info HTTP/1.1" 200
+2023-12-21 00:55:21 [INFO] 请求:GET | /api/v1/user/routers | 127.0.0.1 | 响应:200 | 耗时: 9ms
+2023-12-21 00:55:21 [INFO] 127.0.0.1:60695 - "GET /api/v1/user/routers HTTP/1.1" 200
+2023-12-21 00:55:21 [INFO] 127.0.0.1:60695 - "OPTIONS /api/v1/monitor/cache/getNames HTTP/1.1" 200
+2023-12-21 00:55:22 [INFO] 请求:GET | /api/v1/monitor/cache/getNames | 127.0.0.1 | 响应:200 | 耗时: 7ms
+2023-12-21 00:55:22 [INFO] 127.0.0.1:60695 - "GET /api/v1/monitor/cache/getNames HTTP/1.1" 200
+2023-12-21 00:55:23 [INFO] 127.0.0.1:60695 - "OPTIONS /api/v1/monitor/cache/getKeys/user_login_token_ HTTP/1.1" 200
+2023-12-21 00:55:23 [INFO] 请求:GET | /api/v1/monitor/cache/getKeys/user_login_token_ | 127.0.0.1 | 响应:200 | 耗时: 5ms
+2023-12-21 00:55:23 [INFO] 127.0.0.1:60695 - "GET /api/v1/monitor/cache/getKeys/user_login_token_ HTTP/1.1" 200
+2023-12-21 00:55:23 [INFO] 127.0.0.1:60695 - "OPTIONS /api/v1/monitor/cache/getKeys/user_register_token_ HTTP/1.1" 200
+2023-12-21 00:55:23 [INFO] 请求:GET | /api/v1/monitor/cache/getKeys/user_register_token_ | 127.0.0.1 | 响应:200 | 耗时: 7ms
+2023-12-21 00:55:23 [INFO] 127.0.0.1:60695 - "GET /api/v1/monitor/cache/getKeys/user_register_token_ HTTP/1.1" 200
+2023-12-21 00:55:24 [INFO] 127.0.0.1:60695 - "OPTIONS /api/v1/monitor/cache/getKeys/user_forget_pwd_token_ HTTP/1.1" 200
+2023-12-21 00:55:24 [INFO] 请求:GET | /api/v1/monitor/cache/getKeys/user_forget_pwd_token_ | 127.0.0.1 | 响应:200 | 耗时: 5ms
+2023-12-21 00:55:24 [INFO] 127.0.0.1:60695 - "GET /api/v1/monitor/cache/getKeys/user_forget_pwd_token_ HTTP/1.1" 200
+2023-12-21 00:55:25 [INFO] 请求:GET | /api/v1/monitor/cache/getKeys/user_login_token_ | 127.0.0.1 | 响应:200 | 耗时: 7ms
+2023-12-21 00:55:25 [INFO] 127.0.0.1:60695 - "GET /api/v1/monitor/cache/getKeys/user_login_token_ HTTP/1.1" 200
+2023-12-21 00:55:27 [INFO] 127.0.0.1:60695 - "OPTIONS /api/v1/monitor/server HTTP/1.1" 200
+2023-12-21 00:55:28 [INFO] 请求:GET | /api/v1/monitor/server | 127.0.0.1 | 响应:200 | 耗时: 1078ms
+2023-12-21 00:55:28 [INFO] 127.0.0.1:60695 - "GET /api/v1/monitor/server HTTP/1.1" 200
+2023-12-21 00:55:29 [INFO] jobname=测试|jobtrigger=cron[month='*', day='*', hour='*', minute='20', second='30']|jobtime=2023-12-21 00:55:26+08:00|retval=None
+2023-12-21 00:55:29 [INFO] jobname=测试2|jobtrigger=cron[month='*', day='*', hour='*', minute='10', second='30']|jobtime=2023-12-21 00:55:26+08:00|retval=None
+2023-12-21 00:55:29 [INFO] jobname=可转债打新查询|jobtrigger=cron[month='*', day='1/1', hour='8', minute='0', second='0']|jobtime=2023-12-21 00:55:26+08:00|retval=None
+2023-12-21 00:56:09 [INFO] Shutting down

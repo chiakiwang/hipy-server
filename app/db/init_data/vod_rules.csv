@@ -1,0 +1,19 @@
+id,created_time,creator_id,modified_time,modifier_id,is_deleted,name,group,path,is_exist,order_num,file_type,ext,status,active
+8,2024-01-16 15:43:23.007714,1,2024-01-17 04:48:30.860730,1,0,两个BT,t4/spiders,F:/pywork/fastapi/fastAPI-vue/backend/app/t4/spiders/两个BT.py,True,8,.py,,1,True
+9,2024-01-16 15:43:23.018530,1,2024-01-17 04:48:30.864856,1,0,哔滴影视,t4/spiders,F:/pywork/fastapi/fastAPI-vue/backend/app/t4/spiders/哔滴影视.py,True,9,.py,,1,True
+10,2024-01-16 15:43:23.025600,1,2024-01-17 04:48:30.879097,1,0,新浪资源,t4/spiders,F:/pywork/fastapi/fastAPI-vue/backend/app/t4/spiders/新浪资源.py,True,10,.py,,1,True
+11,2024-01-16 15:43:23.037076,1,2024-01-17 04:48:30.883030,1,0,樱花动漫,t4/spiders,F:/pywork/fastapi/fastAPI-vue/backend/app/t4/spiders/樱花动漫.json,True,11,.json,,1,True
+12,2024-01-16 15:43:23.044578,1,2024-01-17 04:48:30.886169,1,0,樱花动漫,t4/spiders,F:/pywork/fastapi/fastAPI-vue/backend/app/t4/spiders/樱花动漫.py,True,12,.py,,1,True
+13,2024-01-16 15:43:23.052322,1,2024-01-17 04:48:30.889565,1,0,996影视,t4/files/drpy_js,F:/pywork/fastapi/fastAPI-vue/backend/app/t4/files/drpy_js/996影视.js,True,13,.js,,1,True
+14,2024-01-16 15:43:23.059736,1,2024-01-17 04:48:30.892836,1,0,alist,t4/files/json,F:/pywork/fastapi/fastAPI-vue/backend/app/t4/files/json/alist.json,True,14,.json,,1,True
+15,2024-01-16 15:43:23.067448,1,2024-01-17 04:48:30.896504,1,0,bili,t4/files/txt,F:/pywork/fastapi/fastAPI-vue/backend/app/t4/files/txt/bili.txt,True,15,.txt,,1,True
+16,2024-01-16 15:43:23.074985,1,2024-01-17 04:48:30.899875,1,0,douyu,t4/files/txt,F:/pywork/fastapi/fastAPI-vue/backend/app/t4/files/txt/douyu.txt,True,16,.txt,,1,True
+17,2024-01-16 15:43:23.084969,1,2024-01-17 04:48:30.902941,1,0,huya,t4/files/txt,F:/pywork/fastapi/fastAPI-vue/backend/app/t4/files/txt/huya.txt,True,17,.txt,,1,True
+1,2024-01-16 15:43:22.908962,1,2024-01-17 04:48:30.811265,1,0,base_java_loader,t4/spiders,F:/pywork/fastapi/fastAPI-vue/backend/app/t4/spiders/base_java_loader.py,True,1,.py,,1,True
+2,2024-01-16 15:43:22.949066,1,2024-01-17 04:48:30.833416,1,0,base_spider,t4/spiders,F:/pywork/fastapi/fastAPI-vue/backend/app/t4/spiders/base_spider.json,True,2,.json,,1,True
+3,2024-01-16 15:43:22.959613,1,2024-01-17 04:48:30.838694,1,0,base_spider,t4/spiders,F:/pywork/fastapi/fastAPI-vue/backend/app/t4/spiders/base_spider.py,True,3,.py,,1,True
+4,2024-01-16 15:43:22.967659,1,2024-01-17 04:48:30.842521,1,0,cntv央视,t4/spiders,F:/pywork/fastapi/fastAPI-vue/backend/app/t4/spiders/cntv央视.json,True,4,.json,,1,True
+5,2024-01-16 15:43:22.977440,1,2024-01-17 04:48:30.846362,1,0,cntv央视,t4/spiders,F:/pywork/fastapi/fastAPI-vue/backend/app/t4/spiders/cntv央视.py,True,5,.py,,1,True
+6,2024-01-16 15:43:22.988797,1,2024-01-17 04:48:30.852682,1,0,test_1,t4/spiders,F:/pywork/fastapi/fastAPI-vue/backend/app/t4/spiders/test_1.txt,True,6,.txt,,1,True
+7,2024-01-16 15:43:22.997072,1,2024-01-17 04:48:30.856663,1,0,两个BT,t4/spiders,F:/pywork/fastapi/fastAPI-vue/backend/app/t4/spiders/两个BT.json,True,7,.json,,1,True
+18,2024-01-17 04:48:30.870741,1,2024-01-17 04:48:30.870741,0,0,喵次元,t4/spiders,F:/pywork/fastapi/fastAPI-vue/backend/app/t4/spiders/喵次元.py,True,18,.py,,1,True

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>HiPy-嗨派 Swagger UI</title>
+    <link rel="icon" href="/static/img/logo.png" type="image/x-icon">
+    <link type="text/css" rel="stylesheet" href="/web/static/swagger/swagger-ui.css">
+<!--    <link rel="shortcut icon" href="/static/img/swagger.png">-->
+    <link rel="shortcut icon" href="/static/img/logo.png">
+</head>
+<body>
+<div id="swagger-ui">
+</div>
+<script src="/web/static/swagger/swagger-ui-bundle.js"></script>
+<!-- `SwaggerUIBundle` is now available on the page -->
+<script>
+    const ui = SwaggerUIBundle({
+        url: '/openapi.json',
+        "dom_id": "#swagger-ui",
+        "layout": "BaseLayout",
+        "deepLinking": true,
+        "showExtensions": true,
+        "showCommonExtensions": true,
+        oauth2RedirectUrl: window.location.origin + '/docs/oauth2-redirect',
+        presets: [
+            SwaggerUIBundle.presets.apis,
+            SwaggerUIBundle.SwaggerUIStandalonePreset
+        ],
+    })
+</script>
+</body>
+</html>

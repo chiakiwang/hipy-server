@@ -1,0 +1,806 @@
+2024-01-14 14:46:13 [ERROR] playerContent执行发生内部服务器错误:'lhs_url'
+2024-01-14 14:46:14 [ERROR] playerContent执行发生内部服务器错误:'lhs_url'
+2024-01-14 14:46:14 [ERROR] playerContent执行发生内部服务器错误:'lhs_url'
+2024-01-14 14:46:14 [ERROR] playerContent执行发生内部服务器错误:'lhs_url'
+2024-01-14 14:46:20 [ERROR] playerContent执行发生内部服务器错误:'lhs_url'
+2024-01-14 14:46:20 [ERROR] playerContent执行发生内部服务器错误:'lhs_url'
+2024-01-14 14:46:20 [ERROR] playerContent执行发生内部服务器错误:'lhs_url'
+2024-01-14 14:46:21 [ERROR] playerContent执行发生内部服务器错误:'lhs_url'
+2024-01-14 14:48:01 [ERROR] playerContent执行发生内部服务器错误:'lhs6'
+2024-01-14 14:48:01 [ERROR] playerContent执行发生内部服务器错误:'lhs6'
+2024-01-14 14:48:01 [ERROR] playerContent执行发生内部服务器错误:'lhs6'
+2024-01-14 14:48:02 [ERROR] playerContent执行发生内部服务器错误:'lhs6'
+2024-01-14 15:06:23 [ERROR] playerContent执行发生内部服务器错误:'NoneType' object has no attribute 'find'
+2024-01-14 15:06:24 [ERROR] playerContent执行发生内部服务器错误:'NoneType' object has no attribute 'find'
+2024-01-14 15:06:24 [ERROR] playerContent执行发生内部服务器错误:'NoneType' object has no attribute 'find'
+2024-01-14 15:06:25 [ERROR] playerContent执行发生内部服务器错误:'NoneType' object has no attribute 'find'
+2024-01-14 15:08:47 [ERROR] playerContent执行发生内部服务器错误:'NoneType' object has no attribute 'find'
+2024-01-14 15:08:47 [ERROR] playerContent执行发生内部服务器错误:'NoneType' object has no attribute 'find'
+2024-01-14 15:08:48 [ERROR] playerContent执行发生内部服务器错误:'NoneType' object has no attribute 'find'
+2024-01-14 15:08:49 [ERROR] playerContent执行发生内部服务器错误:'NoneType' object has no attribute 'find'
+2024-01-14 15:13:46 [ERROR] playerContent执行发生内部服务器错误:HTTP Error 404: Not Found
+2024-01-14 23:52:06 [ERROR] Exception in ASGI application
+Traceback (most recent call last):
+  File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\starlette\middleware\base.py", line 72, in __call__
+    response = await self.dispatch_func(request, call_next)
+  File "F:\pywork\fastapi\fastAPI-vue\backend\app\core\middleware.py", line 19, in dispatch
+    response = await call_next(request)
+  File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\starlette\middleware\base.py", line 46, in call_next
+    raise app_exc
+  File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\starlette\middleware\base.py", line 36, in coro
+    await self.app(scope, request.receive, send_stream.send)
+  File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\starlette\middleware\exceptions.py", line 75, in __call__
+    raise exc
+  File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\starlette\middleware\exceptions.py", line 64, in __call__
+    await self.app(scope, receive, sender)
+  File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\fastapi\middleware\asyncexitstack.py", line 21, in __call__
+    raise e
+  File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\fastapi\middleware\asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\starlette\routing.py", line 680, in __call__
+    await route.handle(scope, receive, send)
+  File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\starlette\routing.py", line 275, in handle
+    await self.app(scope, receive, send)
+  File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\starlette\routing.py", line 65, in app
+    response = await func(request)
+  File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\fastapi\routing.py", line 235, in app
+    raw_response = await run_endpoint_function(
+  File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\fastapi\routing.py", line 161, in run_endpoint_function
+    return await dependant.call(**values)
+  File "F:\pywork\fastapi\fastAPI-vue\backend\app\apps\vod\views\view_rules.py", line 35, in searchRecords
+    res = curd.search(db, status=status, name=name, group=group, page=page,
+TypeError: search() got an unexpected keyword argument 'order_bys'
+
+During handling of the above exception, another exception occurred:
+
+  + Exception Group Traceback (most recent call last):
+  |   File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\uvicorn\protocols\http\h11_impl.py", line 407, in run_asgi
+  |     result = await app(  # type: ignore[func-returns-value]
+  |   File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\uvicorn\middleware\proxy_headers.py", line 78, in __call__
+  |     return await self.app(scope, receive, send)
+  |   File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\fastapi\applications.py", line 270, in __call__
+  |     await super().__call__(scope, receive, send)
+  |   File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\starlette\applications.py", line 124, in __call__
+  |     await self.middleware_stack(scope, receive, send)
+  |   File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\starlette\middleware\errors.py", line 184, in __call__
+  |     raise exc
+  |   File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\starlette\middleware\errors.py", line 162, in __call__
+  |     await self.app(scope, receive, _send)
+  |   File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\starlette\middleware\cors.py", line 84, in __call__
+  |     await self.app(scope, receive, send)
+  |   File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\starlette\middleware\base.py", line 74, in __call__
+  |     task_group.cancel_scope.cancel()
+  |   File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\anyio\_backends\_asyncio.py", line 664, in __aexit__
+  |     raise BaseExceptionGroup(
+  | exceptiongroup.ExceptionGroup: unhandled errors in a TaskGroup (1 sub-exception)
+  +-+---------------- 1 ----------------
+    | Traceback (most recent call last):
+    |   File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\anyio\streams\memory.py", line 97, in receive
+    |     return self.receive_nowait()
+    |   File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\anyio\streams\memory.py", line 92, in receive_nowait
+    |     raise WouldBlock
+    | anyio.WouldBlock
+    | 
+    | During handling of the above exception, another exception occurred:
+    | 
+    | Traceback (most recent call last):
+    |   File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\starlette\middleware\base.py", line 43, in call_next
+    |     message = await recv_stream.receive()
+    |   File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\anyio\streams\memory.py", line 112, in receive
+    |     raise EndOfStream
+    | anyio.EndOfStream
+    | 
+    | During handling of the above exception, another exception occurred:
+    | 
+    | Traceback (most recent call last):
+    |   File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\starlette\middleware\base.py", line 72, in __call__
+    |     response = await self.dispatch_func(request, call_next)
+    |   File "F:\pywork\fastapi\fastAPI-vue\backend\app\core\middleware.py", line 19, in dispatch
+    |     response = await call_next(request)
+    |   File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\starlette\middleware\base.py", line 46, in call_next
+    |     raise app_exc
+    |   File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\starlette\middleware\base.py", line 36, in coro
+    |     await self.app(scope, request.receive, send_stream.send)
+    |   File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\starlette\middleware\exceptions.py", line 75, in __call__
+    |     raise exc
+    |   File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\starlette\middleware\exceptions.py", line 64, in __call__
+    |     await self.app(scope, receive, sender)
+    |   File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\fastapi\middleware\asyncexitstack.py", line 21, in __call__
+    |     raise e
+    |   File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\fastapi\middleware\asyncexitstack.py", line 18, in __call__
+    |     await self.app(scope, receive, send)
+    |   File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\starlette\routing.py", line 680, in __call__
+    |     await route.handle(scope, receive, send)
+    |   File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\starlette\routing.py", line 275, in handle
+    |     await self.app(scope, receive, send)
+    |   File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\starlette\routing.py", line 65, in app
+    |     response = await func(request)
+    |   File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\fastapi\routing.py", line 235, in app
+    |     raw_response = await run_endpoint_function(
+    |   File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\fastapi\routing.py", line 161, in run_endpoint_function
+    |     return await dependant.call(**values)
+    |   File "F:\pywork\fastapi\fastAPI-vue\backend\app\apps\vod\views\view_rules.py", line 35, in searchRecords
+    |     res = curd.search(db, status=status, name=name, group=group, page=page,
+    | TypeError: search() got an unexpected keyword argument 'order_bys'
+    +------------------------------------
+2024-01-15 01:55:19 [ERROR] Exception in ASGI application
+Traceback (most recent call last):
+  File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\starlette\middleware\base.py", line 72, in __call__
+    response = await self.dispatch_func(request, call_next)
+  File "F:\pywork\fastapi\fastAPI-vue\backend\app\core\middleware.py", line 19, in dispatch
+    response = await call_next(request)
+  File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\starlette\middleware\base.py", line 46, in call_next
+    raise app_exc
+  File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\starlette\middleware\base.py", line 36, in coro
+    await self.app(scope, request.receive, send_stream.send)
+  File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\starlette\middleware\exceptions.py", line 75, in __call__
+    raise exc
+  File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\starlette\middleware\exceptions.py", line 64, in __call__
+    await self.app(scope, receive, sender)
+  File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\fastapi\middleware\asyncexitstack.py", line 21, in __call__
+    raise e
+  File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\fastapi\middleware\asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\starlette\routing.py", line 680, in __call__
+    await route.handle(scope, receive, send)
+  File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\starlette\routing.py", line 275, in handle
+    await self.app(scope, receive, send)
+  File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\starlette\routing.py", line 65, in app
+    response = await func(request)
+  File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\fastapi\routing.py", line 235, in app
+    raw_response = await run_endpoint_function(
+  File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\fastapi\routing.py", line 161, in run_endpoint_function
+    return await dependant.call(**values)
+  File "F:\pywork\fastapi\fastAPI-vue\backend\app\apps\vod\views\view_rules.py", line 116, in clearRecord
+    db.execute(sql)
+  File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\sqlalchemy\orm\session.py", line 1714, in execute
+    result = conn._execute_20(statement, params or {}, execution_options)
+  File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\sqlalchemy\engine\base.py", line 1705, in _execute_20
+    return meth(self, args_10style, kwargs_10style, execution_options)
+  File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\sqlalchemy\sql\elements.py", line 333, in _execute_on_connection
+    return connection._execute_clauseelement(
+  File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\sqlalchemy\engine\base.py", line 1572, in _execute_clauseelement
+    ret = self._execute_context(
+  File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\sqlalchemy\engine\base.py", line 1943, in _execute_context
+    self._handle_dbapi_exception(
+  File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\sqlalchemy\engine\base.py", line 2124, in _handle_dbapi_exception
+    util.raise_(
+  File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\sqlalchemy\util\compat.py", line 208, in raise_
+    raise exception
+  File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\sqlalchemy\engine\base.py", line 1900, in _execute_context
+    self.dialect.do_execute(
+  File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\sqlalchemy\engine\default.py", line 736, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.ProgrammingError: (psycopg2.ProgrammingError) can't execute an empty query
+(Background on this error at: https://sqlalche.me/e/14/f405)
+
+During handling of the above exception, another exception occurred:
+
+  + Exception Group Traceback (most recent call last):
+  |   File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\uvicorn\protocols\http\h11_impl.py", line 407, in run_asgi
+  |     result = await app(  # type: ignore[func-returns-value]
+  |   File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\uvicorn\middleware\proxy_headers.py", line 78, in __call__
+  |     return await self.app(scope, receive, send)
+  |   File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\fastapi\applications.py", line 270, in __call__
+  |     await super().__call__(scope, receive, send)
+  |   File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\starlette\applications.py", line 124, in __call__
+  |     await self.middleware_stack(scope, receive, send)
+  |   File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\starlette\middleware\errors.py", line 184, in __call__
+  |     raise exc
+  |   File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\starlette\middleware\errors.py", line 162, in __call__
+  |     await self.app(scope, receive, _send)
+  |   File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\starlette\middleware\cors.py", line 92, in __call__
+  |     await self.simple_response(scope, receive, send, request_headers=headers)
+  |   File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\starlette\middleware\cors.py", line 147, in simple_response
+  |     await self.app(scope, receive, send)
+  |   File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\starlette\middleware\base.py", line 74, in __call__
+  |     task_group.cancel_scope.cancel()
+  |   File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\anyio\_backends\_asyncio.py", line 664, in __aexit__
+  |     raise BaseExceptionGroup(
+  | exceptiongroup.ExceptionGroup: unhandled errors in a TaskGroup (1 sub-exception)
+  +-+---------------- 1 ----------------
+    | Traceback (most recent call last):
+    |   File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\sqlalchemy\engine\base.py", line 1900, in _execute_context
+    |     self.dialect.do_execute(
+    |   File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\sqlalchemy\engine\default.py", line 736, in do_execute
+    |     cursor.execute(statement, parameters)
+    | psycopg2.ProgrammingError: can't execute an empty query
+    | 
+    | The above exception was the direct cause of the following exception:
+    | 
+    | Traceback (most recent call last):
+    |   File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\starlette\middleware\base.py", line 72, in __call__
+    |     response = await self.dispatch_func(request, call_next)
+    |   File "F:\pywork\fastapi\fastAPI-vue\backend\app\core\middleware.py", line 19, in dispatch
+    |     response = await call_next(request)
+    |   File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\starlette\middleware\base.py", line 46, in call_next
+    |     raise app_exc
+    |   File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\starlette\middleware\base.py", line 36, in coro
+    |     await self.app(scope, request.receive, send_stream.send)
+    |   File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\starlette\middleware\exceptions.py", line 75, in __call__
+    |     raise exc
+    |   File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\starlette\middleware\exceptions.py", line 64, in __call__
+    |     await self.app(scope, receive, sender)
+    |   File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\fastapi\middleware\asyncexitstack.py", line 21, in __call__
+    |     raise e
+    |   File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\fastapi\middleware\asyncexitstack.py", line 18, in __call__
+    |     await self.app(scope, receive, send)
+    |   File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\starlette\routing.py", line 680, in __call__
+    |     await route.handle(scope, receive, send)
+    |   File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\starlette\routing.py", line 275, in handle
+    |     await self.app(scope, receive, send)
+    |   File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\starlette\routing.py", line 65, in app
+    |     response = await func(request)
+    |   File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\fastapi\routing.py", line 235, in app
+    |     raw_response = await run_endpoint_function(
+    |   File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\fastapi\routing.py", line 161, in run_endpoint_function
+    |     return await dependant.call(**values)
+    |   File "F:\pywork\fastapi\fastAPI-vue\backend\app\apps\vod\views\view_rules.py", line 116, in clearRecord
+    |     db.execute(sql)
+    |   File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\sqlalchemy\orm\session.py", line 1714, in execute
+    |     result = conn._execute_20(statement, params or {}, execution_options)
+    |   File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\sqlalchemy\engine\base.py", line 1705, in _execute_20
+    |     return meth(self, args_10style, kwargs_10style, execution_options)
+    |   File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\sqlalchemy\sql\elements.py", line 333, in _execute_on_connection
+    |     return connection._execute_clauseelement(
+    |   File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\sqlalchemy\engine\base.py", line 1572, in _execute_clauseelement
+    |     ret = self._execute_context(
+    |   File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\sqlalchemy\engine\base.py", line 1943, in _execute_context
+    |     self._handle_dbapi_exception(
+    |   File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\sqlalchemy\engine\base.py", line 2124, in _handle_dbapi_exception
+    |     util.raise_(
+    |   File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\sqlalchemy\util\compat.py", line 208, in raise_
+    |     raise exception
+    |   File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\sqlalchemy\engine\base.py", line 1900, in _execute_context
+    |     self.dialect.do_execute(
+    |   File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\sqlalchemy\engine\default.py", line 736, in do_execute
+    |     cursor.execute(statement, parameters)
+    | sqlalchemy.exc.ProgrammingError: (psycopg2.ProgrammingError) can't execute an empty query
+    | (Background on this error at: https://sqlalche.me/e/14/f405)
+    +------------------------------------
+2024-01-15 01:57:16 [ERROR] Exception in ASGI application
+Traceback (most recent call last):
+  File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\starlette\middleware\base.py", line 72, in __call__
+    response = await self.dispatch_func(request, call_next)
+  File "F:\pywork\fastapi\fastAPI-vue\backend\app\core\middleware.py", line 19, in dispatch
+    response = await call_next(request)
+  File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\starlette\middleware\base.py", line 46, in call_next
+    raise app_exc
+  File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\starlette\middleware\base.py", line 36, in coro
+    await self.app(scope, request.receive, send_stream.send)
+  File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\starlette\middleware\exceptions.py", line 75, in __call__
+    raise exc
+  File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\starlette\middleware\exceptions.py", line 64, in __call__
+    await self.app(scope, receive, sender)
+  File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\fastapi\middleware\asyncexitstack.py", line 21, in __call__
+    raise e
+  File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\fastapi\middleware\asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\starlette\routing.py", line 680, in __call__
+    await route.handle(scope, receive, send)
+  File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\starlette\routing.py", line 275, in handle
+    await self.app(scope, receive, send)
+  File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\starlette\routing.py", line 65, in app
+    response = await func(request)
+  File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\fastapi\routing.py", line 235, in app
+    raw_response = await run_endpoint_function(
+  File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\fastapi\routing.py", line 161, in run_endpoint_function
+    return await dependant.call(**values)
+  File "F:\pywork\fastapi\fastAPI-vue\backend\app\apps\vod\views\view_rules.py", line 121, in clearRecord
+    db.execute(sql)
+  File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\sqlalchemy\orm\session.py", line 1714, in execute
+    result = conn._execute_20(statement, params or {}, execution_options)
+  File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\sqlalchemy\engine\base.py", line 1705, in _execute_20
+    return meth(self, args_10style, kwargs_10style, execution_options)
+  File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\sqlalchemy\sql\elements.py", line 333, in _execute_on_connection
+    return connection._execute_clauseelement(
+  File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\sqlalchemy\engine\base.py", line 1572, in _execute_clauseelement
+    ret = self._execute_context(
+  File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\sqlalchemy\engine\base.py", line 1943, in _execute_context
+    self._handle_dbapi_exception(
+  File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\sqlalchemy\engine\base.py", line 2124, in _handle_dbapi_exception
+    util.raise_(
+  File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\sqlalchemy\util\compat.py", line 208, in raise_
+    raise exception
+  File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\sqlalchemy\engine\base.py", line 1900, in _execute_context
+    self.dialect.do_execute(
+  File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\sqlalchemy\engine\default.py", line 736, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.ProgrammingError: (psycopg2.errors.UndefinedTable) 错误:  关系 "vod_rules" 不存在
+LINE 1: select setval('vod_rules_id_seq', 1) from vod_rules;
+                                                  ^
+
+[SQL: select setval('vod_rules_id_seq', 1) from vod_rules;]
+(Background on this error at: https://sqlalche.me/e/14/f405)
+
+During handling of the above exception, another exception occurred:
+
+  + Exception Group Traceback (most recent call last):
+  |   File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\uvicorn\protocols\http\h11_impl.py", line 407, in run_asgi
+  |     result = await app(  # type: ignore[func-returns-value]
+  |   File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\uvicorn\middleware\proxy_headers.py", line 78, in __call__
+  |     return await self.app(scope, receive, send)
+  |   File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\fastapi\applications.py", line 270, in __call__
+  |     await super().__call__(scope, receive, send)
+  |   File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\starlette\applications.py", line 124, in __call__
+  |     await self.middleware_stack(scope, receive, send)
+  |   File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\starlette\middleware\errors.py", line 184, in __call__
+  |     raise exc
+  |   File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\starlette\middleware\errors.py", line 162, in __call__
+  |     await self.app(scope, receive, _send)
+  |   File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\starlette\middleware\cors.py", line 92, in __call__
+  |     await self.simple_response(scope, receive, send, request_headers=headers)
+  |   File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\starlette\middleware\cors.py", line 147, in simple_response
+  |     await self.app(scope, receive, send)
+  |   File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\starlette\middleware\base.py", line 74, in __call__
+  |     task_group.cancel_scope.cancel()
+  |   File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\anyio\_backends\_asyncio.py", line 664, in __aexit__
+  |     raise BaseExceptionGroup(
+  | exceptiongroup.ExceptionGroup: unhandled errors in a TaskGroup (1 sub-exception)
+  +-+---------------- 1 ----------------
+    | Traceback (most recent call last):
+    |   File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\sqlalchemy\engine\base.py", line 1900, in _execute_context
+    |     self.dialect.do_execute(
+    |   File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\sqlalchemy\engine\default.py", line 736, in do_execute
+    |     cursor.execute(statement, parameters)
+    | psycopg2.errors.UndefinedTable: 错误:  关系 "vod_rules" 不存在
+    | LINE 1: select setval('vod_rules_id_seq', 1) from vod_rules;
+    |                                                   ^
+    | 
+    | 
+    | The above exception was the direct cause of the following exception:
+    | 
+    | Traceback (most recent call last):
+    |   File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\starlette\middleware\base.py", line 72, in __call__
+    |     response = await self.dispatch_func(request, call_next)
+    |   File "F:\pywork\fastapi\fastAPI-vue\backend\app\core\middleware.py", line 19, in dispatch
+    |     response = await call_next(request)
+    |   File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\starlette\middleware\base.py", line 46, in call_next
+    |     raise app_exc
+    |   File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\starlette\middleware\base.py", line 36, in coro
+    |     await self.app(scope, request.receive, send_stream.send)
+    |   File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\starlette\middleware\exceptions.py", line 75, in __call__
+    |     raise exc
+    |   File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\starlette\middleware\exceptions.py", line 64, in __call__
+    |     await self.app(scope, receive, sender)
+    |   File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\fastapi\middleware\asyncexitstack.py", line 21, in __call__
+    |     raise e
+    |   File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\fastapi\middleware\asyncexitstack.py", line 18, in __call__
+    |     await self.app(scope, receive, send)
+    |   File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\starlette\routing.py", line 680, in __call__
+    |     await route.handle(scope, receive, send)
+    |   File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\starlette\routing.py", line 275, in handle
+    |     await self.app(scope, receive, send)
+    |   File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\starlette\routing.py", line 65, in app
+    |     response = await func(request)
+    |   File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\fastapi\routing.py", line 235, in app
+    |     raw_response = await run_endpoint_function(
+    |   File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\fastapi\routing.py", line 161, in run_endpoint_function
+    |     return await dependant.call(**values)
+    |   File "F:\pywork\fastapi\fastAPI-vue\backend\app\apps\vod\views\view_rules.py", line 121, in clearRecord
+    |     db.execute(sql)
+    |   File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\sqlalchemy\orm\session.py", line 1714, in execute
+    |     result = conn._execute_20(statement, params or {}, execution_options)
+    |   File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\sqlalchemy\engine\base.py", line 1705, in _execute_20
+    |     return meth(self, args_10style, kwargs_10style, execution_options)
+    |   File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\sqlalchemy\sql\elements.py", line 333, in _execute_on_connection
+    |     return connection._execute_clauseelement(
+    |   File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\sqlalchemy\engine\base.py", line 1572, in _execute_clauseelement
+    |     ret = self._execute_context(
+    |   File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\sqlalchemy\engine\base.py", line 1943, in _execute_context
+    |     self._handle_dbapi_exception(
+    |   File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\sqlalchemy\engine\base.py", line 2124, in _handle_dbapi_exception
+    |     util.raise_(
+    |   File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\sqlalchemy\util\compat.py", line 208, in raise_
+    |     raise exception
+    |   File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\sqlalchemy\engine\base.py", line 1900, in _execute_context
+    |     self.dialect.do_execute(
+    |   File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\sqlalchemy\engine\default.py", line 736, in do_execute
+    |     cursor.execute(statement, parameters)
+    | sqlalchemy.exc.ProgrammingError: (psycopg2.errors.UndefinedTable) 错误:  关系 "vod_rules" 不存在
+    | LINE 1: select setval('vod_rules_id_seq', 1) from vod_rules;
+    |                                                   ^
+    | 
+    | [SQL: select setval('vod_rules_id_seq', 1) from vod_rules;]
+    | (Background on this error at: https://sqlalche.me/e/14/f405)
+    +------------------------------------
+2024-01-16 00:06:23 [ERROR] Exception in ASGI application
+Traceback (most recent call last):
+  File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\starlette\middleware\base.py", line 72, in __call__
+    response = await self.dispatch_func(request, call_next)
+  File "F:\pywork\fastapi\fastAPI-vue\backend\app\core\middleware.py", line 19, in dispatch
+    response = await call_next(request)
+  File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\starlette\middleware\base.py", line 46, in call_next
+    raise app_exc
+  File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\starlette\middleware\base.py", line 36, in coro
+    await self.app(scope, request.receive, send_stream.send)
+  File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\starlette\middleware\exceptions.py", line 75, in __call__
+    raise exc
+  File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\starlette\middleware\exceptions.py", line 64, in __call__
+    await self.app(scope, receive, sender)
+  File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\fastapi\middleware\asyncexitstack.py", line 21, in __call__
+    raise e
+  File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\fastapi\middleware\asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\starlette\routing.py", line 680, in __call__
+    await route.handle(scope, receive, send)
+  File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\starlette\routing.py", line 275, in handle
+    await self.app(scope, receive, send)
+  File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\starlette\routing.py", line 65, in app
+    response = await func(request)
+  File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\fastapi\routing.py", line 235, in app
+    raw_response = await run_endpoint_function(
+  File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\fastapi\routing.py", line 161, in run_endpoint_function
+    return await dependant.call(**values)
+  File "F:\pywork\fastapi\fastAPI-vue\backend\app\apps\vod\views\view_rules.py", line 57, in searchRecords
+    res = curd.search(db, status=status, name=name, group=group, page=page,
+  File "F:\pywork\fastapi\fastAPI-vue\backend\app\apps\vod\curd\curd_rules.py", line 42, in search
+    filters.append(self.model.job_group == group)
+AttributeError: type object 'VodRules' has no attribute 'job_group'
+
+During handling of the above exception, another exception occurred:
+
+  + Exception Group Traceback (most recent call last):
+  |   File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\uvicorn\protocols\http\h11_impl.py", line 407, in run_asgi
+  |     result = await app(  # type: ignore[func-returns-value]
+  |   File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\uvicorn\middleware\proxy_headers.py", line 78, in __call__
+  |     return await self.app(scope, receive, send)
+  |   File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\fastapi\applications.py", line 270, in __call__
+  |     await super().__call__(scope, receive, send)
+  |   File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\starlette\applications.py", line 124, in __call__
+  |     await self.middleware_stack(scope, receive, send)
+  |   File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\starlette\middleware\errors.py", line 184, in __call__
+  |     raise exc
+  |   File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\starlette\middleware\errors.py", line 162, in __call__
+  |     await self.app(scope, receive, _send)
+  |   File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\starlette\middleware\cors.py", line 92, in __call__
+  |     await self.simple_response(scope, receive, send, request_headers=headers)
+  |   File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\starlette\middleware\cors.py", line 147, in simple_response
+  |     await self.app(scope, receive, send)
+  |   File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\starlette\middleware\base.py", line 74, in __call__
+  |     task_group.cancel_scope.cancel()
+  |   File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\anyio\_backends\_asyncio.py", line 664, in __aexit__
+  |     raise BaseExceptionGroup(
+  | exceptiongroup.ExceptionGroup: unhandled errors in a TaskGroup (1 sub-exception)
+  +-+---------------- 1 ----------------
+    | Traceback (most recent call last):
+    |   File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\anyio\streams\memory.py", line 97, in receive
+    |     return self.receive_nowait()
+    |   File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\anyio\streams\memory.py", line 92, in receive_nowait
+    |     raise WouldBlock
+    | anyio.WouldBlock
+    | 
+    | During handling of the above exception, another exception occurred:
+    | 
+    | Traceback (most recent call last):
+    |   File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\starlette\middleware\base.py", line 43, in call_next
+    |     message = await recv_stream.receive()
+    |   File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\anyio\streams\memory.py", line 112, in receive
+    |     raise EndOfStream
+    | anyio.EndOfStream
+    | 
+    | During handling of the above exception, another exception occurred:
+    | 
+    | Traceback (most recent call last):
+    |   File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\starlette\middleware\base.py", line 72, in __call__
+    |     response = await self.dispatch_func(request, call_next)
+    |   File "F:\pywork\fastapi\fastAPI-vue\backend\app\core\middleware.py", line 19, in dispatch
+    |     response = await call_next(request)
+    |   File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\starlette\middleware\base.py", line 46, in call_next
+    |     raise app_exc
+    |   File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\starlette\middleware\base.py", line 36, in coro
+    |     await self.app(scope, request.receive, send_stream.send)
+    |   File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\starlette\middleware\exceptions.py", line 75, in __call__
+    |     raise exc
+    |   File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\starlette\middleware\exceptions.py", line 64, in __call__
+    |     await self.app(scope, receive, sender)
+    |   File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\fastapi\middleware\asyncexitstack.py", line 21, in __call__
+    |     raise e
+    |   File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\fastapi\middleware\asyncexitstack.py", line 18, in __call__
+    |     await self.app(scope, receive, send)
+    |   File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\starlette\routing.py", line 680, in __call__
+    |     await route.handle(scope, receive, send)
+    |   File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\starlette\routing.py", line 275, in handle
+    |     await self.app(scope, receive, send)
+    |   File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\starlette\routing.py", line 65, in app
+    |     response = await func(request)
+    |   File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\fastapi\routing.py", line 235, in app
+    |     raw_response = await run_endpoint_function(
+    |   File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\fastapi\routing.py", line 161, in run_endpoint_function
+    |     return await dependant.call(**values)
+    |   File "F:\pywork\fastapi\fastAPI-vue\backend\app\apps\vod\views\view_rules.py", line 57, in searchRecords
+    |     res = curd.search(db, status=status, name=name, group=group, page=page,
+    |   File "F:\pywork\fastapi\fastAPI-vue\backend\app\apps\vod\curd\curd_rules.py", line 42, in search
+    |     filters.append(self.model.job_group == group)
+    | AttributeError: type object 'VodRules' has no attribute 'job_group'
+    +------------------------------------
+2024-01-16 00:11:15 [ERROR] Exception in ASGI application
+Traceback (most recent call last):
+  File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\starlette\middleware\base.py", line 72, in __call__
+    response = await self.dispatch_func(request, call_next)
+  File "F:\pywork\fastapi\fastAPI-vue\backend\app\core\middleware.py", line 19, in dispatch
+    response = await call_next(request)
+  File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\starlette\middleware\base.py", line 46, in call_next
+    raise app_exc
+  File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\starlette\middleware\base.py", line 36, in coro
+    await self.app(scope, request.receive, send_stream.send)
+  File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\starlette\middleware\exceptions.py", line 75, in __call__
+    raise exc
+  File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\starlette\middleware\exceptions.py", line 64, in __call__
+    await self.app(scope, receive, sender)
+  File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\fastapi\middleware\asyncexitstack.py", line 21, in __call__
+    raise e
+  File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\fastapi\middleware\asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\starlette\routing.py", line 680, in __call__
+    await route.handle(scope, receive, send)
+  File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\starlette\routing.py", line 275, in handle
+    await self.app(scope, receive, send)
+  File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\starlette\routing.py", line 65, in app
+    response = await func(request)
+  File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\fastapi\routing.py", line 235, in app
+    raw_response = await run_endpoint_function(
+  File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\fastapi\routing.py", line 161, in run_endpoint_function
+    return await dependant.call(**values)
+  File "F:\pywork\fastapi\fastAPI-vue\backend\app\apps\vod\views\view_rules.py", line 77, in refreshRules
+    group_dict = curd_dict_data.getByType(db,'vod_rule_group')
+  File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\cachetools\__init__.py", line 732, in wrapper
+    k = key(*args, **kwargs)
+TypeError: envkey() missing 1 required keyword-only argument: '_type'
+
+During handling of the above exception, another exception occurred:
+
+  + Exception Group Traceback (most recent call last):
+  |   File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\uvicorn\protocols\http\h11_impl.py", line 407, in run_asgi
+  |     result = await app(  # type: ignore[func-returns-value]
+  |   File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\uvicorn\middleware\proxy_headers.py", line 78, in __call__
+  |     return await self.app(scope, receive, send)
+  |   File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\fastapi\applications.py", line 270, in __call__
+  |     await super().__call__(scope, receive, send)
+  |   File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\starlette\applications.py", line 124, in __call__
+  |     await self.middleware_stack(scope, receive, send)
+  |   File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\starlette\middleware\errors.py", line 184, in __call__
+  |     raise exc
+  |   File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\starlette\middleware\errors.py", line 162, in __call__
+  |     await self.app(scope, receive, _send)
+  |   File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\starlette\middleware\cors.py", line 92, in __call__
+  |     await self.simple_response(scope, receive, send, request_headers=headers)
+  |   File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\starlette\middleware\cors.py", line 147, in simple_response
+  |     await self.app(scope, receive, send)
+  |   File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\starlette\middleware\base.py", line 74, in __call__
+  |     task_group.cancel_scope.cancel()
+  |   File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\anyio\_backends\_asyncio.py", line 664, in __aexit__
+  |     raise BaseExceptionGroup(
+  | exceptiongroup.ExceptionGroup: unhandled errors in a TaskGroup (1 sub-exception)
+  +-+---------------- 1 ----------------
+    | Traceback (most recent call last):
+    |   File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\anyio\streams\memory.py", line 97, in receive
+    |     return self.receive_nowait()
+    |   File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\anyio\streams\memory.py", line 92, in receive_nowait
+    |     raise WouldBlock
+    | anyio.WouldBlock
+    | 
+    | During handling of the above exception, another exception occurred:
+    | 
+    | Traceback (most recent call last):
+    |   File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\starlette\middleware\base.py", line 43, in call_next
+    |     message = await recv_stream.receive()
+    |   File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\anyio\streams\memory.py", line 112, in receive
+    |     raise EndOfStream
+    | anyio.EndOfStream
+    | 
+    | During handling of the above exception, another exception occurred:
+    | 
+    | Traceback (most recent call last):
+    |   File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\starlette\middleware\base.py", line 72, in __call__
+    |     response = await self.dispatch_func(request, call_next)
+    |   File "F:\pywork\fastapi\fastAPI-vue\backend\app\core\middleware.py", line 19, in dispatch
+    |     response = await call_next(request)
+    |   File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\starlette\middleware\base.py", line 46, in call_next
+    |     raise app_exc
+    |   File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\starlette\middleware\base.py", line 36, in coro
+    |     await self.app(scope, request.receive, send_stream.send)
+    |   File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\starlette\middleware\exceptions.py", line 75, in __call__
+    |     raise exc
+    |   File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\starlette\middleware\exceptions.py", line 64, in __call__
+    |     await self.app(scope, receive, sender)
+    |   File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\fastapi\middleware\asyncexitstack.py", line 21, in __call__
+    |     raise e
+    |   File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\fastapi\middleware\asyncexitstack.py", line 18, in __call__
+    |     await self.app(scope, receive, send)
+    |   File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\starlette\routing.py", line 680, in __call__
+    |     await route.handle(scope, receive, send)
+    |   File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\starlette\routing.py", line 275, in handle
+    |     await self.app(scope, receive, send)
+    |   File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\starlette\routing.py", line 65, in app
+    |     response = await func(request)
+    |   File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\fastapi\routing.py", line 235, in app
+    |     raw_response = await run_endpoint_function(
+    |   File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\fastapi\routing.py", line 161, in run_endpoint_function
+    |     return await dependant.call(**values)
+    |   File "F:\pywork\fastapi\fastAPI-vue\backend\app\apps\vod\views\view_rules.py", line 77, in refreshRules
+    |     group_dict = curd_dict_data.getByType(db,'vod_rule_group')
+    |   File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\cachetools\__init__.py", line 732, in wrapper
+    |     k = key(*args, **kwargs)
+    | TypeError: envkey() missing 1 required keyword-only argument: '_type'
+    +------------------------------------
+2024-01-16 00:14:35 [ERROR] Exception in ASGI application
+Traceback (most recent call last):
+  File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\starlette\middleware\base.py", line 72, in __call__
+    response = await self.dispatch_func(request, call_next)
+  File "F:\pywork\fastapi\fastAPI-vue\backend\app\core\middleware.py", line 19, in dispatch
+    response = await call_next(request)
+  File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\starlette\middleware\base.py", line 46, in call_next
+    raise app_exc
+  File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\starlette\middleware\base.py", line 36, in coro
+    await self.app(scope, request.receive, send_stream.send)
+  File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\starlette\middleware\exceptions.py", line 75, in __call__
+    raise exc
+  File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\starlette\middleware\exceptions.py", line 64, in __call__
+    await self.app(scope, receive, sender)
+  File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\fastapi\middleware\asyncexitstack.py", line 21, in __call__
+    raise e
+  File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\fastapi\middleware\asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\starlette\routing.py", line 680, in __call__
+    await route.handle(scope, receive, send)
+  File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\starlette\routing.py", line 275, in handle
+    await self.app(scope, receive, send)
+  File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\starlette\routing.py", line 65, in app
+    response = await func(request)
+  File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\fastapi\routing.py", line 235, in app
+    raw_response = await run_endpoint_function(
+  File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\fastapi\routing.py", line 161, in run_endpoint_function
+    return await dependant.call(**values)
+  File "F:\pywork\fastapi\fastAPI-vue\backend\app\apps\vod\views\view_rules.py", line 80, in refreshRules
+    groups[li['lable']] = li['value']
+KeyError: 'lable'
+
+During handling of the above exception, another exception occurred:
+
+  + Exception Group Traceback (most recent call last):
+  |   File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\uvicorn\protocols\http\h11_impl.py", line 407, in run_asgi
+  |     result = await app(  # type: ignore[func-returns-value]
+  |   File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\uvicorn\middleware\proxy_headers.py", line 78, in __call__
+  |     return await self.app(scope, receive, send)
+  |   File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\fastapi\applications.py", line 270, in __call__
+  |     await super().__call__(scope, receive, send)
+  |   File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\starlette\applications.py", line 124, in __call__
+  |     await self.middleware_stack(scope, receive, send)
+  |   File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\starlette\middleware\errors.py", line 184, in __call__
+  |     raise exc
+  |   File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\starlette\middleware\errors.py", line 162, in __call__
+  |     await self.app(scope, receive, _send)
+  |   File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\starlette\middleware\cors.py", line 92, in __call__
+  |     await self.simple_response(scope, receive, send, request_headers=headers)
+  |   File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\starlette\middleware\cors.py", line 147, in simple_response
+  |     await self.app(scope, receive, send)
+  |   File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\starlette\middleware\base.py", line 74, in __call__
+  |     task_group.cancel_scope.cancel()
+  |   File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\anyio\_backends\_asyncio.py", line 664, in __aexit__
+  |     raise BaseExceptionGroup(
+  | exceptiongroup.ExceptionGroup: unhandled errors in a TaskGroup (1 sub-exception)
+  +-+---------------- 1 ----------------
+    | Traceback (most recent call last):
+    |   File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\anyio\streams\memory.py", line 97, in receive
+    |     return self.receive_nowait()
+    |   File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\anyio\streams\memory.py", line 92, in receive_nowait
+    |     raise WouldBlock
+    | anyio.WouldBlock
+    | 
+    | During handling of the above exception, another exception occurred:
+    | 
+    | Traceback (most recent call last):
+    |   File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\starlette\middleware\base.py", line 43, in call_next
+    |     message = await recv_stream.receive()
+    |   File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\anyio\streams\memory.py", line 112, in receive
+    |     raise EndOfStream
+    | anyio.EndOfStream
+    | 
+    | During handling of the above exception, another exception occurred:
+    | 
+    | Traceback (most recent call last):
+    |   File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\starlette\middleware\base.py", line 72, in __call__
+    |     response = await self.dispatch_func(request, call_next)
+    |   File "F:\pywork\fastapi\fastAPI-vue\backend\app\core\middleware.py", line 19, in dispatch
+    |     response = await call_next(request)
+    |   File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\starlette\middleware\base.py", line 46, in call_next
+    |     raise app_exc
+    |   File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\starlette\middleware\base.py", line 36, in coro
+    |     await self.app(scope, request.receive, send_stream.send)
+    |   File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\starlette\middleware\exceptions.py", line 75, in __call__
+    |     raise exc
+    |   File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\starlette\middleware\exceptions.py", line 64, in __call__
+    |     await self.app(scope, receive, sender)
+    |   File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\fastapi\middleware\asyncexitstack.py", line 21, in __call__
+    |     raise e
+    |   File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\fastapi\middleware\asyncexitstack.py", line 18, in __call__
+    |     await self.app(scope, receive, send)
+    |   File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\starlette\routing.py", line 680, in __call__
+    |     await route.handle(scope, receive, send)
+    |   File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\starlette\routing.py", line 275, in handle
+    |     await self.app(scope, receive, send)
+    |   File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\starlette\routing.py", line 65, in app
+    |     response = await func(request)
+    |   File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\fastapi\routing.py", line 235, in app
+    |     raw_response = await run_endpoint_function(
+    |   File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\fastapi\routing.py", line 161, in run_endpoint_function
+    |     return await dependant.call(**values)
+    |   File "F:\pywork\fastapi\fastAPI-vue\backend\app\apps\vod\views\view_rules.py", line 80, in refreshRules
+    |     groups[li['lable']] = li['value']
+    | KeyError: 'lable'
+    +------------------------------------
+2024-01-16 00:15:51 [ERROR] Exception in ASGI application
+Traceback (most recent call last):
+  File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\anyio\streams\memory.py", line 97, in receive
+    return self.receive_nowait()
+  File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\anyio\streams\memory.py", line 92, in receive_nowait
+    raise WouldBlock
+anyio.WouldBlock
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\starlette\middleware\base.py", line 43, in call_next
+    message = await recv_stream.receive()
+  File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\anyio\streams\memory.py", line 112, in receive
+    raise EndOfStream
+anyio.EndOfStream
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\starlette\middleware\base.py", line 72, in __call__
+    response = await self.dispatch_func(request, call_next)
+  File "F:\pywork\fastapi\fastAPI-vue\backend\app\core\middleware.py", line 19, in dispatch
+    response = await call_next(request)
+  File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\starlette\middleware\base.py", line 46, in call_next
+    raise app_exc
+  File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\starlette\middleware\base.py", line 36, in coro
+    await self.app(scope, request.receive, send_stream.send)
+  File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\starlette\middleware\exceptions.py", line 75, in __call__
+    raise exc
+  File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\starlette\middleware\exceptions.py", line 64, in __call__
+    await self.app(scope, receive, sender)
+  File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\fastapi\middleware\asyncexitstack.py", line 21, in __call__
+    raise e
+  File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\fastapi\middleware\asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\starlette\routing.py", line 680, in __call__
+    await route.handle(scope, receive, send)
+  File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\starlette\routing.py", line 275, in handle
+    await self.app(scope, receive, send)
+  File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\starlette\routing.py", line 65, in app
+    response = await func(request)
+  File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\fastapi\routing.py", line 235, in app
+    raw_response = await run_endpoint_function(
+  File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\fastapi\routing.py", line 161, in run_endpoint_function
+    return await dependant.call(**values)
+  File "F:\pywork\fastapi\fastAPI-vue\backend\app\apps\vod\views\view_rules.py", line 80, in refreshRules
+    groups[li['lable']] = li['value']
+KeyError: 'lable'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\uvicorn\protocols\http\h11_impl.py", line 407, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+  File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\uvicorn\middleware\proxy_headers.py", line 78, in __call__
+    return await self.app(scope, receive, send)
+  File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\fastapi\applications.py", line 270, in __call__
+    await super().__call__(scope, receive, send)
+  File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\starlette\applications.py", line 124, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\starlette\middleware\errors.py", line 184, in __call__
+    raise exc
+  File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\starlette\middleware\errors.py", line 162, in __call__
+    await self.app(scope, receive, _send)
+  File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\starlette\middleware\cors.py", line 92, in __call__
+    await self.simple_response(scope, receive, send, request_headers=headers)
+  File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\starlette\middleware\cors.py", line 147, in simple_response
+    await self.app(scope, receive, send)
+  File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\starlette\middleware\base.py", line 74, in __call__
+    task_group.cancel_scope.cancel()
+  File "F:\python\mypython\fastAPI-vue-388\lib\site-packages\anyio\_backends\_asyncio.py", line 664, in __aexit__
+    raise BaseExceptionGroup(
+exceptiongroup.ExceptionGroup: unhandled errors in a TaskGroup (1 sub-exception)

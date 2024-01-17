@@ -1,0 +1,101 @@
+2023-12-28 20:39:21 [INFO] Started server process [55536]
+2023-12-28 20:39:21 [INFO] Waiting for application startup.
+2023-12-28 20:39:21 [INFO] 初始化定时任务状态成功
+2023-12-28 20:39:21 [INFO] 定时任务【demo:测试】将在10秒钟后运行.下次执行时间为:2023-12-28 20:39:31.853694
+2023-12-28 20:39:21 [INFO] 定时任务【demo2:测试2】将在10秒钟后运行.下次执行时间为:2023-12-28 20:39:31.861795
+2023-12-28 20:39:21 [INFO] 可转债打新查询 func_args 序列化列表发生错误:malformed node or string: None
+2023-12-28 20:39:21 [INFO] 定时任务【kzz:可转债打新查询】将在10秒钟后运行.下次执行时间为:2023-12-28 20:39:31.862692
+2023-12-28 20:39:21 [INFO] Application startup complete.
+2023-12-28 20:39:21 [INFO] Uvicorn running on http://0.0.0.0:5707 (Press CTRL+C to quit)
+2023-12-28 20:39:34 [INFO] jobname=测试|jobtrigger=cron[month='*', day='*', hour='*', minute='20', second='30']|jobtime=2023-12-28 20:39:31+08:00|retval=None
+2023-12-28 20:39:34 [INFO] jobname=测试2|jobtrigger=cron[month='*', day='*', hour='*', minute='10', second='30']|jobtime=2023-12-28 20:39:31+08:00|retval=None
+2023-12-28 20:39:34 [INFO] jobname=可转债打新查询|jobtrigger=cron[month='*', day='1/1', hour='8', minute='0', second='0']|jobtime=2023-12-28 20:39:31+08:00|retval=None
+2023-12-28 20:39:34 [INFO] Shutting down
+2023-12-28 21:21:18 [INFO] Started server process [58380]
+2023-12-28 21:21:18 [INFO] Waiting for application startup.
+2023-12-28 21:21:18 [INFO] 初始化定时任务状态成功
+2023-12-28 21:21:18 [INFO] 定时任务【demo:测试】将在10秒钟后运行.下次执行时间为:2023-12-28 21:21:28.812279
+2023-12-28 21:21:18 [INFO] 定时任务【demo2:测试2】将在10秒钟后运行.下次执行时间为:2023-12-28 21:21:28.818432
+2023-12-28 21:21:18 [INFO] 可转债打新查询 func_args 序列化列表发生错误:unexpected EOF while parsing (<unknown>, line 0)
+2023-12-28 21:21:18 [INFO] 定时任务【kzz:可转债打新查询】将在10秒钟后运行.下次执行时间为:2023-12-28 21:21:28.819431
+2023-12-28 21:21:18 [INFO] Application startup complete.
+2023-12-28 21:21:18 [INFO] Uvicorn running on http://0.0.0.0:5707 (Press CTRL+C to quit)
+2023-12-28 21:21:38 [INFO] jobname=测试|jobtrigger=cron[month='*', day='*', hour='*', minute='20', second='30']|jobtime=2023-12-28 21:21:28+08:00|retval=None
+2023-12-28 21:21:38 [INFO] jobname=测试2|jobtrigger=cron[month='*', day='*', hour='*', minute='10', second='30']|jobtime=2023-12-28 21:21:28+08:00|retval=None
+2023-12-28 21:21:38 [INFO] jobname=可转债打新查询|jobtrigger=cron[month='*', day='1/1', hour='8', minute='0', second='0']|jobtime=2023-12-28 21:21:28+08:00|retval=None
+2023-12-28 21:22:52 [INFO] 127.0.0.1:51271 - "OPTIONS /api/v1/user/info HTTP/1.1" 200
+2023-12-28 21:22:52 [INFO] 请求:GET | /api/v1/user/info | 127.0.0.1 | 响应:200 | 耗时: 11ms
+2023-12-28 21:22:52 [INFO] 127.0.0.1:51271 - "GET /api/v1/user/info HTTP/1.1" 200
+2023-12-28 21:22:53 [INFO] =========测试缓存是否生效,仅第一次访问无缓存时出现此提示=========
+2023-12-28 21:22:53 [INFO] 请求:GET | /api/v1/system/config-setting/key/login_with_captcha | 127.0.0.1 | 响应:200 | 耗时: 9ms
+2023-12-28 21:22:53 [INFO] 127.0.0.1:51271 - "GET /api/v1/system/config-setting/key/login_with_captcha HTTP/1.1" 200
+2023-12-28 21:22:54 [INFO] 请求:GET | /api/v1/system/config-setting/key/login_with_captcha | 127.0.0.1 | 响应:200 | 耗时: 2ms
+2023-12-28 21:22:54 [INFO] 127.0.0.1:51271 - "GET /api/v1/system/config-setting/key/login_with_captcha HTTP/1.1" 200
+2023-12-28 21:23:11 [INFO] 127.0.0.1:51305 - "OPTIONS /api/v1/user/login HTTP/1.1" 200
+2023-12-28 21:23:12 [INFO] =========测试缓存是否生效,仅第一次访问无缓存时出现此提示=========
+2023-12-28 21:23:12 [INFO] 请求:POST | /api/v1/user/login | 127.0.0.1 | 响应:200 | 耗时: 278ms
+2023-12-28 21:23:12 [INFO] 127.0.0.1:51305 - "POST /api/v1/user/login HTTP/1.1" 200
+2023-12-28 21:23:12 [INFO] 请求:GET | /api/v1/user/info | 127.0.0.1 | 响应:200 | 耗时: 13ms
+2023-12-28 21:23:12 [INFO] 127.0.0.1:51305 - "GET /api/v1/user/info HTTP/1.1" 200
+2023-12-28 21:23:12 [INFO] 127.0.0.1:51305 - "OPTIONS /api/v1/user/routers HTTP/1.1" 200
+2023-12-28 21:23:12 [INFO] 请求:GET | /api/v1/user/routers | 127.0.0.1 | 响应:200 | 耗时: 8ms
+2023-12-28 21:23:12 [INFO] 127.0.0.1:51305 - "GET /api/v1/user/routers HTTP/1.1" 200
+2023-12-28 21:23:12 [INFO] 请求:GET | /media/images/avatar/5ce5f4fa-ff60-47c0-9414-d332b12b99b3. | 127.0.0.1 | 响应:304 | 耗时: 2ms
+2023-12-28 21:23:12 [INFO] 127.0.0.1:51306 - "GET /images/avatar/5ce5f4fa-ff60-47c0-9414-d332b12b99b3.?imageView2/1/w/80/h/80 HTTP/1.1" 304
+2023-12-28 21:23:18 [INFO] 127.0.0.1:51324 - "OPTIONS /api/v1/monitor/cache/getNames HTTP/1.1" 200
+2023-12-28 21:23:18 [INFO] 请求:GET | /api/v1/monitor/cache/getNames | 127.0.0.1 | 响应:200 | 耗时: 6ms
+2023-12-28 21:23:18 [INFO] 127.0.0.1:51324 - "GET /api/v1/monitor/cache/getNames HTTP/1.1" 200
+2023-12-28 21:23:19 [INFO] 127.0.0.1:51324 - "OPTIONS /api/v1/monitor/server HTTP/1.1" 200
+2023-12-28 21:23:20 [INFO] 请求:GET | /api/v1/monitor/server | 127.0.0.1 | 响应:200 | 耗时: 1070ms
+2023-12-28 21:23:20 [INFO] 127.0.0.1:51324 - "GET /api/v1/monitor/server HTTP/1.1" 200
+2023-12-28 21:23:22 [INFO] 127.0.0.1:51333 - "OPTIONS /api/v1/monitor/job/list?pageNum=1&pageSize=10 HTTP/1.1" 200
+2023-12-28 21:23:22 [INFO] 127.0.0.1:51334 - "OPTIONS /api/v1/system/dict/type/sys_job_group HTTP/1.1" 200
+2023-12-28 21:23:22 [INFO] 127.0.0.1:51335 - "OPTIONS /api/v1/system/dict/type/sys_job_status HTTP/1.1" 200
+2023-12-28 21:23:22 [INFO] 请求:GET | /api/v1/monitor/job/list | 127.0.0.1 | 响应:200 | 耗时: 7ms
+2023-12-28 21:23:22 [INFO] 127.0.0.1:51335 - "GET /api/v1/monitor/job/list?pageNum=1&pageSize=10 HTTP/1.1" 200
+2023-12-28 21:23:22 [INFO] 请求:GET | /api/v1/system/dict/type/sys_job_group | 127.0.0.1 | 响应:200 | 耗时: 41ms
+2023-12-28 21:23:22 [INFO] 127.0.0.1:51334 - "GET /api/v1/system/dict/type/sys_job_group HTTP/1.1" 200
+2023-12-28 21:23:22 [INFO] 请求:GET | /api/v1/system/dict/type/sys_job_status | 127.0.0.1 | 响应:200 | 耗时: 43ms
+2023-12-28 21:23:22 [INFO] 127.0.0.1:51333 - "GET /api/v1/system/dict/type/sys_job_status HTTP/1.1" 200
+2023-12-28 21:48:59 [INFO] Shutting down
+2023-12-28 21:49:05 [INFO] Started server process [58428]
+2023-12-28 21:49:05 [INFO] Waiting for application startup.
+2023-12-28 21:49:05 [INFO] 初始化定时任务状态成功
+2023-12-28 21:49:05 [INFO] 定时任务【demo:测试】将在10秒钟后运行.下次执行时间为:2023-12-28 21:49:15.067334
+2023-12-28 21:49:05 [INFO] 定时任务【demo2:测试2】将在10秒钟后运行.下次执行时间为:2023-12-28 21:49:15.075486
+2023-12-28 21:49:05 [INFO] 可转债打新查询 func_args 序列化列表发生错误:unexpected EOF while parsing (<unknown>, line 0)
+2023-12-28 21:49:05 [INFO] 定时任务【kzz:可转债打新查询】将在10秒钟后运行.下次执行时间为:2023-12-28 21:49:15.076367
+2023-12-28 21:49:05 [INFO] Application startup complete.
+2023-12-28 21:49:05 [INFO] Uvicorn running on http://0.0.0.0:5707 (Press CTRL+C to quit)
+2023-12-28 21:49:13 [INFO] 127.0.0.1:54249 - "OPTIONS /api/v1/user/info HTTP/1.1" 200
+2023-12-28 21:49:13 [INFO] 请求:GET | /api/v1/user/info | 127.0.0.1 | 响应:200 | 耗时: 16ms
+2023-12-28 21:49:13 [INFO] 127.0.0.1:54249 - "GET /api/v1/user/info HTTP/1.1" 200
+2023-12-28 21:49:13 [INFO] 127.0.0.1:54249 - "OPTIONS /api/v1/user/routers HTTP/1.1" 200
+2023-12-28 21:49:13 [INFO] 请求:GET | /api/v1/user/routers | 127.0.0.1 | 响应:200 | 耗时: 9ms
+2023-12-28 21:49:13 [INFO] 127.0.0.1:54249 - "GET /api/v1/user/routers HTTP/1.1" 200
+2023-12-28 21:49:13 [INFO] 127.0.0.1:54249 - "OPTIONS /api/v1/monitor/job/list?pageNum=1&pageSize=10 HTTP/1.1" 200
+2023-12-28 21:49:13 [INFO] 127.0.0.1:54257 - "OPTIONS /api/v1/system/dict/type/sys_job_group HTTP/1.1" 200
+2023-12-28 21:49:13 [INFO] 127.0.0.1:54258 - "OPTIONS /api/v1/system/dict/type/sys_job_status HTTP/1.1" 200
+2023-12-28 21:49:13 [INFO] 请求:GET | /api/v1/monitor/job/list | 127.0.0.1 | 响应:200 | 耗时: 9ms
+2023-12-28 21:49:13 [INFO] 127.0.0.1:54257 - "GET /api/v1/monitor/job/list?pageNum=1&pageSize=10 HTTP/1.1" 200
+2023-12-28 21:49:13 [INFO] 请求:GET | /api/v1/system/dict/type/sys_job_group | 127.0.0.1 | 响应:200 | 耗时: 17ms
+2023-12-28 21:49:13 [INFO] 127.0.0.1:54258 - "GET /api/v1/system/dict/type/sys_job_group HTTP/1.1" 200
+2023-12-28 21:49:13 [INFO] 请求:GET | /api/v1/system/dict/type/sys_job_status | 127.0.0.1 | 响应:200 | 耗时: 17ms
+2023-12-28 21:49:13 [INFO] 127.0.0.1:54249 - "GET /api/v1/system/dict/type/sys_job_status HTTP/1.1" 200
+2023-12-28 21:49:15 [INFO] 127.0.0.1:54249 - "OPTIONS /api/v1/monitor/logininfor/list?page=1&page_size=10 HTTP/1.1" 200
+2023-12-28 21:49:15 [INFO] 127.0.0.1:54258 - "OPTIONS /api/v1/system/dict/type/com_default_status HTTP/1.1" 200
+2023-12-28 21:49:15 [INFO] 请求:GET | /api/v1/monitor/logininfor/list | 127.0.0.1 | 响应:200 | 耗时: 11ms
+2023-12-28 21:49:15 [INFO] 127.0.0.1:54258 - "GET /api/v1/monitor/logininfor/list?page=1&page_size=10 HTTP/1.1" 200
+2023-12-28 21:49:15 [INFO] 请求:GET | /api/v1/system/dict/type/com_default_status | 127.0.0.1 | 响应:200 | 耗时: 19ms
+2023-12-28 21:49:15 [INFO] 127.0.0.1:54249 - "GET /api/v1/system/dict/type/com_default_status HTTP/1.1" 200
+2023-12-28 21:49:17 [INFO] 127.0.0.1:54249 - "OPTIONS /api/v1/monitor/pip?page=1&page_size=20 HTTP/1.1" 200
+2023-12-28 21:49:18 [INFO] jobname=测试|jobtrigger=cron[month='*', day='*', hour='*', minute='20', second='30']|jobtime=2023-12-28 21:49:15+08:00|retval=None
+2023-12-28 21:49:18 [INFO] jobname=测试2|jobtrigger=cron[month='*', day='*', hour='*', minute='10', second='30']|jobtime=2023-12-28 21:49:15+08:00|retval=None
+2023-12-28 21:49:18 [INFO] jobname=可转债打新查询|jobtrigger=cron[month='*', day='1/1', hour='8', minute='0', second='0']|jobtime=2023-12-28 21:49:15+08:00|retval=None
+2023-12-28 21:49:19 [INFO] 请求:GET | /api/v1/monitor/pip | 127.0.0.1 | 响应:200 | 耗时: 2158ms
+2023-12-28 21:49:19 [INFO] 127.0.0.1:54258 - "OPTIONS /api/v1/monitor/cache/getNames HTTP/1.1" 200
+2023-12-28 21:49:19 [INFO] 127.0.0.1:54249 - "GET /api/v1/monitor/pip?page=1&page_size=20 HTTP/1.1" 200
+2023-12-28 21:49:20 [INFO] 请求:GET | /api/v1/monitor/cache/getNames | 127.0.0.1 | 响应:200 | 耗时: 5ms
+2023-12-28 21:49:20 [INFO] 127.0.0.1:54249 - "GET /api/v1/monitor/cache/getNames HTTP/1.1" 200
+2023-12-28 21:50:38 [INFO] Shutting down
+2023-12-28 21:50:39 [INFO] Waiting for application shutdown.
