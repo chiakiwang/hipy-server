@@ -1,11 +1,11 @@
-### hipy-ui 后端项目
+### hipy-server 后端项目
 
 ##### 技术栈:  python|fastapi|redis|sqlachemy|postgresql|mysql|sqlite
 
 [套装传送门:hipy-ui](https://github.com/hjdhnx/hipy-ui/)  
 [巨人的肩膀](https://github.com/JohnDoe1996/fastAPI-vue)
 
-# <center> FastAPI-Vue </center>
+# <center> hipy-server </center>
 
 [压测工具](https://runnergo.apipost.cn/)  
 [组件文档](https://element.eleme.io/#/zh-CN/component/input)
@@ -42,7 +42,8 @@ alembic upgrade head
 
 > 注意：
 > 本源码中所有配置文件都使用 配置文件模板(.example)的形式上传, 目的是为了方便我自己的配置信息不被泄露。
-> 部署项目时需要将[.example]后缀去掉才能使用。需要用到配置文件的地方均在后续说明有列出。
+> 部署项目时需要将[.example]后缀去掉才能使用。需要用到配置文件的地方均在后续说明有列出。  
+> 最低运行条件:python3.8,安装了redis,.env配置的sqlite数据库,正确安装完整的requirements.txt
 
 ### FIRST
 
