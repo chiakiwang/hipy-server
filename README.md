@@ -5,6 +5,39 @@
 [套装传送门:hipy-ui](https://github.com/hjdhnx/hipy-ui/)  
 [巨人的肩膀](https://github.com/JohnDoe1996/fastAPI-vue)
 
+# <center> FastAPI-Vue </center>
+
+[压测工具](https://runnergo.apipost.cn/)  
+[组件文档](https://element.eleme.io/#/zh-CN/component/input)
+[系统资源监控](https://zhuanlan.zhihu.com/p/664812265)  
+[ws,jinja](https://www.jianshu.com/p/ca9b257a1a44)  
+[cachetools文档](https://cachetools.readthedocs.io/en/stable/#cachetools.Cache)
+
+```shell
+alembic init alembic
+
+sqlalchemy.url = mysql+pymysql://root:root@localhost:3306/fastapi_vue
+
+# import sys, os
+# sys.path.append(os.path.join(os.path.dirname(__file__), "./"))
+# from db.base_class import Base
+# target_metadata = Base.metadata
+from apps.system.models.config_settings import ConfigSettings
+target_metadata = ConfigSettings.metadata
+
+alembic revision --autogenerate -m "init"
+alembic upgrade head
+```
+
+### 账号:
+
+| 角色   | 用户名    | 密码       |
+|------|--------|----------|
+| 管理员  | admin  | admin123 |
+| 运维员  | opt    | opt123   |
+| 普通用户 | user   | 123456   |
+| 道长   | hjdhnx | 123456   |
+
 ## 项目部署
 
 > 注意：
@@ -80,3 +113,16 @@ sudo supervisorctl update     # 更新supervisor
 
 sudo supervisorctl start hipy-server:   # 启动项目
 ```
+
+### 版权
+
+前端VUE代码使用若依修改vue-element-admin的进行修改，版权参照他们的版权。
+后端FastAPI代码基于fastAPI-vue二次开发，可供学习和商用，禁止直接转卖代码，转载代码请带上出处。
+
+### 致谢
+
+- FastAPI
+- vue
+- element
+- vue-element-admin
+- 若依Ruoyi
