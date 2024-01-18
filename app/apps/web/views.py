@@ -5,11 +5,13 @@
 # Author's Blog: https://blog.csdn.net/qq_32394351
 # Date  : 2023/12/3
 
-from fastapi import APIRouter, WebSocket, Request as Req
+from fastapi import APIRouter, Depends, Query, WebSocket, Request as Req, HTTPException
 from starlette.responses import HTMLResponse, RedirectResponse
-
-from common import error_code
+import os
+from common import error_code, deps
+from sqlalchemy.orm import Session
 from core.config import settings
+from core.logger import logger
 from utils.web import htmler
 from utils.cmd import update_db
 from utils.httpapi import get_location_by_ip
@@ -18,6 +20,7 @@ from common.resp import respSuccessJson, respErrorJson
 from .schemas import database_schemas
 from fastapi.templating import Jinja2Templates
 from fastapi.responses import FileResponse
+from apps.system.curd.curd_dict_data import curd_dict_data
 
 router = APIRouter()
 # htmler2 = Jinja2Templates(directory="templates")
@@ -47,6 +50,48 @@ async def favicon():
 @router.get('/blog', summary="博客首页")
 async def blog():
     return RedirectResponse(settings.BLOG_URL)
+
+
+@router.get("/files/{group}/{filename:path}", summary="T4静态文件")
+async def t4_files(*,
+                   db: Session = Depends(deps.get_db),
+                   request: Req,
+                   group: str = Query(..., title="hipy源分组"),
+                   filename: str = Query(..., title="hipy源文件名")):
+    """
+    返回静态文件链接
+    @param request: Request请求
+    @param group: hipy文件分组
+    @param filename: 文件名
+    @return:
+    """
+    error_msg = f'group:{group},filename:{filename}'
+    host = str(request.base_url)
+    # logger.info(f'host:{host}')
+    # 获取项目根目录
+    project_dir = os.getcwd()
+    groups = {}
+    group_dict = curd_dict_data.getByType(db, _type='vod_rule_group')
+    group_details = group_dict.get('details')
+    for li in group_details:
+        groups[li['label']] = li['value']
+    # 判断分组在系统字典里才进行上传操作
+    if group in groups.keys():
+        folder_path = groups[group]
+        folder_path = os.path.join(project_dir, folder_path)
+        file_path = os.path.join(folder_path, filename)
+        if not os.path.exists(file_path):
+            logger.info(f'{error_msg},file_path:{file_path}')
+            raise HTTPException(status_code=404)
+        else:
+            if filename.endswith('.js'):
+                return FileResponse(file_path, media_type='text/javascript; charset=utf-8')
+
+            return FileResponse(file_path)
+
+    else:
+        logger.info(f'{error_msg},groups:{groups}')
+        raise HTTPException(status_code=404)
 
 
 @router.get('/baidu', summary="访问百度")

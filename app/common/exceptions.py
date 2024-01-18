@@ -1,5 +1,6 @@
 import json
 import traceback
+import os
 from typing import Optional, Dict, Any
 from fastapi import FastAPI, status, HTTPException
 from starlette.exceptions import HTTPException as StarletteHTTPException
@@ -8,12 +9,21 @@ from .error_code import *
 from core.config import settings
 from .resp import respErrorJson
 from starlette.requests import Request
+from fastapi.templating import Jinja2Templates
+
+folder_path = 'templates/ErrorFiles'
+templates = Jinja2Templates(directory=folder_path)
 
 
 def customExceptions(app: FastAPI):
     # 重写HTTPException为项目中需要的返回类型
     @app.exception_handler(StarletteHTTPException)
     async def http_exception_handle(request: Request, exec: StarletteHTTPException):
+        file_names = [file for file in os.listdir(folder_path) if os.path.isfile(os.path.join(folder_path, file))]
+        error_file_name = f'{exec.status_code}.html'
+        if error_file_name in file_names:
+            return templates.TemplateResponse(error_file_name, {'request': request}, status_code=exec.status_code)
+
         err = exec.err if hasattr(exec, 'err') else ErrorBase(code=exec.status_code)
         return respErrorJson(error=err, status_code=exec.status_code, msg=exec.detail)
 
@@ -35,6 +45,10 @@ def customExceptions(app: FastAPI):
         # if mongo:
         #     mongo['request_exceptions'].insert_one(data)
         return respErrorJson(error=err, status_code=err.code, data=data if settings.DEBUG else {})
+
+    # @app.exception_handler(404)
+    # async def not_found_exception_handler(request: Request, exc: HTTPException):
+    #     return templates.TemplateResponse('404.html', {'request': request}, status_code=404)
 
 
 class CustomErrorBase(HTTPException):

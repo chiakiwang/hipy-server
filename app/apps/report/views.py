@@ -23,9 +23,9 @@ api_url = '/excel_generate'
 
 
 @router.get(api_url + "/{_excel_name:path}", summary="生成Excel")
-def excel_generate(*, _excel_name: str = "", request: Request,
-                   db: Session = Depends(deps.get_db),
-                   u: Users = Depends(deps.user_perm([f"{access_name}:export"]))) -> Any:
+async def excel_generate(*, _excel_name: str = "", request: Request,
+                         db: Session = Depends(deps.get_db),
+                         u: Users = Depends(deps.user_perm([f"{access_name}:export"]))) -> Any:
     """
     通过动态import的形式，统一处理excel:模板下载/数据导出
     template参数默认为1，下载导入模板

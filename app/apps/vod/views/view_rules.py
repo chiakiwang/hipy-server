@@ -6,7 +6,7 @@
 # Date  : 2024/1/14
 
 import os
-from fastapi import APIRouter, Depends, Query, File, UploadFile
+from fastapi import APIRouter, Depends, Query, File, UploadFile, Request
 from typing import List
 from sqlalchemy.orm import Session
 from sqlalchemy import asc, desc, func
@@ -68,6 +68,33 @@ async def getRecord(*,
                     _id: int = Query(..., title="源id"),
                     ):
     return respSuccessJson(curd.get(db, _id=_id))
+
+
+@router.get(api_url + '/raw/{_id}', summary="获取源文件直链")
+async def getRecordRawLink(*,
+                           db: Session = Depends(deps.get_db),
+                           u: Users = Depends(deps.user_perm([f"{access_name}:put"])),
+                           request: Request,
+                           _id: int = Query(..., title="源id"),
+                           ):
+    host = str(request.base_url)
+    rule_data = curd.get(db, _id=_id, to_dict=False)
+    groups = {}
+    group_dict = curd_dict_data.getByType(db, _type='vod_rule_group')
+    group_details = group_dict.get('details')
+    for li in group_details:
+        groups[li['label']] = li['value']
+    if rule_data.group in groups.values():
+        group = ''
+        for key, value in groups.items():
+            if value == rule_data.group:
+                group = key
+                break
+
+        file_url = f'{host}files/{group}/{rule_data.name}{rule_data.file_type}'
+        return respSuccessJson({'url': file_url})
+    else:
+        return respErrorJson(error_code.ERROR_INTERNAL.set_msg(f"系统字典不存在值为{rule_data.group}的内容"))
 
 
 @router.put(api_url + "/{_id}", summary="修改源")

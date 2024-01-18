@@ -31,9 +31,9 @@ api_url = ''
 # u: Users = Depends(deps.user_perm([f"{access_name}:get"]))
 # @router.get(api_url + "/{api:path}", summary="生成Vod")
 @router.api_route(methods=['GET', 'POST', 'HEAD'], path=api_url + "/{api:path}", summary="生成Vod")
-def vod_generate(*, api: str = "", request: Request,
-                 db: Session = Depends(deps.get_db),
-                 ) -> Any:
+async def vod_generate(*, api: str = "", request: Request,
+                       db: Session = Depends(deps.get_db),
+                       ) -> Any:
     """
     通过动态import的形式，统一处理vod:爬虫源T4接口
     ext参数默认为空字符串，传入api配置里对应的ext，可以是文本和链接
