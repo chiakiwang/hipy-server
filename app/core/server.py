@@ -12,11 +12,13 @@ from starlette.middleware.cors import CORSMiddleware
 from common.exceptions import customExceptions
 from core.config import settings
 from core.middleware import middleware
+from core.logger import logger
 # from common.middleware import RequestsLoggerMiddleware
 from db.cache import registerRedis
 # from tasks.timer import scheduler # 这个是没固化数据库的。scheduler.start() 启动
 from common.task_apscheduler import scheduler_register, scheduler  # 固化数据库,scheduler.init_scheduler() 初始化
 from utils.notes import set_start_time
+from utils.server_info import get_server_info, get_host_ip
 
 
 class InitializeApp(object):
@@ -83,6 +85,9 @@ class InitializeApp(object):
             # 初始化 apscheduler
             # scheduler.init_scheduler()  # noqa 去掉不合理提示
             scheduler_register()
+
+            logger.info(f'服务器参数:{get_server_info()}')
+            logger.info(f'局域网地址: http://{get_host_ip()}:{settings.PORT}')
 
         @app.on_event('shutdown')
         async def shutdown():

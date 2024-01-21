@@ -170,5 +170,28 @@ def get_server_info():
     return data
 
 
+def get_wlan_info():
+    info = psutil.net_if_addrs()
+    netcard_info = []
+    ips = []
+    for k, v in info.items():
+        for item in v:
+            if item[0] == 2:
+                netcard_info.append((k, item[1]))
+                ips.append(item[1])
+    return netcard_info, ips
+
+
+def get_host_ip():
+    """
+    获取局域网ip
+    @return:
+    """
+    netcard_info, ips = get_wlan_info()
+    real_ips = list(filter(lambda x: x and x != '127.0.0.1', ips))
+    jyw = list(filter(lambda x: str(x).startswith('192.168') and not str(x).endswith('.1'), real_ips))
+    return real_ips[-1] if len(jyw) < 1 else jyw[0]
+
+
 if __name__ == '__main__':
     print(get_server_info())
