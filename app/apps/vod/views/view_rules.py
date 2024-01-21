@@ -92,7 +92,8 @@ async def getRecordRawLink(*,
                 break
 
         file_url = f'{host}files/{group}/{rule_data.name}{rule_data.file_type}'
-        return respSuccessJson({'url': file_url})
+        editable = rule_data.file_type in ['.py', '.json', '.js', '.txt', '.m3u', '.m3u8']
+        return respSuccessJson({'url': file_url, 'editable': editable})
     else:
         return respErrorJson(error_code.ERROR_INTERNAL.set_msg(f"系统字典不存在值为{rule_data.group}的内容"))
 
@@ -106,6 +107,30 @@ async def setRecord(*,
                     ):
     curd.update(db, _id=_id, obj_in=obj, modifier_id=u['id'])
     return respSuccessJson()
+
+
+@router.put(api_url + '/raw/{_id}', summary="修改源文件文本")
+async def setRecordRawContent(*,
+                              db: Session = Depends(deps.get_db),
+                              u: Users = Depends(deps.user_perm([f"{access_name}:put"])),
+                              _id: int,
+                              obj: rules_schemas.RulesContentSchema,
+                              ):
+    rule_data = curd.get(db, _id=_id, to_dict=False)
+    rule_path = rule_data.path
+    is_exist = rule_data.is_exist
+    logger.info(f'rule_path:{rule_path}, is_exist:{is_exist}')
+    obj_in = {}
+    msg = '修改成功'
+    if os.path.exists(rule_path):
+        with open(rule_path, mode='w+', encoding='utf-8') as f:
+            f.write(obj.content)
+    else:
+        if is_exist:
+            obj_in.update({'is_exist': False})
+            msg = '修改失败,待修改的文件路径不存在'
+    curd.update(db, _id=_id, obj_in=obj_in, modifier_id=u['id'])
+    return respSuccessJson(msg=msg)
 
 
 @router.post(api_url + "/file/uploadData", summary="上传源")

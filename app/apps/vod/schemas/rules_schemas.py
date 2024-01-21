@@ -13,3 +13,7 @@ class RulesSchema(BaseModel):
     status: int = 1
     active: bool = True
     ext: str = ''
+
+
+class RulesContentSchema(BaseModel):
+    content: str = ''
