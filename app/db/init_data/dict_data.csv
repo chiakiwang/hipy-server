@@ -14,3 +14,4 @@ id,created_time,creator_id,modified_time,modifier_id,is_deleted,dict_type,dict_n
         'txt': 't4/files/txt',
     }",0,8
 10,2024-01-15 16:23:43.576457,1,2024-01-15 16:23:43.576457,0,0,vod_rule_status,源状态,1正常 0异常,0,9
+11,2024-01-25 14:00:03.613571,1,2024-01-25 14:00:03.613571,0,0,vod_configs_value_type,hipy配置值类型,str:字符串，int:数字,0,11

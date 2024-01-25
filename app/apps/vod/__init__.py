@@ -7,3 +7,4 @@
 
 from .vod_views import router as vod_api
 from .views.view_rules import router as vod_rules_api
+from .views.views_configs import router as vod_configs_api

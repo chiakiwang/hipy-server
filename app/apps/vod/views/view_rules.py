@@ -73,7 +73,7 @@ async def getRecord(*,
 @router.get(api_url + '/raw/{_id}', summary="获取源文件直链")
 async def getRecordRawLink(*,
                            db: Session = Depends(deps.get_db),
-                           u: Users = Depends(deps.user_perm([f"{access_name}:put"])),
+                           u: Users = Depends(deps.user_perm([f"{access_name}:get"])),
                            request: Request,
                            _id: int = Query(..., title="源id"),
                            ):
@@ -92,7 +92,7 @@ async def getRecordRawLink(*,
                 break
 
         file_url = f'{host}files/{group}/{rule_data.name}{rule_data.file_type}'
-        editable = rule_data.file_type in ['.py', '.json', '.js', '.txt', '.m3u', '.m3u8']
+        editable = rule_data.file_type in ['.py', '.json', '.js', '.txt', '.m3u', '.m3u8', '.conf']
         return respSuccessJson({'url': file_url, 'editable': editable})
     else:
         return respErrorJson(error_code.ERROR_INTERNAL.set_msg(f"系统字典不存在值为{rule_data.group}的内容"))
