@@ -114,6 +114,19 @@ sudo supervisorctl update     # 更新supervisor
 
 sudo supervisorctl start hipy-server:   # 启动项目
 ```
+### github被墙无法提交代码的操作说明
+
+[看这篇文章就够了](https://raw.hellogithub.com/hosts)
+
+懒人直通车:
+[到作者github上下载程序](https://github.com/oldj/SwitchHosts/releases) 或着
+[道长的蓝奏云](https://wwi.lanzoup.com/iYyVp1mtojwd)
+
+程序里配置下面的链接并刷新即可
+```text
+https://raw.hellogithub.com/hosts
+```
+
 
 ### 版权
 
