@@ -183,6 +183,13 @@ async def refreshConfigs(*,
             'remark': 'hipy的自定义视频解析配置文件',
             'value_type': 'file',
         },
+        {
+            'name': '自定义直播外链',
+            'key': 'vod_zb_url',
+            'value': 'http://hiker.nokia.press/hikerule/zyw_data/43',
+            'remark': 'hipy的自定义直播外链文件',
+            'value_type': 'url',
+        },
     ]
     exist_records = []
     for config in configs_data:
