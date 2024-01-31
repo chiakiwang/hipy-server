@@ -10,17 +10,25 @@ from starlette.responses import HTMLResponse, RedirectResponse
 import os
 from common import error_code, deps
 from sqlalchemy.orm import Session
+from sqlalchemy import asc, desc, func
 from core.config import settings
 from core.logger import logger
-from utils.web import htmler
+from utils.web import htmler, render_template_string
 from utils.cmd import update_db
 from utils.httpapi import get_location_by_ip
 from network.request import Request
-from common.resp import respSuccessJson, respErrorJson
+from common.resp import respSuccessJson, respErrorJson, abort
 from .schemas import database_schemas
 from fastapi.templating import Jinja2Templates
 from fastapi.responses import FileResponse
 from apps.system.curd.curd_dict_data import curd_dict_data
+from apps.vod.curd.curd_rules import curd_vod_rules
+from apps.vod.curd.curd_configs import curd_vod_configs
+
+try:
+    from redis.asyncio import Redis as asyncRedis
+except ImportError:
+    from aioredis import Redis as asyncRedis
 
 router = APIRouter()
 # htmler2 = Jinja2Templates(directory="templates")
@@ -52,23 +60,61 @@ async def blog():
     return RedirectResponse(settings.BLOG_URL)
 
 
-@router.get("/files/{group}/{filename:path}", summary="T4静态文件")
-async def t4_files(*,
-                   db: Session = Depends(deps.get_db),
-                   request: Req,
-                   group: str = Query(..., title="hipy源分组"),
-                   filename: str = Query(..., title="hipy源文件名")):
+@router.get("/config/{mode}", summary="自动生成tvbox-hipy配置")
+async def hipy_configs(*,
+                       db: Session = Depends(deps.get_db),
+                       r: asyncRedis = Depends(deps.get_redis),
+                       request: Req,
+                       mode: int = Query(..., title="模式 0:t4 1:t3"),
+                       ):
+    groups = {}
+    group_dict = curd_dict_data.getByType(db, _type='vod_rule_group')
+    group_details = group_dict.get('details')
+    for li in group_details:
+        groups[li['label']] = li['value']
+    order_bys = [asc(curd_vod_rules.model.order_num)]
+    hipy_rules = curd_vod_rules.search(db=db, status=1, group=groups['hipy'], page=1, page_size=9999,
+                                       order_bys=order_bys)
+    drpy_rules = curd_vod_rules.search(db=db, status=1, group=groups['drpy_js'], page=1, page_size=9999,
+                                       order_bys=order_bys)
+    # print(hipy_rules)
+    # print(drpy_rules)
+    key = 'vod_config_base'
+    if r:
+        vod_configs_obj = await curd_vod_configs.getByKeyWithCache(r, db, key=key)
+    else:
+        vod_configs_obj = curd_vod_configs.getByKey(db, key=key)
+
+    cf_value = vod_configs_obj.get('value')
+    cf_value_type = vod_configs_obj.get('value_type')
+    if cf_value_type == 'file':
+        group = cf_value.split('/')[0]
+        file_name = '/'.join(cf_value.split('/')[1:])
+        resp = get_file_path(db, group, file_name)
+        if isinstance(resp, int):
+            return abort(404, f'invalid value:{cf_value},file not found')
+        file_path = resp[0]
+        context = {}
+        try:
+            with open(file_path, encoding='utf-8') as f:
+                file_content = f.read()
+            return render_template_string(file_content, **context)
+        except Exception as e:
+            raise HTTPException(status_code=500, detail=f"{e}")
+            # raise HTTPException(status_code=500)
+    else:
+        return abort(404, f'invalid value_type:{cf_value_type},only file allowed')
+
+
+def get_file_path(db, group, filename):
     """
-    返回静态文件链接
-    @param request: Request请求
-    @param group: hipy文件分组
-    @param filename: 文件名
-    @return:
+    获取本地文件路径和类型
+    @param db: 数据库游标
+    @param group: 文件组label
+    @param filename: 文件名称带后缀
+    @return: 404 [file_path,media_type] [file_path]
     """
     error_msg = f'group:{group},filename:{filename}'
-    host = str(request.base_url)
-    # logger.info(f'host:{host}')
-    # 获取项目根目录
     project_dir = os.getcwd()
     groups = {}
     group_dict = curd_dict_data.getByType(db, _type='vod_rule_group')
@@ -82,16 +128,43 @@ async def t4_files(*,
         file_path = os.path.join(folder_path, filename)
         if not os.path.exists(file_path):
             logger.info(f'{error_msg},file_path:{file_path}')
-            raise HTTPException(status_code=404)
+            return 404
         else:
             if filename.endswith('.js'):
-                return FileResponse(file_path, media_type='text/javascript; charset=utf-8')
+                return [file_path, 'text/javascript; charset=utf-8']
 
-            return FileResponse(file_path)
+            return [file_path]
 
     else:
         logger.info(f'{error_msg},groups:{groups}')
-        raise HTTPException(status_code=404)
+        return 404
+
+
+@router.get("/files/{group}/{filename:path}", summary="T4静态文件")
+async def t4_files(*,
+                   db: Session = Depends(deps.get_db),
+                   request: Req,
+                   group: str = Query(..., title="hipy源分组"),
+                   filename: str = Query(..., title="hipy源文件名")):
+    """
+    返回静态文件链接
+    @param request: Request请求
+    @param group: hipy文件分组
+    @param filename: 文件名
+    @return:
+    """
+    host = str(request.base_url)
+    # logger.info(f'host:{host}')
+    resp = get_file_path(db, group, filename)
+    if isinstance(resp, int):
+        raise resp
+
+    file_path = resp[0]
+    if len(resp) > 1:
+        media_type = resp[1]
+        return FileResponse(file_path, media_type=media_type)
+    else:
+        return FileResponse(file_path)
 
 
 @router.get('/baidu', summary="访问百度")

@@ -79,6 +79,14 @@ async def listCacheName(*,
             "cacheName": 'curd_config_setting_key_ID_',
             "remark": "系统参数缓存ID",
         },
+        {
+            "cacheName": 'vod_configs_KEY_',
+            "remark": "hipy配置缓存键",
+        },
+        {
+            "cacheName": 'vod_configs_key_ID_',
+            "remark": "hipy配置缓存ID",
+        },
     ]
     return respSuccessJson(data=data)
 

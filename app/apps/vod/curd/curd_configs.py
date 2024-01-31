@@ -41,7 +41,9 @@ class CURDVodConfigs(CRUDBase):
         if not obj:
             return {}
         return {'id': obj.id, 'key': obj.key, 'name': obj.name,
-                'value': int(obj.value) if obj.value.isdigit() else obj.value}
+                'value': int(obj.value) if obj.value.isdigit() else obj.value,
+                'value_type': obj.value_type,
+                }
 
     async def getByKeyWithCache(self, r: asyncRedis, db: Session, key: str) -> dict:
         _key = self.CACHE_KEY + key

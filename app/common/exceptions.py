@@ -22,14 +22,15 @@ def customExceptions(app: FastAPI):
         file_names = [file for file in os.listdir(folder_path) if os.path.isfile(os.path.join(folder_path, file))]
         error_file_name = f'{exec.status_code}.html'
         if error_file_name in file_names:
-            return templates.TemplateResponse(error_file_name, {'request': request}, status_code=exec.status_code)
+            return templates.TemplateResponse(error_file_name, {'request': request, 'msg': exec.detail},
+                                              status_code=exec.status_code)
 
         err = exec.err if hasattr(exec, 'err') else ErrorBase(code=exec.status_code)
         return respErrorJson(error=err, status_code=exec.status_code, msg=exec.detail)
 
     # 重写RequestValidationError为项目中需要的返回类型
     @app.exception_handler(RequestValidationError)
-    async def http_exception_handle(request: Request, exec: RequestValidationError):
+    async def http_exception_handle_json(request: Request, exec: RequestValidationError):
         err = ERROR_PARAMETER_ERROR
         return respErrorJson(error=err, status_code=err.code, data={'errors': json.loads(exec.json())})
 
