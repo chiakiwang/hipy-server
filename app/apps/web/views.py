@@ -6,7 +6,7 @@
 # Date  : 2023/12/3
 
 from fastapi import APIRouter, Depends, Query, WebSocket, Request as Req, HTTPException
-from starlette.responses import HTMLResponse, RedirectResponse
+from starlette.responses import HTMLResponse, RedirectResponse, Response
 import os
 from common import error_code, deps
 from sqlalchemy.orm import Session
@@ -67,13 +67,14 @@ async def hipy_configs(*,
                        request: Req,
                        mode: int = Query(..., title="模式 0:t4 1:t3"),
                        ):
+    host = str(request.base_url).rstrip('/')
     groups = {}
     group_dict = curd_dict_data.getByType(db, _type='vod_rule_group')
     group_details = group_dict.get('details')
     for li in group_details:
         groups[li['label']] = li['value']
     order_bys = [asc(curd_vod_rules.model.order_num)]
-    hipy_rules = curd_vod_rules.search(db=db, status=1, group=groups['hipy'], page=1, page_size=9999,
+    hipy_rules = curd_vod_rules.search(db=db, status=1, group=groups['hipy'], file_type='.py', page=1, page_size=9999,
                                        order_bys=order_bys)
     drpy_rules = curd_vod_rules.search(db=db, status=1, group=groups['drpy_js'], page=1, page_size=9999,
                                        order_bys=order_bys)
@@ -94,11 +95,26 @@ async def hipy_configs(*,
         if isinstance(resp, int):
             return abort(404, f'invalid value:{cf_value},file not found')
         file_path = resp[0]
-        context = {}
+
+        data, total, offset, limit = curd_vod_configs.get_multi(db, page=1, page_size=99,
+                                                                order_bys=[asc(curd_vod_configs.model.order_num)])
+        # print(data)
+        config = {}
+        for d in data:
+            config[d['key']] = d['value']
+
+        rules = {
+            'list': hipy_rules['results']
+        }
+
+        context = {'config': config, 'rules': rules, 'host': host}
+        print(context)
         try:
             with open(file_path, encoding='utf-8') as f:
                 file_content = f.read()
-            return render_template_string(file_content, **context)
+            render_text = render_template_string(file_content, **context)
+            # return HTMLResponse(render_text)
+            return Response(status_code=200, media_type='text/plain', content=render_text)
         except Exception as e:
             raise HTTPException(status_code=500, detail=f"{e}")
             # raise HTTPException(status_code=500)
