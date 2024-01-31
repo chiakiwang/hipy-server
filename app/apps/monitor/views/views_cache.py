@@ -63,6 +63,22 @@ async def listCacheName(*,
             "cacheName": REDIS_KEY_USER_PERM_LABEL_CACHE,
             "remark": "权限标签",
         },
+        {
+            "cacheName": 'curd_dict_data_TYPE_',
+            "remark": "字典缓存类型",
+        },
+        {
+            "cacheName": 'curd_dict_data_type_ID_',
+            "remark": "字典缓存ID",
+        },
+        {
+            "cacheName": 'curd_config_setting_KEY_',
+            "remark": "系统参数缓存键",
+        },
+        {
+            "cacheName": 'curd_config_setting_key_ID_',
+            "remark": "系统参数缓存ID",
+        },
     ]
     return respSuccessJson(data=data)
 

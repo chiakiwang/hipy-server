@@ -61,6 +61,13 @@ class CURDDictData(CRUDBase):
             del_keys.append(self.CACHE_KEY + res.decode('utf-8'))
         await r.delete(*del_keys)
 
+        keys = (await r.scan(match=f"{self.CACHE_KEY}*"))[-1]
+        if len(keys) > 0:
+            await r.delete(*keys)
+
+        self.getByType.cache_clear()
+        logger.info('=========执行deleteCacheByID方法自动清除系统参数缓存=========')
+
     def create(self, db: Session, *, obj_in, creator_id: int = 0):
         res = super().create(db, obj_in=obj_in, creator_id=creator_id)
         self.getByType.cache_clear()
