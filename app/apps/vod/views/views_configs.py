@@ -190,6 +190,20 @@ async def refreshConfigs(*,
             'remark': 'hipy的自定义直播外链文件',
             'value_type': 'url',
         },
+        {
+            'name': '自定义挂载jar',
+            'key': 'vod_custom_jar',
+            'value': 'drpy_libs/custom_spider_dz1201.jar',
+            'remark': 'hipy的自定义外挂jar文件,用于直播解析和视频解析轮询',
+            'value_type': 'file',
+        },
+        {
+            'name': '自定义壁纸',
+            'key': 'vod_wall_paper',
+            'value': 'https://tuapi.eees.cc/api.php?category=fengjing&type=302',
+            'remark': 'hipy的自定义壁纸，可以是文件或着链接',
+            'value_type': 'url',
+        },
     ]
     exist_records = []
     for config in configs_data:

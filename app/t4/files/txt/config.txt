@@ -1,8 +1,8 @@
 {
-{% if config.wall_paper_enable %}"wallpaper":"{{ host }}/pics",{% endif %}
+{% if config.vod_wall_paper %}"wallpaper":"{{ config.vod_wall_paper }}",{% endif %}
 "dr_count": {{rules|length}},
 "mode": {{ mode }},
-"spider": "{{ host }}/files/drpy_libs/custom_spider_dz1201.jar",
+"spider": "{{ config.vod_custom_jar }}",
 {% if alists|length > 0 %}"drives": {{alists_str}},{% endif %}
 "homepage":"https://github.com/hjdhnx/hipy-server",
 "sites": [{% for rule in rules %}{% if rule.file_type ==".py" %}
