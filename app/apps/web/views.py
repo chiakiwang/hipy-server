@@ -152,19 +152,25 @@ async def hipy_configs(*,
         file_path = resp[0]
 
         rules = hipy_rules + drpy_rules
+        # 按order_num排序
+        rules.sort(key=lambda x: x['order_num'])
+        # print(rules)
         # 自定义额外sites,从用户附加里面去获取
         sites = []
 
         context = {'config': config, 'rules': rules,
                    'host': host, 'mode': mode, 'sites': sites,
                    'jxs': jxs, 'alists': [],
-
                    }
         # print(context)
         try:
             with open(file_path, encoding='utf-8') as f:
                 file_content = f.read()
             render_text = render_template_string(file_content, **context)
+            # 单引号替换双引号
+            render_text = render_text.replace("'", '"')
+            # render_dict = json.loads(render_text)
+            # print(render_dict)
             # return HTMLResponse(render_text)
             return Response(status_code=200, media_type='text/plain', content=render_text)
         except Exception as e:
