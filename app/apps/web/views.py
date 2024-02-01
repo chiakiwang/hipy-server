@@ -172,6 +172,7 @@ async def hipy_configs(*,
             # render_dict = json.loads(render_text)
             # print(render_dict)
             # return HTMLResponse(render_text)
+            render_text = render_template_string(render_text, **context)
             return Response(status_code=200, media_type='text/plain', content=render_text)
         except Exception as e:
             raise HTTPException(status_code=500, detail=f"{e}")
