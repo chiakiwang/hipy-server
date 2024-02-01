@@ -1,9 +1,9 @@
 id,created_time,creator_id,modified_time,modifier_id,is_deleted,name,key,value,value_type,remark,status,order_num
-1,2024-01-31 14:38:47.797302,1,2024-02-01 18:13:11.481553,1,0,drpy接口文件,vod_drpy_api,drpy_libs/drpy2.min.js,file,自动生成配置中的drpy的api将会使用此文件,1,1
-2,2024-01-31 14:38:47.823924,1,2024-02-01 18:13:11.495617,1,0,接口密码,vod_passwd,dzyyds,str,hipy的t4接口将使用此密码作为参数验证,1,2
-3,2024-01-31 14:38:47.828862,1,2024-02-01 18:13:11.498553,1,0,生成配置模板文件,vod_config_base,txt/config.txt,file,hipy的自动生成在线配置将使用此文件作为渲染模板,1,3
-4,2024-01-31 14:38:47.842080,1,2024-02-01 18:13:11.501208,1,0,自定义配置模板文件,vod_config_custom,txt/custom.conf,file,hipy的自动生成在线配置将使用此文件作为个性化配置,1,4
-5,2024-01-31 14:59:42.036636,1,2024-02-01 18:13:11.503879,1,0,自定义解析文件,vod_vip_parse,txt/vip_parse.conf,file,hipy的自定义视频解析配置文件,1,5
-6,2024-01-31 16:39:51.706523,1,2024-02-01 18:13:11.506252,1,0,自定义直播外链,vod_zb_url,http://hiker.nokia.press/hikerule/zyw_data/43,url,hipy的自定义直播外链文件,1,6
-7,2024-02-01 18:09:17.032722,1,2024-02-01 18:13:11.509617,1,0,自定义挂载jar,vod_custom_jar,drpy_libs/custom_spider_dz1201.jar,file,"hipy的自定义外挂jar文件,用于直播解析和视频解析轮询",1,7
-8,2024-02-01 18:13:11.512327,1,2024-02-01 18:13:11.512327,0,0,自定义壁纸,vod_wall_paper,https://tuapi.eees.cc/api.php?category=fengjing&type=302,url,hipy的自定义壁纸，可以是文件或着链接,1,8
+1,2024-02-01 13:15:53.558712,1,2024-02-01 13:15:53.558712,0,0,drpy接口文件,vod_drpy_api,drpy_libs/drpy2.min.js,file,自动生成配置中的drpy的api将会使用此文件,1,1
+2,2024-02-01 13:15:53.589862,1,2024-02-01 13:15:53.589862,0,0,接口密码,vod_passwd,dzyyds,str,hipy的t4接口将使用此密码作为参数验证,1,2
+3,2024-02-01 13:15:53.607850,1,2024-02-01 13:15:53.607850,0,0,生成配置模板文件,vod_config_base,txt/config.txt,file,hipy的自动生成在线配置将使用此文件作为渲染模板,1,3
+4,2024-02-01 13:15:53.620216,1,2024-02-01 13:15:53.620216,0,0,自定义配置模板文件,vod_config_custom,txt/custom.conf,file,hipy的自动生成在线配置将使用此文件作为个性化配置,1,4
+5,2024-02-01 13:15:53.637165,1,2024-02-01 13:15:53.637165,0,0,自定义解析文件,vod_vip_parse,txt/vip_parse.conf,file,hipy的自定义视频解析配置文件,1,5
+6,2024-02-01 13:15:53.649765,1,2024-02-01 13:15:53.649765,0,0,自定义直播外链,vod_zb_url,http://hiker.nokia.press/hikerule/zyw_data/43,url,hipy的自定义直播外链文件,1,6
+7,2024-02-01 13:15:53.665355,1,2024-02-01 13:15:53.665355,0,0,自定义挂载jar,vod_custom_jar,drpy_libs/custom_spider_dz1201.jar,file,"hipy的自定义外挂jar文件,用于直播解析和视频解析轮询",1,7
+8,2024-02-01 13:15:53.686778,1,2024-02-01 13:15:53.686778,0,0,自定义壁纸,vod_wall_paper,https://tuapi.eees.cc/api.php?category=fengjing&type=302,url,hipy的自定义壁纸，可以是文件或着链接,1,8

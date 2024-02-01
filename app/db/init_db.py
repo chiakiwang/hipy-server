@@ -134,7 +134,8 @@ def init_table_data_form_csv(db: Session) -> None:
     files = ['config_settings.csv', 'dict_data.csv', 'dict_details.csv', 'hiker_rule_type.csv', 'hiker_developer.csv',
              'hiker_rule.csv',
              'menus.csv', 'roles.csv', 'role_menu.csv', 'perm_label.csv', 'perm_label_role.csv',
-             'users.csv', 'user_role.csv', 'login_infor.csv', 'job.csv', 'job_log.csv']
+             'users.csv', 'user_role.csv', 'login_infor.csv', 'job.csv', 'job_log.csv', 'vod_configs.csv',
+             'vod_rules.csv']
     for file in files:
         file_path = os.path.join(init_data_path, file)
         df = pd.read_csv(file_path, sep=",", converters=converters)

@@ -13,7 +13,7 @@ from db import fields
 class VodConfigs(Base):
     """ hipy参数配置 列表 """
     name = fields.Char(string='参数名称', required=True)
-    key = fields.Char(string='参数键', index=True, required=True)
+    key = fields.Char(string='参数键', index=False, required=True)
     value = fields.Text(string='参数值')
     value_type = fields.Char(string='值类型')
     remark = fields.Char(string='备注')
