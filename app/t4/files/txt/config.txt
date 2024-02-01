@@ -13,7 +13,8 @@
     "api":"{% if mode == 0 %}{{ host }}/api/v1/vod/{{ rule.name }}{% else %}{{ host }}/files/hipy/{{ rule.name }}{{rule.file_type}}{% endif %}",
     "searchable": {{ rule.searchable or 0 }},
     "quickSearch": {{ rule.quickSearch or 0}},
-    "filterable": {{ rule.filterable or 0}}
+    "filterable": {{ rule.filterable or 0}},
+    "ext": "{{ rule.ext or ""}}"
 }{% else %}
 {
     "key":"dr_{{ rule.name }}",
