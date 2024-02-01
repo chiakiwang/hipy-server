@@ -1,6 +1,6 @@
 {
 {% if config.vod_wall_paper %}"wallpaper":"{{ config.vod_wall_paper }}",{% endif %}
-"dr_count": {{rules|length}},
+"hipy_sites_count": {{rules|length}},
 "mode": {{ mode }},
 "spider": "{{ config.vod_custom_jar }}",
 {% if alists|length > 0 %}"drives": {{alists_str}},{% endif %}

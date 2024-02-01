@@ -44,7 +44,7 @@ api里会自动含有ext参数是base64编码后的选中的筛选条件
     "searchable":1,
     "quickSearch":0,
     "filterable":1,
-    "ext":"cntv央视"
+    "ext":"{{host}}/files/hipy/cntv央视.json"
  },
  {
     "key": "hipy_t3_cntv央视",
@@ -54,7 +54,7 @@ api里会自动含有ext参数是base64编码后的选中的筛选条件
     "searchable": 1,
     "quickSearch": 0,
     "filterable": 1,
-    "ext": "{{host}}/txt/hipy/cntv央视.json"
+    "ext": "{{host}}/files/hipy/cntv央视.json"
 },
 """
 

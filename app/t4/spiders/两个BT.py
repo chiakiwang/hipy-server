@@ -37,7 +37,7 @@ api里会自动含有ext参数是base64编码后的选中的筛选条件
     "searchable":1,
     "quickSearch":0,
     "filterable":1,
-    "ext":"两个BT"
+    "ext":"{{host}}/files/hipy/两个BT.json"
 },
 {
     "key": "hipy_t3_两个BT",
@@ -47,7 +47,7 @@ api里会自动含有ext参数是base64编码后的选中的筛选条件
     "searchable": 1,
     "quickSearch": 0,
     "filterable": 1,
-    "ext": "{{host}}/txt/hipy/两个BT.json"
+    "ext": "{{host}}/files/hipy/两个BT.json"
 },
 """
 

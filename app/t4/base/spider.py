@@ -146,24 +146,24 @@ class BaseSpider(metaclass=ABCMeta):  # 元类 默认的元类 type
                        src)
         return clean
 
-    def fetch(self, url, data=None, headers={}, cookies=""):
+    def fetch(self, url, data=None, headers={}, cookies="", timeout=5):
         if data is None:
             data = {}
-        rsp = requests.get(url, params=data, headers=headers, cookies=cookies, verify=False)
+        rsp = requests.get(url, params=data, headers=headers, cookies=cookies, timeout=timeout, verify=False)
         rsp.encoding = 'utf-8'
         return rsp
 
-    def post(self, url, data, headers={}, cookies={}):
-        rsp = requests.post(url, data=data, headers=headers, cookies=cookies, verify=False)
+    def post(self, url, data, headers={}, cookies={}, timeout=5):
+        rsp = requests.post(url, data=data, headers=headers, cookies=cookies, timeout=timeout, verify=False)
         rsp.encoding = 'utf-8'
         return rsp
 
-    def postJson(self, url, json, headers={}, cookies={}):
-        rsp = requests.post(url, json=json, headers=headers, cookies=cookies, verify=False)
+    def postJson(self, url, json, headers={}, cookies={}, timeout=5):
+        rsp = requests.post(url, json=json, headers=headers, cookies=cookies, timeout=timeout, verify=False)
         rsp.encoding = 'utf-8'
         return rsp
 
-    def postBinary(self, url, data: dict, boundary=None, headers={}, cookies={}):
+    def postBinary(self, url, data: dict, boundary=None, headers={}, cookies={}, timeout=5):
         if boundary is None:
             boundary = f'--dio-boundary-{int(time.time())}'
         headers['Content-Type'] = f'multipart/form-data; boundary={boundary}'
@@ -173,7 +173,7 @@ class BaseSpider(metaclass=ABCMeta):  # 元类 默认的元类 type
             fields.append((key, (None, value, None)))
         m = encode_multipart_formdata(fields, boundary=boundary)
         data = m[0]
-        rsp = requests.post(url, data=data, headers=headers, cookies=cookies, verify=False)
+        rsp = requests.post(url, data=data, headers=headers, cookies=cookies, timeout=timeout, verify=False)
         rsp.encoding = 'utf-8'
         return rsp
 

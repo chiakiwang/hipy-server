@@ -31,10 +31,11 @@ api_url = ''
 # u: Users = Depends(deps.user_perm([f"{access_name}:get"]))
 # @router.get(api_url + "/{api:path}", summary="生成Vod")
 @router.api_route(methods=['GET', 'POST', 'HEAD'], path=api_url + "/{api:path}", summary="生成Vod")
-async def vod_generate(*, api: str = "", request: Request,
-                       db: Session = Depends(deps.get_db),
-                       ) -> Any:
+def vod_generate(*, api: str = "", request: Request,
+                 db: Session = Depends(deps.get_db),
+                 ) -> Any:
     """
+    这个接口千万不要写async def 否则类似这种内部接口文件请求将无法实现 http://192.168.31.49:5707/files/hipy/两个BT.json
     通过动态import的形式，统一处理vod:爬虫源T4接口
     ext参数默认为空字符串，传入api配置里对应的ext，可以是文本和链接
     """

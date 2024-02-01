@@ -60,6 +60,18 @@ async def blog():
     return RedirectResponse(settings.BLOG_URL)
 
 
+# @router.get('/test')
+# async def api_test():
+#     """
+#     这个例子就是很好的测试。加了async内部的代码逻辑不能去调用自己的其他接口否则会阻塞无法获取
+#     @return:
+#     """
+#     import requests
+#     r = requests.get('http://192.168.31.49:5707/files/hipy/两个BT.json', timeout=5)
+#     print(r.text)
+#     return respSuccessJson(data=r.json())
+
+
 @router.get("/config/{mode}", summary="自动生成tvbox-hipy配置")
 async def hipy_configs(*,
                        db: Session = Depends(deps.get_db),
