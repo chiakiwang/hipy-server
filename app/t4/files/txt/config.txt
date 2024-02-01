@@ -1,40 +1,40 @@
 {
-{% if config.WALL_PAPER_ENABLE %}"wallpaper":"{{ host }}/pics",{% endif %}
-"dr_count": {{rules.list|length}},
+{% if config.wall_paper_enable %}"wallpaper":"{{ host }}/pics",{% endif %}
+"dr_count": {{rules|length}},
 "mode": {{ mode }},
-"spider": "{{ host }}/liveslib",
+"spider": "{{ host }}/files/drpy_libs/custom_spider_dz1201.jar",
 {% if alists|length > 0 %}"drives": {{alists_str}},{% endif %}
-"homepage":"https://github.com/hjdhnx/dr_py",
-"sites": [{% for rule in rules.list %}{% if js_mode != 1 %}
+"homepage":"https://github.com/hjdhnx/hipy-server",
+"sites": [{% for rule in rules %}{% if rule.file_type ==".py" %}
 {
-    "key":"dr_{{ rule.name }}",
-    "name":"{{ rule.name }}(道长)",
-    "type":1,
-    "api":"{{ host }}/api/v1/vod/{{ rule.name }}{% if js0_password %}?pwd={{js0_password}}{% endif %}",
-    "searchable": {{ rule.searchable }},
-    "quickSearch": {{ rule.quickSearch }},
-    "filterable": {{ rule.filterable }}
+    "key":"{% if mode == 0 %}hipy_t4_{{ rule.name }}{% else %}hipy_t3_{{ rule.name }}{% endif %}",
+    "name":"{% if mode == 0 %}{{ rule.name }}(hipy_t4){% else %}{{ rule.name }}(hipy_t3){% endif %}",
+    "type":{% if mode == 0 %}4{% else %}3{% endif %},
+    "api":"{% if mode == 0 %}{{ host }}/api/v1/vod/{{ rule.name }}{% else %}{{ host }}/files/hipy/{{ rule.name }}{{rule.file_type}}{% endif %}",
+    "searchable": {{ rule.searchable or 0 }},
+    "quickSearch": {{ rule.quickSearch or 0}},
+    "filterable": {{ rule.filterable or 0}}
 }{% else %}
 {
     "key":"dr_{{ rule.name }}",
     "name":"{{ rule.name }}(drpy)",
     "type":3,
-    "api":{% if ISTVB and xr_mode %}"{{ host }}/files/drpy_libs/drpy2.min.js"{% else %}"{{ host }}/files/drpy_libs/drpy.min.js"{% endif %},
-    "searchable": {{ rule.searchable }},
-    "quickSearch": {{ rule.quickSearch }},
-    "filterable": {{ rule.filterable }},
-    "ext":"{{ host }}/js/{{ rule.name }}.js"
+    "api":"{{ config.vod_drpy_api }}",
+    "searchable": {{ rule.searchable or 0}},
+    "quickSearch": {{ rule.quickSearch or 0}},
+    "filterable": {{ rule.filterable or 0}},
+    "ext":"{{ host }}/files/drpy_js/{{ rule.name }}{{rule.file_type}}"
 }{% endif %}{% if loop.last==False %},{% endif %}{% endfor %}
-{% if pys %}
-,{% for py in pys %}{
-    "key":"{{ py.name }}",
-    "name":"{{ py.name }}(Pyramid)",
-    "type": 3,
-    "api":"{{ py.name }}",
-    "searchable": {{ py.searchable }},
-    "quickSearch": {{ py.quickSearch }},
-    "filterable": {{ py.filterable }},
-    "ext": "{{ host }}/txt/py/{{ py.name }}.py"
+{% if sites %}
+,{% for site in sites %}{
+    "key":"{{ site.key }}",
+    "name":"{{ site.name }}",
+    "type": {{ site.type }},
+    "api":"{{ site.api }}",
+    "searchable": {{ site.searchable or 0 }},
+    "quickSearch": {{ site.quickSearch or 0}},
+    "filterable": {{ site.filterable or 0}},
+    "ext": "{{ site.ext }}"
 }{% if loop.last==False %},{% endif %}{% endfor %}
 {% endif %}
 ],
@@ -69,10 +69,9 @@
     "type": {{ jx.type }},
     "ext": {
         "flag": {{jx.flag or ["qiyi","imgo","爱奇艺", "奇艺", "qq","qq 预告及花絮", "腾讯", "youku", "优酷", "pptv", "PPTV", "letv", "乐视","leshi", "mgtv", "芒果","sohu", "xigua","fun","风行"]}}
-
     },
     "header": {
-        "User-Agent": "{{ jx.ua }}"
+        "User-Agent": {{ jx.ua or "Mozilla/5.0" }}
     }
 }{% if loop.last==False %},{% endif %}{% endfor %}
 	 ],
@@ -101,7 +100,7 @@
         ]
     }
 }],
-"lives":[{"group":"redirect","channels":[{"name":"直播","urls":["proxy://do=live&type=txt&ext={{live_url}}"]}]}],
+"lives":[{"group":"redirect","channels":[{"name":"直播","urls":["proxy://do=live&type=txt&ext={{config.vod_zb_url}}"]}]}],
 "sniffer": {
     "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36 Edg/105.0.1343.27",
     "isVideoFormat": "http((?!http).){26,}\\.(m3u8|mp4|flv|avi|mkv|wmv|mpg|mpeg|mov|ts|3gp|rm|rmvb|asf|m4a|mp3|wma)",

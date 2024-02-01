@@ -13,9 +13,9 @@ from sqlalchemy.orm import Session
 from sqlalchemy import asc, desc, func
 from core.config import settings
 from core.logger import logger
-from utils.web import htmler, render_template_string
+from utils.web import htmler, render_template_string, remove_comments
 from utils.cmd import update_db
-from utils.httpapi import get_location_by_ip
+from utils.httpapi import get_location_by_ip, getHotSuggest
 from network.request import Request
 from common.resp import respSuccessJson, respErrorJson, abort
 from .schemas import database_schemas
@@ -78,6 +78,21 @@ async def hipy_configs(*,
                                        order_bys=order_bys)
     drpy_rules = curd_vod_rules.search(db=db, status=1, group=groups['drpy_js'], page=1, page_size=9999,
                                        order_bys=order_bys)
+    # print(hipy_rules.get('results')[0])
+    hipy_rules = [{
+        'name': rec['name'],
+        'file_type': rec['file_type'],
+        'ext': rec['ext'],
+        'order_num': rec['order_num'],
+    } for rec in hipy_rules.get('results') or [] if rec['active'] == True]
+
+    drpy_rules = [{
+        'name': rec['name'],
+        'file_type': rec['file_type'],
+        'ext': rec['ext'],
+        'order_num': rec['order_num'],
+    } for rec in drpy_rules.get('results') or [] if rec['active'] == True]
+
     # print(hipy_rules)
     # print(drpy_rules)
     key = 'vod_config_base'
@@ -88,7 +103,47 @@ async def hipy_configs(*,
 
     cf_value = vod_configs_obj.get('value')
     cf_value_type = vod_configs_obj.get('value_type')
+
     if cf_value_type == 'file':
+        data, total, offset, limit = curd_vod_configs.get_multi(db, page=1, page_size=99,
+                                                                order_bys=[asc(curd_vod_configs.model.order_num)])
+        # print(data)
+        config = {}
+        jxs = []
+        for d in data:
+            if d['value_type'] == 'file':
+                config[d['key']] = f"{host}/files/{d['value']}"
+            else:
+                config[d['key']] = d['value']
+
+            if d['key'] == 'vod_vip_parse' and d['value_type'] == 'file':
+                d_value = d['value']
+                d_group = d_value.split('/')[0]
+                d_file_name = '/'.join(d_value.split('/')[1:])
+                resp = get_file_path(db, d_group, d_file_name)
+                if isinstance(resp, list):
+                    jx_file_path = resp[0]
+                    # print(jx_file_path)
+                    with open(jx_file_path, encoding='utf-8') as f:
+                        jx_content = f.read()
+                    jx_content = remove_comments(jx_content)
+                    for jx in jx_content.split('\n'):
+                        jx = jx.strip()
+                        jx_arr = jx.split(',')
+                        if len(jx_arr) > 1:
+                            jx_name = jx_arr[0]
+                            jx_url = jx_arr[1]
+                            jx_type = jx_arr[2] if len(jx_arr) > 2 else 0
+                            jx_ua = jx_arr[3] if len(jx_arr) > 3 else ''
+                            jx_flag = jx_arr[4] if len(jx_arr) > 4 else ''
+                            jxs.append({
+                                'name': jx_name,
+                                'url': jx_url,
+                                'type': jx_type,
+                                'ua': jx_ua,
+                                'flag': jx_flag,
+                            })
+
         group = cf_value.split('/')[0]
         file_name = '/'.join(cf_value.split('/')[1:])
         resp = get_file_path(db, group, file_name)
@@ -96,19 +151,16 @@ async def hipy_configs(*,
             return abort(404, f'invalid value:{cf_value},file not found')
         file_path = resp[0]
 
-        data, total, offset, limit = curd_vod_configs.get_multi(db, page=1, page_size=99,
-                                                                order_bys=[asc(curd_vod_configs.model.order_num)])
-        # print(data)
-        config = {}
-        for d in data:
-            config[d['key']] = d['value']
+        rules = hipy_rules + drpy_rules
+        # 自定义额外sites,从用户附加里面去获取
+        sites = []
 
-        rules = {
-            'list': hipy_rules['results']
-        }
+        context = {'config': config, 'rules': rules,
+                   'host': host, 'mode': mode, 'sites': sites,
+                   'jxs': jxs, 'alists': [],
 
-        context = {'config': config, 'rules': rules, 'host': host}
-        print(context)
+                   }
+        # print(context)
         try:
             with open(file_path, encoding='utf-8') as f:
                 file_content = f.read()
@@ -173,7 +225,7 @@ async def t4_files(*,
     # logger.info(f'host:{host}')
     resp = get_file_path(db, group, filename)
     if isinstance(resp, int):
-        raise resp
+        raise HTTPException(status_code=resp)
 
     file_path = resp[0]
     if len(resp) > 1:
@@ -199,6 +251,26 @@ async def baidu():
 @router.get('/get_ip_location/{ipaddr}', summary="获取ip归属地")
 async def get_ip_location(ipaddr):
     return HTMLResponse(get_location_by_ip(ipaddr))
+
+
+@router.get('/hotsugg', summary="获取热搜")
+async def get_hot_search(*, request: Req, ):
+    """
+    默认腾讯接口，支持size=50;
+    可传from=sougou但是不支持size
+    from: sougou
+    size: 50
+    @param request:
+    @return:
+    """
+
+    def getParams(key=None, value=''):
+        return request.query_params.get(key) or value
+
+    s_from = getParams('from')
+    size = getParams('size')
+    data = getHotSuggest(s_from, size)
+    return respSuccessJson(data=data)
 
 
 @router.put('/database_update', summary="数据库升级")

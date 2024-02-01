@@ -239,8 +239,8 @@ async def vod_generate(*, api: str = "", request: Request,
             logger.error(error_msg)
             return respErrorJson(error_code.ERROR_INTERNAL.set_msg(error_msg))
 
-    home_data = vod.homeContent(filterable)
-    home_video_data = vod.homeVideoContent()
+    home_data = vod.homeContent(filterable) or {}
+    home_video_data = vod.homeVideoContent() or {}
     home_data.update(home_video_data)
 
     return respVodJson(home_data)

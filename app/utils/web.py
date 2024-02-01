@@ -28,6 +28,23 @@ def render_template_string(source: str, **context):
     return view
 
 
+def remove_comments(text):
+    """
+    字符串删除注释
+    @param text:带注释的字符串
+    @return:
+    """
+
+    pattern = re.compile(r'\s*[\'\"]{3}[\S\s]*?[\'\"]{3}')
+    text = pattern.sub('', text)
+    pattern = re.compile(r'\s*/\*[\S\s]*?\*/')
+    text = pattern.sub('', text)
+    text = text.splitlines()
+    text = [txt for txt in text if not (txt.strip().startswith('//') or txt.strip().startswith('#'))]
+    text = '\n'.join(text)
+    return text.strip()
+
+
 class HtmlSender:
     ENV = Environment(loader=FileSystemLoader('./'))
 
