@@ -7,6 +7,8 @@
 
 from typing import Any, Optional, List
 
+import ujson
+
 from core.config import settings
 from core.logger import logger
 from fastapi import APIRouter, Depends, HTTPException
@@ -203,6 +205,19 @@ async def refreshConfigs(*,
             'value': 'https://tuapi.eees.cc/api.php?category=fengjing&type=302',
             'remark': 'hipy的自定义壁纸，可以是文件或着链接',
             'value_type': 'url',
+        },
+        {
+            'name': '环境变量',
+            'key': 'vod_hipy_env',
+            'value': ujson.dumps({
+                "bili_cookie": "SESSDATA=93f1b89c%2C1685503124%2C760e0%2Ac1; bili_jct=5e0a1e65979f4d9f48fd9c158362b573; DedeUserID=253592508",
+                "douban": "264291961", "vmid": "253592508", "test_env": "测试环境变量",
+                "appkey": "1d8b6e7d45233436",
+                "access_key": "3841bf63f94a8e8d0181e59470167aa1CjCup6x6MSEv8rLctbAuWLQs0ra3Ej09EJhjMBrgAsaVt3ALYteyfxjvizVqWrnlR0ESVmlucDVmcHBycjZDVk9KMDFucTRmMEcwMUlHWWhQZkVvUnRqeTdMWTNjU2phSkdpRkZFTGJPQUZ6NEVmcVVMUUx2WjZBTl8wb0lsTjhLbmp6SHVxRjdRIIEC"},
+                ensure_ascii=False
+            ),
+            'remark': 'hipy的环境变量，json数据',
+            'value_type': 'json',
         },
     ]
     exist_records = []
