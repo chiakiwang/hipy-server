@@ -15,7 +15,7 @@ class RulesSchema(BaseModel):
     filterable: int = 0
     quickSearch: int = 0
     active: bool = True
-    ext: str = ''
+    ext: Optional[str] = None
 
 
 class RulesContentSchema(BaseModel):

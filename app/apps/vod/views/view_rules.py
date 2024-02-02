@@ -25,6 +25,8 @@ from common.resp import respSuccessJson, respErrorJson
 from common.schemas import StatusSchema, ActiveSchema
 
 from pathlib import Path
+from quickjs import Function, Context
+import ujson
 
 router = APIRouter()
 
@@ -217,6 +219,9 @@ async def refreshRules(*,
     logger.info(groups)
     files_data = []
     spiders_dirs = []
+    # 预置带模板的js源文件检测
+    prefix_js_code = ''
+    enfix_js_code = ''
     for key, value in groups.items():
         group_label = key
         group_value = value
@@ -224,6 +229,13 @@ async def refreshRules(*,
         os.makedirs(spiders_dir, exist_ok=True)
         spiders_dirs.append(spiders_dir)
         files = os.listdir(spiders_dir)
+        # 如果js源列表有文件，则装载预置的js模板代码
+        if group_label == 'drpy_js' and len(files) > 0:
+            with open(f'{group_value.replace("_js", "_libs")}/模板.js', encoding='utf-8') as f:
+                before = f.read().split('export default')[0]
+            prefix_js_code = before + '\n' + 'var muban = JSON.parse(JSON.stringify(mubanDict));\n'
+            enfix_js_code = '\n' + 'if(rule.模板){rule = Object.assign(muban[rule.模板],rule)}'
+
         for file in files:
             fpath = os.path.join(spiders_dir, file)
             fpath = Path(fpath).as_posix()
@@ -231,13 +243,43 @@ async def refreshRules(*,
             name = os.path.basename(fpath)
             base_name, extension = os.path.splitext(name)
             if os.path.isfile(fpath):
-                files_data.append({
+                file_info = {
                     'name': base_name,
                     'group': group_value,
                     'path': fpath,
                     'is_exist': True,
                     'file_type': extension,
-                })
+                    'searchable': 0,
+                    'quickSearch': 0,
+                    'filterable': 0,
+                }
+                if group_label == 'hipy' and extension == '.py':
+                    file_info.update({
+                        'searchable': 1,
+                        'quickSearch': 0,
+                        'filterable': 1,
+                    })
+                elif group_label == 'drpy_js' and extension == '.js':
+                    ctx = Context()
+                    with open(fpath, encoding='utf-8') as f:
+                        js_code = f.read()
+                    try:
+                        # js代码里用到了muban变量才加入预置代码
+                        if 'muban' in js_code:
+                            js_code = prefix_js_code + js_code + enfix_js_code
+                        ctx.eval(js_code)
+                        rule = ujson.loads(ctx.get('rule').json())
+                        searchable = rule.get('searchable') or 0
+                        quickSearch = rule.get('quickSearch') or 0
+                        filterable = rule.get('filterable') or 0
+                        file_info.update({
+                            'searchable': searchable if searchable == 0 else 1,
+                            'quickSearch': quickSearch if quickSearch == 0 else 1,
+                            'filterable': filterable if filterable == 0 else 1,
+                        })
+                    except Exception as e:
+                        logger.info(f'解析js源{fpath}发生错误:{e}')
+                files_data.append(file_info)
     exist_records = []
     for file_info in files_data:
         record = curd.getByName(db, file_info['name'], file_info['file_type'], file_info['group'])

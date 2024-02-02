@@ -95,6 +95,9 @@ async def hipy_configs(*,
         'name': rec['name'],
         'file_type': rec['file_type'],
         'ext': rec['ext'],
+        'searchable': rec['searchable'],
+        'quickSearch': rec['quickSearch'],
+        'filterable': rec['filterable'],
         'order_num': rec['order_num'],
     } for rec in hipy_rules.get('results') or [] if rec['active'] == True]
 
@@ -102,6 +105,9 @@ async def hipy_configs(*,
         'name': rec['name'],
         'file_type': rec['file_type'],
         'ext': rec['ext'],
+        'searchable': rec['searchable'],
+        'quickSearch': rec['quickSearch'],
+        'filterable': rec['filterable'],
         'order_num': rec['order_num'],
     } for rec in drpy_rules.get('results') or [] if rec['active'] == True]
 

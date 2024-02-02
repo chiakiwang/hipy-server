@@ -40,3 +40,4 @@ ujson
 pyquery
 jsonpath
 jpype1
+quickjs
