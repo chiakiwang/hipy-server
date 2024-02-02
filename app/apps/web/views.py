@@ -4,7 +4,7 @@
 # Author: DaShenHan&道长-----先苦后甜，任凭晚风拂柳颜------
 # Author's Blog: https://blog.csdn.net/qq_32394351
 # Date  : 2023/12/3
-
+import ujson
 from fastapi import APIRouter, Depends, Query, WebSocket, Request as Req, HTTPException
 from starlette.responses import HTMLResponse, RedirectResponse, Response
 import os
@@ -172,6 +172,11 @@ async def hipy_configs(*,
         rules = hipy_rules + drpy_rules
         # 按order_num排序
         rules.sort(key=lambda x: x['order_num'])
+
+        rules = ujson.dumps(rules, ensure_ascii=False)
+        # rules里支持{{host}}渲染
+        rules = render_template_string(rules, **{'host': host})
+        rules = ujson.loads(rules)
         # print(rules)
         # 自定义额外sites,从用户附加里面去获取
         sites = []
@@ -190,7 +195,8 @@ async def hipy_configs(*,
             # render_dict = json.loads(render_text)
             # print(render_dict)
             # return HTMLResponse(render_text)
-            render_text = render_template_string(render_text, **context)
+            # rules经过{{host}}渲染后这里不需要二次渲染
+            # render_text = render_template_string(render_text, **context)
             return Response(status_code=200, media_type='text/plain', content=render_text)
         except Exception as e:
             raise HTTPException(status_code=500, detail=f"{e}")
