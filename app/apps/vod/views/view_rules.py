@@ -135,6 +135,65 @@ async def setRecordRawContent(*,
     return respSuccessJson(msg=msg)
 
 
+def update_file_info(file_info, group_label, extension, fpath, prefix_js_code, endfix_js_code):
+    """
+    更新file_info字典
+    @param file_info: 字典
+    @param group_label: 文件组标签如hipy/drpy_js
+    @param extension: 文件后缀
+    @param fpath:  文件完整路径
+    @param prefix_js_code: js前置代码
+    @param endfix_js_code: js后置代码
+    @return:
+    """
+    if group_label == 'hipy' and extension == '.py':
+        file_info.update({
+            'searchable': 1,
+            'quickSearch': 0,
+            'filterable': 1,
+        })
+    elif group_label == 'drpy_js' and extension == '.js':
+        ctx = Context()
+        with open(fpath, encoding='utf-8') as f:
+            js_code = f.read()
+        try:
+            # js代码里用到了muban变量才加入预置代码
+            if 'muban' in js_code:
+                js_code = prefix_js_code + js_code + endfix_js_code
+            ctx.eval(js_code)
+            rule = ujson.loads(ctx.get('rule').json())
+            searchable = rule.get('searchable') or 0
+            quickSearch = rule.get('quickSearch') or 0
+            filterable = rule.get('filterable') or 0
+            file_info.update({
+                'searchable': searchable if searchable == 0 else 1,
+                'quickSearch': quickSearch if quickSearch == 0 else 1,
+                'filterable': filterable if filterable == 0 else 1,
+            })
+        except Exception as e:
+            logger.info(f'解析js源{fpath}发生错误:{e}')
+
+
+def get_prefix_end_js(group_label, group_value, files):
+    """
+    预置带模板的js源文件检测
+    如果js源列表有文件，则装载预置的js模板代码
+    返回模板前置代码和模板后置代码
+    @param group_label: 文件分组标签
+    @param group_value: 文件分组值
+    @param files: 可用的文件
+    @return:
+    """
+    if group_label == 'drpy_js' and len(files) > 0:
+        with open(f'{group_value.replace("_js", "_libs")}/模板.js', encoding='utf-8') as f:
+            before = f.read().split('export default')[0]
+        prefix_js_code = before + '\n' + 'var muban = JSON.parse(JSON.stringify(mubanDict));\n'
+        endfix_js_code = '\n' + 'if(rule.模板){rule = Object.assign(muban[rule.模板],rule)}'
+        return prefix_js_code, endfix_js_code
+    else:
+        return "", ""
+
+
 @router.post(api_url + "/file/uploadData", summary="上传源")
 async def uploadData(*,
                      u: Users = Depends(deps.user_perm([f"{access_name}:post"])),
@@ -152,12 +211,15 @@ async def uploadData(*,
         groups[li['label']] = li['value']
     logger.info(groups)
     skip_files = []
+
     # 判断分组在系统字典里才进行上传操作
     if group in groups.values():
+        group_label = [key for key, value in groups.items() if value == group][0]
         files_data = []
         spiders_dir = os.path.join(project_dir, group)
         os.makedirs(spiders_dir, exist_ok=True)
         count = 0
+        prefix_js_code, endfix_js_code = get_prefix_end_js(group_label, group, files)
         for i in files:
             fpath = os.path.join(spiders_dir, i.filename)
             fpath = Path(fpath).as_posix()
@@ -168,18 +230,25 @@ async def uploadData(*,
             # 不存在或者支持覆盖，构造数据
             name = os.path.basename(fpath)
             base_name, extension = os.path.splitext(name)
-            files_data.append({
+            file_info = {
                 'name': base_name,
                 'group': group,
                 'path': fpath,
                 'is_exist': True,
                 'file_type': extension,
-            })
+                'searchable': 0,
+                'quickSearch': 0,
+                'filterable': 0,
+            }
 
             # 写入本地文件
             file_content = await i.read()
             with open(fpath, 'wb') as f:
                 f.write(file_content)
+
+            update_file_info(file_info, group_label, extension, fpath, prefix_js_code, endfix_js_code)
+
+            files_data.append(file_info)
             count += 1
 
         for file_info in files_data:
@@ -219,9 +288,6 @@ async def refreshRules(*,
     logger.info(groups)
     files_data = []
     spiders_dirs = []
-    # 预置带模板的js源文件检测
-    prefix_js_code = ''
-    enfix_js_code = ''
     for key, value in groups.items():
         group_label = key
         group_value = value
@@ -229,12 +295,7 @@ async def refreshRules(*,
         os.makedirs(spiders_dir, exist_ok=True)
         spiders_dirs.append(spiders_dir)
         files = os.listdir(spiders_dir)
-        # 如果js源列表有文件，则装载预置的js模板代码
-        if group_label == 'drpy_js' and len(files) > 0:
-            with open(f'{group_value.replace("_js", "_libs")}/模板.js', encoding='utf-8') as f:
-                before = f.read().split('export default')[0]
-            prefix_js_code = before + '\n' + 'var muban = JSON.parse(JSON.stringify(mubanDict));\n'
-            enfix_js_code = '\n' + 'if(rule.模板){rule = Object.assign(muban[rule.模板],rule)}'
+        prefix_js_code, endfix_js_code = get_prefix_end_js(group_label, group_value, files)
 
         for file in files:
             fpath = os.path.join(spiders_dir, file)
@@ -253,32 +314,7 @@ async def refreshRules(*,
                     'quickSearch': 0,
                     'filterable': 0,
                 }
-                if group_label == 'hipy' and extension == '.py':
-                    file_info.update({
-                        'searchable': 1,
-                        'quickSearch': 0,
-                        'filterable': 1,
-                    })
-                elif group_label == 'drpy_js' and extension == '.js':
-                    ctx = Context()
-                    with open(fpath, encoding='utf-8') as f:
-                        js_code = f.read()
-                    try:
-                        # js代码里用到了muban变量才加入预置代码
-                        if 'muban' in js_code:
-                            js_code = prefix_js_code + js_code + enfix_js_code
-                        ctx.eval(js_code)
-                        rule = ujson.loads(ctx.get('rule').json())
-                        searchable = rule.get('searchable') or 0
-                        quickSearch = rule.get('quickSearch') or 0
-                        filterable = rule.get('filterable') or 0
-                        file_info.update({
-                            'searchable': searchable if searchable == 0 else 1,
-                            'quickSearch': quickSearch if quickSearch == 0 else 1,
-                            'filterable': filterable if filterable == 0 else 1,
-                        })
-                    except Exception as e:
-                        logger.info(f'解析js源{fpath}发生错误:{e}')
+                update_file_info(file_info, group_label, extension, fpath, prefix_js_code, endfix_js_code)
                 files_data.append(file_info)
     exist_records = []
     for file_info in files_data:
