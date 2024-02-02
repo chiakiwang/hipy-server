@@ -16,6 +16,7 @@ class RulesSchema(BaseModel):
     quickSearch: int = 0
     active: bool = True
     ext: Optional[str] = None
+    order_num: int = 1
 
 
 class RulesContentSchema(BaseModel):
