@@ -21,4 +21,7 @@ class VodRules(Base):
     file_type = fields.Char(string='文件类型')
     ext = fields.Text(string='ext扩展')
     status = fields.Integer(string='源状态')
+    searchable = fields.Integer(string='可搜索')
+    filterable = fields.Integer(string='可筛选')
+    quickSearch = fields.Integer(string='可快速搜索')
     active = fields.Boolean(string='是否显示', default=True)

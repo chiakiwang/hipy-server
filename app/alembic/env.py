@@ -1,6 +1,6 @@
 from logging.config import fileConfig
 
-from sqlalchemy import engine_from_config
+from sqlalchemy import engine_from_config, create_engine
 from sqlalchemy import pool
 
 from alembic import context
@@ -23,12 +23,14 @@ if config.config_file_name is not None:
 # from db.base_class import Base
 # target_metadata = Base.metadata
 from apps.system.models.config_settings import ConfigSettings
+
 target_metadata = ConfigSettings.metadata
 
 # other values from the config, defined by the needs of env.py,
 # can be acquired:
 # my_important_option = config.get_main_option("my_important_option")
 # ... etc.
+from core.config import settings
 
 
 def run_migrations_offline() -> None:
@@ -43,7 +45,8 @@ def run_migrations_offline() -> None:
     script output.
 
     """
-    url = config.get_main_option("sqlalchemy.url")
+    # url = config.get_main_option("sqlalchemy.url")
+    url = settings.getSqlalchemyURL()
     context.configure(
         url=url,
         target_metadata=target_metadata,
@@ -62,11 +65,12 @@ def run_migrations_online() -> None:
     and associate a connection with the context.
 
     """
-    connectable = engine_from_config(
-        config.get_section(config.config_ini_section, {}),
-        prefix="sqlalchemy.",
-        poolclass=pool.NullPool,
-    )
+    # connectable = engine_from_config(
+    #     config.get_section(config.config_ini_section, {}),
+    #     prefix="sqlalchemy.",
+    #     poolclass=pool.NullPool,
+    # )
+    connectable = create_engine(settings.getSqlalchemyURL(), pool_pre_ping=True, echo=settings.ECHO_SQL)
 
     with connectable.connect() as connection:
         context.configure(

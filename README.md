@@ -11,12 +11,14 @@
 [组件文档](https://element.eleme.io/#/zh-CN/component/input)
 [系统资源监控](https://zhuanlan.zhihu.com/p/664812265)  
 [ws,jinja](https://www.jianshu.com/p/ca9b257a1a44)  
-[cachetools文档](https://cachetools.readthedocs.io/en/stable/#cachetools.Cache)
+[cachetools文档](https://cachetools.readthedocs.io/en/stable/#cachetools.Cache)  
+[alembic参考文档](https://zhuanlan.zhihu.com/p/306898869?utm_id=0)
 
 ```shell
 alembic init alembic
 
-sqlalchemy.url = mysql+pymysql://root:root@localhost:3306/fastapi_vue
+# sqlalchemy.url = mysql+pymysql://root:root@localhost:3306/hipy
+sqlalchemy.url = postgresql://hipy:hipy@localhost:5432/hipy
 
 # import sys, os
 # sys.path.append(os.path.join(os.path.dirname(__file__), "./"))

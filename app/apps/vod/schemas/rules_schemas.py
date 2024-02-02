@@ -11,6 +11,9 @@ from pydantic import BaseModel, Field, ValidationError, validator
 
 class RulesSchema(BaseModel):
     status: int = 1
+    searchable: int = 0
+    filterable: int = 0
+    quickSearch: int = 0
     active: bool = True
     ext: str = ''
 
