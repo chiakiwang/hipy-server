@@ -99,7 +99,7 @@ async def hipy_configs(*,
         'quickSearch': rec['quickSearch'],
         'filterable': rec['filterable'],
         'order_num': rec['order_num'],
-    } for rec in hipy_rules.get('results') or [] if rec['active'] == True]
+    } for rec in hipy_rules.get('results') or [] if rec['active'] and rec['is_exist']]
 
     drpy_rules = [{
         'name': rec['name'],
@@ -109,7 +109,7 @@ async def hipy_configs(*,
         'quickSearch': rec['quickSearch'],
         'filterable': rec['filterable'],
         'order_num': rec['order_num'],
-    } for rec in drpy_rules.get('results') or [] if rec['active'] == True]
+    } for rec in drpy_rules.get('results') or [] if rec['active'] and rec['is_exist']]
 
     # print(hipy_rules)
     # print(drpy_rules)
