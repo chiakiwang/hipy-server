@@ -17,6 +17,7 @@ from ...permission.models import Users
 
 from common import deps, error_code
 from ..schemas import rules_schemas
+from common.schemas import OrderNumSchema
 from ..curd.curd_rules import curd_vod_rules as curd
 from apps.system.curd.curd_dict_data import curd_dict_data
 from ..models.vod_rules import VodRules
@@ -107,6 +108,17 @@ async def setRecord(*,
                     _id: int,
                     obj: rules_schemas.RulesSchema,
                     ):
+    curd.update(db, _id=_id, obj_in=obj, modifier_id=u['id'])
+    return respSuccessJson()
+
+
+@router.put(api_url + "/{_id}/order_num", summary="修改排序-置顶置底")
+async def setOrderNum(*,
+                      db: Session = Depends(deps.get_db),
+                      u: Users = Depends(deps.user_perm([f"{access_name}:put"])),
+                      _id: int,
+                      obj: OrderNumSchema
+                      ):
     curd.update(db, _id=_id, obj_in=obj, modifier_id=u['id'])
     return respSuccessJson()
 
