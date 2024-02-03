@@ -44,7 +44,6 @@ id,created_time,creator_id,modified_time,modifier_id,is_deleted,name,group,path,
 54,2024-02-02 15:59:25.736026,1,2024-02-03 16:41:32.698605,1,0,在线之家,t4/files/drpy_js,F:/pywork/hipy/hipy-server/app/t4/files/drpy_js/在线之家.js,True,54,.js,,1,1,1,0,True
 52,2024-02-01 14:32:51.350356,1,2024-02-03 16:41:32.706190,1,0,爱看机器人,t4/files/drpy_js,F:/pywork/hipy/hipy-server/app/t4/files/drpy_js/爱看机器人.js,True,52,.js,,1,1,1,0,True
 24,2024-02-01 14:31:22.128734,1,2024-02-03 16:41:32.719242,1,0,菜狗,t4/files/drpy_js,F:/pywork/hipy/hipy-server/app/t4/files/drpy_js/菜狗.js,True,24,.js,,1,1,1,0,True
-68,2024-02-03 16:41:32.722555,1,2024-02-03 16:41:32.722555,0,0,豆瓣,t4/files/drpy_js,F:/pywork/hipy/hipy-server/app/t4/files/drpy_js/豆瓣.js,True,62,.js,,1,1,1,1,True
 53,2024-02-02 15:48:08.743430,1,2024-02-03 16:41:32.729018,1,0,酷云77,t4/files/drpy_js,F:/pywork/hipy/hipy-server/app/t4/files/drpy_js/酷云77.js,True,53,.js,,1,1,1,0,True
 26,2024-02-01 14:31:22.135010,1,2024-02-03 16:41:32.739652,1,0,alist.min,t4/files/drpy_libs,F:/pywork/hipy/hipy-server/app/t4/files/drpy_libs/alist.min.js,True,26,.js,,1,0,0,0,True
 63,2024-02-03 16:40:09.532841,1,2024-02-03 16:41:32.761980,1,0,custom_jsapi,t4/files/drpy_libs,F:/pywork/hipy/hipy-server/app/t4/files/drpy_libs/custom_jsapi.jar,True,57,.jar,,1,0,0,0,True
@@ -55,6 +54,7 @@ id,created_time,creator_id,modified_time,modifier_id,is_deleted,name,group,path,
 67,2024-02-03 16:40:09.621637,1,2024-02-03 16:41:32.848597,1,0,zb,t4/files/txt,F:/pywork/hipy/hipy-server/app/t4/files/txt/zb.txt,True,61,.txt,,1,0,0,0,True
 56,2024-02-02 16:38:12.276321,1,2024-02-03 16:41:32.851841,1,0,555影视[飞],t4/files/drpy_js,E:/pywork/hipy/hipy-server/app/t4/files/drpy_js/555影视[飞].js,False,56,.js,,1,1,1,0,True
 55,2024-02-02 16:37:12.679917,1,2024-02-03 16:41:32.851841,1,0,兔小贝,t4/files/drpy_js,E:/pywork/hipy/hipy-server/app/t4/files/drpy_js/兔小贝.js,False,55,.js,,1,1,0,0,True
+68,2024-02-03 16:41:32.722555,1,2024-02-03 16:54:18.938809,1,0,豆瓣,t4/files/drpy_js,F:/pywork/hipy/hipy-server/app/t4/files/drpy_js/豆瓣.js,True,62,.js,?render=1,1,1,1,1,True
 66,2024-02-03 16:40:09.599471,1,2024-02-03 16:41:32.823940,1,0,live2mv_data,t4/files/json,F:/pywork/hipy/hipy-server/app/t4/files/json/live2mv_data.json,True,60,.json,,1,0,0,0,True
 47,2024-02-01 14:31:22.206951,1,2024-02-03 16:41:32.831005,1,0,config,t4/files/txt,F:/pywork/hipy/hipy-server/app/t4/files/txt/config.txt,True,47,.txt,,1,0,0,0,True
 48,2024-02-01 14:31:22.210714,1,2024-02-03 16:41:32.834447,1,0,custom,t4/files/txt,F:/pywork/hipy/hipy-server/app/t4/files/txt/custom.conf,True,48,.conf,,1,0,0,0,True
