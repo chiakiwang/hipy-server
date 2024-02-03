@@ -10,7 +10,7 @@
     "key":"{% if mode == 0 %}hipy_t4_{{ rule.name }}{% else %}hipy_t3_{{ rule.name }}{% endif %}",
     "name":"{% if mode == 0 %}{{ rule.name }}(hipy_t4){% else %}{{ rule.name }}(hipy_t3){% endif %}",
     "type":{% if mode == 0 %}4{% else %}3{% endif %},
-    "api":"{% if mode == 0 %}{{ host }}/api/v1/vod/{{ rule.name }}{% else %}{{ host }}/files/hipy/{{ rule.name }}{{rule.file_type}}{% endif %}",
+    "api":"{% if mode == 0 %}{{ host }}/api/v1/vod/{{ rule.name }}{% if config.vod_passwd %}?pwd={{config.vod_passwd}}{% endif %}{% else %}{{ host }}/files/hipy/{{ rule.name }}{{rule.file_type}}{% endif %}",
     "searchable": {{ rule.searchable or 0 }},
     "quickSearch": {{ rule.quickSearch or 0}},
     "filterable": {{ rule.filterable or 0}},

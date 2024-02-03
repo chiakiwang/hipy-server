@@ -40,7 +40,7 @@ class CURDVodConfigs(CRUDBase):
         logger.info('=========测试缓存是否生效,仅第一次访问无缓存时出现此提示=========')
         if not obj:
             return {}
-        return {'id': obj.id, 'key': obj.key, 'name': obj.name,
+        return {'id': obj.id, 'key': obj.key, 'name': obj.name, 'status': obj.status,
                 'value': int(obj.value) if obj.value.isdigit() else obj.value,
                 'value_type': obj.value_type,
                 }

@@ -128,7 +128,8 @@ async def hipy_configs(*,
         cf_value_type = 'error'
 
     if cf_value_type == 'file':
-        data, total, offset, limit = curd_vod_configs.get_multi(db, page=1, page_size=99,
+        filters = [curd_vod_configs.model.status == 1]
+        data, total, offset, limit = curd_vod_configs.get_multi(db, page=1, page_size=99, filters=filters,
                                                                 order_bys=[asc(curd_vod_configs.model.order_num)])
         # print(data)
         config = {}

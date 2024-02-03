@@ -18,6 +18,7 @@ from common.resp import respVodJson, respErrorJson, abort
 from urllib.parse import quote, unquote
 import requests
 from apps.permission.models.user import Users
+from apps.vod.curd.curd_configs import curd_vod_configs
 
 from common import deps
 from core.logger import logger
@@ -65,6 +66,18 @@ def vod_generate(*, api: str = "", request: Request,
     # if req_method == 'head' and (t4_api + '&') not in whole_url:
     if req_method == 'head' and not is_proxy:
         return abort(403)
+
+    if not is_proxy:
+        # 非本地代理请求需要验证密码
+        pwd = getParams('pwd')
+        try:
+            vod_configs_obj = curd_vod_configs.getByKey(db, key='vod_passwd')
+            vod_passwd = vod_configs_obj.get('value') if vod_configs_obj.get('status') == 1 else ''
+        except Exception as e:
+            logger.info(f'获取vod_passwd发生错误:{e}')
+            vod_passwd = ''
+        if vod_passwd and pwd != vod_passwd:
+            return abort(403)
 
     try:
         vod = Vod(api=api, query_params=request.query_params, t4_api=t4_api).module
