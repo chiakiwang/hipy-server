@@ -247,6 +247,7 @@ def get_file_path(db, group, filename):
 @router.get("/files/{group}/{filename:path}", summary="T4静态文件")
 async def t4_files(*,
                    db: Session = Depends(deps.get_db),
+                   r: asyncRedis = Depends(deps.get_redis),
                    request: Req,
                    group: str = Query(..., title="hipy源分组"),
                    filename: str = Query(..., title="hipy源文件名")):
@@ -257,6 +258,10 @@ async def t4_files(*,
     @param filename: 文件名
     @return:
     """
+
+    def getParams(key=None, value=''):
+        return request.query_params.get(key) or value
+
     host = str(request.base_url)
     # logger.info(f'host:{host}')
     resp = get_file_path(db, group, filename)
@@ -264,11 +269,28 @@ async def t4_files(*,
         raise HTTPException(status_code=resp)
 
     file_path = resp[0]
-    if len(resp) > 1:
-        media_type = resp[1]
-        return FileResponse(file_path, media_type=media_type)
+    media_type = resp[1] if len(resp) > 1 else None
+    if file_path.endswith('.js') and getParams('render'):
+        try:
+            key = 'vod_hipy_env'
+            if r:
+                vod_configs_obj = await curd_vod_configs.getByKeyWithCache(r, db, key=key)
+            else:
+                vod_configs_obj = curd_vod_configs.getByKey(db, key=key)
+            env = vod_configs_obj.get('value')
+            env = ujson.loads(env)
+        except Exception as e:
+            logger.info(f'获取环境变量发生错误:{e}')
+            env = {}
+        with open(file_path, encoding='utf-8') as f:
+            js_code = f.read()
+
+        for k in env.keys():
+            if f'${k}' in js_code:
+                js_code = js_code.replace(f'${k}', f'{env[k]}')
+        return Response(js_code, media_type=media_type)
     else:
-        return FileResponse(file_path)
+        return FileResponse(file_path, media_type=media_type)
 
 
 @router.get('/baidu', summary="访问百度")
