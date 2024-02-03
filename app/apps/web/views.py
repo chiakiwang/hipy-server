@@ -94,7 +94,7 @@ async def hipy_configs(*,
     hipy_rules = [{
         'name': rec['name'],
         'file_type': rec['file_type'],
-        'ext': rec['ext'],
+        'ext': rec['ext'] or '',
         'searchable': rec['searchable'],
         'quickSearch': rec['quickSearch'],
         'filterable': rec['filterable'],
@@ -104,7 +104,7 @@ async def hipy_configs(*,
     drpy_rules = [{
         'name': rec['name'],
         'file_type': rec['file_type'],
-        'ext': rec['ext'],
+        'ext': rec['ext'] or '',
         'searchable': rec['searchable'],
         'quickSearch': rec['quickSearch'],
         'filterable': rec['filterable'],
@@ -113,14 +113,19 @@ async def hipy_configs(*,
 
     # print(hipy_rules)
     # print(drpy_rules)
-    key = 'vod_config_base'
-    if r:
-        vod_configs_obj = await curd_vod_configs.getByKeyWithCache(r, db, key=key)
-    else:
-        vod_configs_obj = curd_vod_configs.getByKey(db, key=key)
+    try:
+        key = 'vod_config_base'
+        if r:
+            vod_configs_obj = await curd_vod_configs.getByKeyWithCache(r, db, key=key)
+        else:
+            vod_configs_obj = curd_vod_configs.getByKey(db, key=key)
 
-    cf_value = vod_configs_obj.get('value')
-    cf_value_type = vod_configs_obj.get('value_type')
+        cf_value = vod_configs_obj.get('value')
+        cf_value_type = vod_configs_obj.get('value_type')
+    except Exception as e:
+        logger.info(f'获取vod_config_base发生错误:{e}')
+        cf_value = ''
+        cf_value_type = 'error'
 
     if cf_value_type == 'file':
         data, total, offset, limit = curd_vod_configs.get_multi(db, page=1, page_size=99,

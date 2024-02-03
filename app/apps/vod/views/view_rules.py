@@ -19,6 +19,7 @@ from common import deps, error_code
 from ..schemas import rules_schemas
 from common.schemas import OrderNumSchema
 from ..curd.curd_rules import curd_vod_rules as curd
+from ..curd.curd_configs import curd_vod_configs
 from apps.system.curd.curd_dict_data import curd_dict_data
 from ..models.vod_rules import VodRules
 
@@ -28,6 +29,12 @@ from common.schemas import StatusSchema, ActiveSchema
 from pathlib import Path
 from quickjs import Function, Context
 import ujson
+import re
+
+try:
+    from redis.asyncio import Redis as asyncRedis
+except ImportError:
+    from aioredis import Redis as asyncRedis
 
 router = APIRouter()
 
@@ -147,7 +154,7 @@ async def setRecordRawContent(*,
     return respSuccessJson(msg=msg)
 
 
-def update_file_info(file_info, group_label, extension, fpath, prefix_js_code, endfix_js_code):
+def update_file_info(file_info, group_label, extension, fpath, prefix_js_code, endfix_js_code, env=None):
     """
     更新file_info字典
     @param file_info: 字典
@@ -156,8 +163,11 @@ def update_file_info(file_info, group_label, extension, fpath, prefix_js_code, e
     @param fpath:  文件完整路径
     @param prefix_js_code: js前置代码
     @param endfix_js_code: js后置代码
+    @param env: 环境变量字典
     @return:
     """
+    if env is None:
+        env = {}
     if group_label == 'hipy' and extension == '.py':
         file_info.update({
             'searchable': 1,
@@ -165,6 +175,9 @@ def update_file_info(file_info, group_label, extension, fpath, prefix_js_code, e
             'filterable': 1,
         })
     elif group_label == 'drpy_js' and extension == '.js':
+        # 构造环境变量的正则匹配表达式 /\$(bili_cookie|douban|vmid|test_env|appkey|access_key)/
+        env_keys = [f'{key}' for key in env.keys()]
+        env_match = r'\$(' + '|'.join(env_keys) + ')'
         ctx = Context()
         with open(fpath, encoding='utf-8') as f:
             js_code = f.read()
@@ -173,7 +186,17 @@ def update_file_info(file_info, group_label, extension, fpath, prefix_js_code, e
             if 'muban' in js_code:
                 js_code = prefix_js_code + js_code + endfix_js_code
             ctx.eval(js_code)
-            rule = ujson.loads(ctx.get('rule').json())
+            rule_json = ctx.get('rule').json()
+            # 这里可以正则判断json里是否含有环境变量，如果有就更新ext为?render=1
+            has_env = re.search(rf'{env_match}', rule_json, re.M | re.I)
+            if has_env:
+                print(f'文件{file_info["path"]}存在环境变量:', has_env)
+                # 标记该js文件需要渲染
+                file_info.update({
+                    'ext': '?render=1'
+                })
+
+            rule = ujson.loads(rule_json)
             searchable = rule.get('searchable') or 0
             quickSearch = rule.get('quickSearch') or 0
             filterable = rule.get('filterable') or 0
@@ -210,6 +233,7 @@ def get_prefix_end_js(group_label, group_value, files):
 async def uploadData(*,
                      u: Users = Depends(deps.user_perm([f"{access_name}:post"])),
                      db: Session = Depends(deps.get_db),
+                     r: asyncRedis = Depends(deps.get_redis),
                      updateSupport: bool = Query(...),
                      group: str = Query(...),
                      files: List[UploadFile] = File(...)):
@@ -223,6 +247,19 @@ async def uploadData(*,
         groups[li['label']] = li['value']
     logger.info(groups)
     skip_files = []
+
+    try:
+        key = 'vod_hipy_env'
+        if r:
+            vod_configs_obj = await curd_vod_configs.getByKeyWithCache(r, db, key=key)
+        else:
+            vod_configs_obj = curd_vod_configs.getByKey(db, key=key)
+
+        env = vod_configs_obj.get('value')
+        env = ujson.loads(env)
+    except Exception as e:
+        logger.info(f'获取环境变量发生错误:{e}')
+        env = {}
 
     # 判断分组在系统字典里才进行上传操作
     if group in groups.values():
@@ -258,7 +295,7 @@ async def uploadData(*,
             with open(fpath, 'wb') as f:
                 f.write(file_content)
 
-            update_file_info(file_info, group_label, extension, fpath, prefix_js_code, endfix_js_code)
+            update_file_info(file_info, group_label, extension, fpath, prefix_js_code, endfix_js_code, env)
 
             files_data.append(file_info)
             count += 1
@@ -289,6 +326,7 @@ async def uploadData(*,
 @router.post(api_url + "/refresh", summary="刷新源")
 async def refreshRules(*,
                        db: Session = Depends(deps.get_db),
+                       r: asyncRedis = Depends(deps.get_redis),
                        u: Users = Depends(deps.user_perm([f"{access_name}:post"])), ):
     # 获取项目根目录
     project_dir = os.getcwd()
@@ -300,6 +338,19 @@ async def refreshRules(*,
     logger.info(groups)
     files_data = []
     spiders_dirs = []
+
+    try:
+        key = 'vod_hipy_env'
+        if r:
+            vod_configs_obj = await curd_vod_configs.getByKeyWithCache(r, db, key=key)
+        else:
+            vod_configs_obj = curd_vod_configs.getByKey(db, key=key)
+        env = vod_configs_obj.get('value')
+        env = ujson.loads(env)
+    except Exception as e:
+        logger.info(f'获取环境变量发生错误:{e}')
+        env = {}
+
     for key, value in groups.items():
         group_label = key
         group_value = value
@@ -326,7 +377,7 @@ async def refreshRules(*,
                     'quickSearch': 0,
                     'filterable': 0,
                 }
-                update_file_info(file_info, group_label, extension, fpath, prefix_js_code, endfix_js_code)
+                update_file_info(file_info, group_label, extension, fpath, prefix_js_code, endfix_js_code, env)
                 files_data.append(file_info)
     exist_records = []
     for file_info in files_data:
