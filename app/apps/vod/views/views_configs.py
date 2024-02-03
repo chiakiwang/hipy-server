@@ -224,6 +224,7 @@ async def refreshConfigs(*,
             'name': '环境变量',
             'key': 'vod_hipy_env',
             'value': ujson.dumps({
+                "ali_token": "682c41720d6d4c9d8ded00bcdd712870",
                 "bili_cookie": "SESSDATA=93f1b89c%2C1685503124%2C760e0%2Ac1; bili_jct=5e0a1e65979f4d9f48fd9c158362b573; DedeUserID=253592508",
                 "douban": "264291961", "vmid": "253592508", "test_env": "测试环境变量",
                 "appkey": "1d8b6e7d45233436",

@@ -13,7 +13,7 @@ from sqlalchemy.orm import Session
 from sqlalchemy import asc, desc, func
 from core.config import settings
 from core.logger import logger
-from utils.web import htmler, render_template_string, remove_comments
+from utils.web import htmler, render_template_string, remove_comments, parseJson
 from utils.cmd import update_db
 from utils.httpapi import get_location_by_ip, getHotSuggest
 from network.request import Request
@@ -70,6 +70,36 @@ async def blog():
 #     r = requests.get('http://192.168.31.49:5707/files/hipy/两个BT.json', timeout=5)
 #     print(r.text)
 #     return respSuccessJson(data=r.json())
+
+def merge_config(base_conf: dict, custom_conf: dict):
+    """
+    配置字典合并策略
+    @param base_conf:
+    @param custom_conf:
+    @return:
+    """
+    if not custom_conf or len(custom_conf.keys()) < 1:
+        return base_conf
+    for key, value in custom_conf.items():
+        # 合并列表
+        if base_conf.get(key) and isinstance(base_conf[key], list) and isinstance(value, list):
+            for v in value:
+                if not hasattr(v, 'order_num'):
+                    v['order_num'] = 9999
+            base_conf[key].extend(value)
+            if key == 'sites':
+                base_conf[key].sort(key=lambda x: x['order_num'])
+        # 合并字典
+        elif base_conf.get(key) and isinstance(base_conf[key], dict) and isinstance(value, dict):
+            base_conf[key].update(value)
+        # 覆盖其他类型
+        elif base_conf.get(key) and type(base_conf[key]) == type(value):
+            base_conf[key] = value
+        # 新增原来不存在的
+        elif not base_conf.get(key):
+            base_conf[key] = value
+    logger.info(f'合并配置共有解析数量:{len(base_conf.get("parses"))}')
+    return base_conf
 
 
 @router.get("/config/{mode}", summary="自动生成tvbox-hipy配置")
@@ -128,45 +158,70 @@ async def hipy_configs(*,
         cf_value_type = 'error'
 
     if cf_value_type == 'file':
+        def get_content(_d):
+            """
+            内部函数.获取配置参数对应文件的文本内容
+            @param _d: 参数dict
+            @return:
+            """
+            _d_value = _d['value']
+            _d_group = _d_value.split('/')[0]
+            _d_file_name = '/'.join(_d_value.split('/')[1:])
+            _resp = get_file_path(db, _d_group, _d_file_name)
+            if isinstance(_resp, list):
+                _file_path = _resp[0]
+                # print(jx_file_path)
+                with open(_file_path, encoding='utf-8') as f:
+                    _content = f.read()
+                _content = remove_comments(_content)
+            else:
+                _content = ''
+            return _content
+
         filters = [curd_vod_configs.model.status == 1]
         data, total, offset, limit = curd_vod_configs.get_multi(db, page=1, page_size=99, filters=filters,
                                                                 order_bys=[asc(curd_vod_configs.model.order_num)])
         # print(data)
         config = {}
         jxs = []
+        custom_content = ''
+        custom_dict = {}
+        hipy_env = {}
         for d in data:
             if d['value_type'] == 'file':
                 config[d['key']] = f"{host}/files/{d['value']}"
+            elif d['value_type'] == 'json':
+                try:
+                    d['value'] = ujson.loads(d['value'])
+                except Exception as e:
+                    logger.info(f"错误{e}.参数{d['key']}的值不是正确的json文本。转字典失败。赋值为空字典")
+                    d['value'] = {}
+                config[d['key']] = d['value']
             else:
                 config[d['key']] = d['value']
 
             if d['key'] == 'vod_vip_parse' and d['value_type'] == 'file':
-                d_value = d['value']
-                d_group = d_value.split('/')[0]
-                d_file_name = '/'.join(d_value.split('/')[1:])
-                resp = get_file_path(db, d_group, d_file_name)
-                if isinstance(resp, list):
-                    jx_file_path = resp[0]
-                    # print(jx_file_path)
-                    with open(jx_file_path, encoding='utf-8') as f:
-                        jx_content = f.read()
-                    jx_content = remove_comments(jx_content)
-                    for jx in jx_content.split('\n'):
-                        jx = jx.strip()
-                        jx_arr = jx.split(',')
-                        if len(jx_arr) > 1:
-                            jx_name = jx_arr[0]
-                            jx_url = jx_arr[1]
-                            jx_type = jx_arr[2] if len(jx_arr) > 2 else 0
-                            jx_ua = jx_arr[3] if len(jx_arr) > 3 else ''
-                            jx_flag = jx_arr[4] if len(jx_arr) > 4 else ''
-                            jxs.append({
-                                'name': jx_name,
-                                'url': jx_url,
-                                'type': jx_type,
-                                'ua': jx_ua,
-                                'flag': jx_flag,
-                            })
+                jx_content = get_content(d)
+                for jx in jx_content.split('\n'):
+                    jx = jx.strip()
+                    jx_arr = jx.split(',')
+                    if len(jx_arr) > 1:
+                        jx_name = jx_arr[0]
+                        jx_url = jx_arr[1]
+                        jx_type = jx_arr[2] if len(jx_arr) > 2 else 0
+                        jx_ua = jx_arr[3] if len(jx_arr) > 3 else ''
+                        jx_flag = jx_arr[4] if len(jx_arr) > 4 else ''
+                        jxs.append({
+                            'name': jx_name,
+                            'url': jx_url,
+                            'type': jx_type,
+                            'ua': jx_ua,
+                            'flag': jx_flag,
+                        })
+            elif d['key'] == 'vod_config_custom' and d['value_type'] == 'file':
+                custom_content = get_content(d)
+            elif d['key'] == 'vod_hipy_env' and d['value_type'] == 'json':
+                hipy_env = d['value']
 
         group = cf_value.split('/')[0]
         file_name = '/'.join(cf_value.split('/')[1:])
@@ -187,10 +242,19 @@ async def hipy_configs(*,
         # 自定义额外sites,从用户附加里面去获取
         sites = []
 
-        context = {'config': config, 'rules': rules,
+        context = {'config': config, 'rules': rules, 'env': hipy_env,
                    'host': host, 'mode': mode, 'sites': sites,
                    'jxs': jxs, 'alists': [],
                    }
+        if custom_content:
+            try:
+                render_custom_content = render_template_string(custom_content, **context)
+                custom_dict = parseJson(render_custom_content)
+            except Exception as e:
+                logger.info(f'获取custom_dict发生错误:{e}')
+
+        # print(custom_dict)
+        # print(config)
         # print(context)
         try:
             with open(file_path, encoding='utf-8') as f:
@@ -198,7 +262,10 @@ async def hipy_configs(*,
             render_text = render_template_string(file_content, **context)
             # 单引号替换双引号
             render_text = render_text.replace("'", '"')
-            # render_dict = json.loads(render_text)
+            if custom_content and custom_dict:
+                render_dict = ujson.loads(render_text)
+                merge_config(render_dict, custom_dict)
+                render_text = ujson.dumps(render_dict, ensure_ascii=False, indent=4)
             # print(render_dict)
             # return HTMLResponse(render_text)
             # rules经过{{host}}渲染后这里不需要二次渲染

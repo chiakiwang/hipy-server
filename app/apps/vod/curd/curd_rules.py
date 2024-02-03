@@ -23,7 +23,7 @@ class CURDVodRules(CRUDBase):
         return record
 
     def get_max_order_num(self, db: Session) -> int:
-        filter = (self.model.is_deleted == 0,)
+        filter = (self.model.is_deleted == 0, self.model.order_num != 9999)
         data = db.query(func.max(self.model.order_num).label('max_order_num')).filter(*filter).first()
         return data['max_order_num'] or 0
 

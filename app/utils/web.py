@@ -6,6 +6,7 @@
 # Date  : 2023/12/3
 import os
 import re
+from ast import literal_eval
 from core.config import settings
 from jinja2 import Environment, FileSystemLoader, Template
 
@@ -43,6 +44,11 @@ def remove_comments(text):
     text = [txt for txt in text if not (txt.strip().startswith('//') or txt.strip().startswith('#'))]
     text = '\n'.join(text)
     return text.strip()
+
+
+def parseJson(text: str):
+    text = text.replace('false', 'False').replace('true', 'True').replace('null', 'None')
+    return literal_eval(remove_comments(text))
 
 
 class HtmlSender:

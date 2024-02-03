@@ -14,6 +14,7 @@
     "searchable": {{ rule.searchable or 0 }},
     "quickSearch": {{ rule.quickSearch or 0}},
     "filterable": {{ rule.filterable or 0}},
+    "order_num": {{ rule.order_num }},
     "ext": "{{ rule.ext or ""}}"
 }{% else %}
 {
@@ -24,6 +25,7 @@
     "searchable": {{ rule.searchable or 0}},
     "quickSearch": {{ rule.quickSearch or 0}},
     "filterable": {{ rule.filterable or 0}},
+    "order_num": {{ rule.order_num }},
     "ext":"{{ host }}/files/drpy_js/{{ rule.name }}{{rule.file_type}}{{rule.ext}}"
 }{% endif %}{% if loop.last==False %},{% endif %}{% endfor %}
 {% if sites %}
@@ -35,6 +37,7 @@
     "searchable": {{ site.searchable or 0 }},
     "quickSearch": {{ site.quickSearch or 0}},
     "filterable": {{ site.filterable or 0}},
+    "order_num": {{ rule.order_num }},
     "ext": "{{ site.ext }}"
 }{% if loop.last==False %},{% endif %}{% endfor %}
 {% endif %}
