@@ -52,7 +52,7 @@ async def web_home():
 @router.get('/favicon.ico', summary="网站默认图标")  # 设置icon
 async def favicon():
     # return RedirectResponse('/static/img/favicon.svg')
-    return FileResponse('static/img/favicon.svg')
+    return FileResponse('static/img/favicon.ico')
 
 
 @router.get('/blog', summary="博客首页")
