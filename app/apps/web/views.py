@@ -4,20 +4,27 @@
 # Author: DaShenHan&道长-----先苦后甜，任凭晚风拂柳颜------
 # Author's Blog: https://blog.csdn.net/qq_32394351
 # Date  : 2023/12/3
+import base64
+from time import time
 import ujson
+
+import requests
+import warnings
+
 from fastapi import APIRouter, Depends, Query, WebSocket, Request as Req, HTTPException
 from starlette.responses import HTMLResponse, RedirectResponse, Response
 import os
 from common import error_code, deps
 from sqlalchemy.orm import Session
-from sqlalchemy import asc, desc, func
+from sqlalchemy import asc
 from core.config import settings
 from core.logger import logger
+from t4.base.htmlParser import jsoup
 from utils.web import htmler, render_template_string, remove_comments, parseJson
 from utils.cmd import update_db
 from utils.httpapi import get_location_by_ip, getHotSuggest
 from network.request import Request
-from common.resp import respSuccessJson, respErrorJson, abort
+from common.resp import respSuccessJson, respErrorJson, respParseJson, abort
 from .schemas import database_schemas
 from fastapi.templating import Jinja2Templates
 from fastapi.responses import FileResponse
@@ -29,6 +36,16 @@ try:
     from redis.asyncio import Redis as asyncRedis
 except ImportError:
     from aioredis import Redis as asyncRedis
+
+try:
+    from quickjs import Function, Context
+except ImportError:
+    Function = None
+    Context = None
+
+# 关闭警告
+warnings.filterwarnings("ignore")
+requests.packages.urllib3.disable_warnings()
 
 router = APIRouter()
 # htmler2 = Jinja2Templates(directory="templates")
@@ -202,6 +219,7 @@ async def hipy_configs(*,
 
             if d['key'] == 'vod_vip_parse' and d['value_type'] == 'file':
                 jx_content = get_content(d)
+                jx_content = render_template_string(jx_content, host=host)
                 for jx in jx_content.split('\n'):
                     jx = jx.strip()
                     jx_arr = jx.split(',')
@@ -321,6 +339,7 @@ async def t4_files(*,
                    filename: str = Query(..., title="hipy源文件名")):
     """
     返回静态文件链接
+    @param db:
     @param request: Request请求
     @param group: hipy文件分组
     @param filename: 文件名
@@ -397,6 +416,165 @@ async def get_hot_search(*, request: Req, ):
     size = getParams('size')
     data = getHotSuggest(s_from, size)
     return respSuccessJson(data=data)
+
+
+@router.get('/parse/api/{filename:path}', summary="执行js后台解析")
+def get_js_vip_parse(*,
+                     db: Session = Depends(deps.get_db),
+                     request: Req,
+                     filename: str = Query(..., title="解析js文件名")):
+    t1 = time()
+
+    def getParams(_key=None, _value=''):
+        if _key:
+            return request.query_params.get(_key) or _value
+        else:
+            return request.query_params.__dict__['_dict']
+
+    resp = get_file_path(db, 'jiexi_js', filename)
+    if isinstance(resp, int):
+        raise HTTPException(status_code=resp)
+    url = getParams('url')
+    if not url or not url.startswith('http'):
+        return respErrorJson(error=error_code.ERROR_INTERNAL.set_msg(f'url必填!{url},且必须是http开头'))
+    file_path = resp[0]
+    if not Context:
+        return respErrorJson(error=error_code.ERROR_INTERNAL.set_msg(f'缺少必要的依赖库quickjs，无法执行js解析'))
+    ctx = Context()
+    with open(file_path, encoding='utf-8') as f:
+        js_code = f.read()
+
+    def get_file_content(file_name: str):
+        try:
+            with open(get_file_path(db, 'drpy_libs', file_name)[0], encoding='utf-8') as f:
+                content = f.read()
+            return content
+        except Exception as e:
+            logger.info(f'获取文件{file_name}发生错误:{e}')
+            return ''
+
+    def getCryptoJS():
+        return get_file_content('crypto-hiker.js')
+
+    def fetch(_url, _object):
+        if not isinstance(_object, dict):
+            _object = ujson.loads(_object.json())
+
+        method = (_object.get('method') or 'get').lower()
+        timeout = _object.get('timeout') or 5
+        body = _object.get('body') or ''
+        data = _object.get('data') or {}
+        if body and not data:
+            for p in body.split('&'):
+                k, v = p.split('=')
+                data[k] = v
+        headers = _object.get('headers')
+        withHeaders = bool(_object.get('withHeaders') or False)
+        r = None
+        if method == 'get':
+            r = requests.get(_url, headers=headers, params=data, timeout=timeout, verify=False)
+            r.encoding = r.apparent_encoding
+        else:
+            _request = None
+            if method == 'post':
+                _request = requests.post
+            elif method == 'put':
+                _request = requests.put
+            elif method == 'delete':
+                _request = requests.delete
+            elif method == 'head':
+                _request = requests.head
+            if _request:
+                r = _request(_url, headers=headers, data=data, timeout=timeout, verify=False)
+                r.encoding = r.apparent_encoding
+
+        if withHeaders:
+            return ujson.dumps({'body': r.text if r else '', 'headers': r.headers if r else {}})
+        else:
+            return r.text if r else ''
+
+    def 重定向(_url: str):
+        if _url.startswith('http'):
+            return f'redirect://{_url}'
+        else:
+            return str(_url)
+
+    def toast(_url: str):
+        return f'toast://{_url}'
+
+    def image(_text: str):
+        return f'image://{_text}'
+
+    def base64ToImage(_image_base64: str):
+        if ',' in _image_base64:
+            _image_base64 = _image_base64.split(',')[1]
+        _img_data = base64.b64decode(_image_base64)
+        return _img_data
+
+    def get_interval(t):
+        interval = time() - t
+        interval = round(interval * 1000, 2)
+        return interval
+
+    prefix_code = get_file_content('qjs_env.js')
+    ctx.add_callable("getParams", getParams)
+    ctx.add_callable("log", logger.info)
+    ctx.add_callable("print", print)
+    ctx.add_callable("fetch", fetch)
+    ctx.eval("const console = {log};")
+    ctx.add_callable("getCryptoJS", getCryptoJS)
+    jsp = jsoup(url)
+    ctx.add_callable("pdfh", jsp.pdfh)
+    ctx.add_callable("pdfa", jsp.pdfa)
+    ctx.add_callable("pd", jsp.pd)
+    ctx.add_callable("重定向", 重定向)
+    ctx.add_callable("toast", toast)
+    ctx.add_callable("image", image)
+
+    try:
+        vod_configs_obj = curd_vod_configs.getByKey(db, key='vod_hipy_env')
+        env = vod_configs_obj.get('value')
+        env = ujson.loads(env)
+    except Exception as e:
+        logger.info(f'获取环境变量发生错误:{e}')
+        env = {}
+    set_values = {
+        'vipUrl': url,
+        'realUrl': '',
+        'input': url,
+        'fetch_params': {'headers': {'Referer': url}, 'timeout': 10, 'encoding': 'utf-8'},
+        'env': env,
+        'params': getParams()
+    }
+    for key, value in set_values.items():
+        if isinstance(value, dict):
+            ctx.eval(f'var {key} = {value}')
+        else:
+            ctx.set(key, value)
+
+    ctx.eval(prefix_code)
+    try:
+        ctx.eval(js_code.strip().replace('js:', '', 1))
+        realUrl = str(ctx.eval('lazy()'))
+        # print(realUrl)
+        if not realUrl:
+            return respParseJson(msg=f'解析失败:{realUrl}', code=404)
+        if realUrl == url:
+            return respParseJson(msg=f'解析失败:{realUrl}', code=404, extra={'from': realUrl})
+        if str(realUrl).startswith('redirect://'):
+            return RedirectResponse(realUrl.split('redirect://')[1])
+        elif str(realUrl).startswith('toast://'):
+            return respParseJson(msg=str(realUrl).split('toast://')[1], code=404)
+        elif str(realUrl).startswith('image://'):
+            img_data = base64ToImage(str(realUrl).split('image://')[1])
+            return Response(img_data, media_type='image/jpeg')
+
+        return respParseJson(msg=f'{filename}解析成功', url=realUrl,
+                             extra={'time': f'{get_interval(t1)}毫秒', 'from': url})
+    except Exception as e:
+        msg = f'{filename}解析出错:{e}'
+        logger.info(msg)
+        return respErrorJson(error=error_code.ERROR_INTERNAL.set_msg(msg))
 
 
 @router.put('/database_update', summary="数据库升级")

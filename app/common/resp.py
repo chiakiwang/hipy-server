@@ -88,6 +88,31 @@ def respVodJson(data: Union[list, dict, str] = None):
     )
 
 
+def respParseJson(data: Union[list, dict, str] = None, msg: str = '', code: int = 200, url: str = '', extra=None):
+    """ 解析接口返回 """
+    content = {'code': code, 'msg': msg, 'url': url}
+    if not data and not isinstance(data, list) and not isinstance(data, dict):
+        data = {}
+    if extra is None:
+        extra = {}
+
+    if data:
+        content['data'] = data
+    headers = {
+        "user-agent": "Mozilla/5.0"
+    }
+    if 'bilivideo.c' in url:
+        headers.update({
+            'referer': 'https://www.bilibili.com/'
+        })
+    content.update(headers)
+    content.update(extra)
+    return MyJSONResponse(
+        status_code=code,
+        content=content
+    )
+
+
 def respErrorJson(error: ErrorBase, *, msg: Optional[str] = None, msg_append: str = "",
                   data: Union[list, dict, str] = None, status_code: int = status.HTTP_200_OK):
     """ 错误接口返回 """
