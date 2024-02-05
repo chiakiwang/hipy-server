@@ -4,12 +4,10 @@
 # Author: DaShenHan&道长-----先苦后甜，任凭晚风拂柳颜------
 # Author's Blog: https://blog.csdn.net/qq_32394351
 # Date  : 2023/12/3
-import base64
+
+
 from time import time
 import ujson
-
-import requests
-import warnings
 
 from fastapi import APIRouter, Depends, Query, WebSocket, Request as Req, HTTPException
 from starlette.responses import HTMLResponse, RedirectResponse, Response
@@ -22,6 +20,7 @@ from core.logger import logger
 from t4.base.htmlParser import jsoup
 from utils.web import htmler, render_template_string, remove_comments, parseJson
 from utils.cmd import update_db
+from utils.vod_tool import fetch, 重定向, toast, image, base64ToImage, get_interval, requests
 from utils.httpapi import get_location_by_ip, getHotSuggest
 from network.request import Request
 from common.resp import respSuccessJson, respErrorJson, respParseJson, respVodJson, abort
@@ -43,10 +42,6 @@ try:
 except ImportError:
     Function = None
     Context = None
-
-# 关闭警告
-warnings.filterwarnings("ignore")
-requests.packages.urllib3.disable_warnings()
 
 router = APIRouter()
 # htmler2 = Jinja2Templates(directory="templates")
@@ -127,6 +122,7 @@ async def hipy_configs(*,
                        request: Req,
                        mode: int = Query(..., title="模式 0:t4 1:t3"),
                        ):
+    t1 = time()
     host = str(request.base_url).rstrip('/')
     groups = {}
     group_dict = curd_dict_data.getByType(db, _type='vod_rule_group')
@@ -284,7 +280,10 @@ async def hipy_configs(*,
             render_dict = ujson.loads(render_text)
             if custom_content and custom_dict:
                 merge_config(render_dict, custom_dict)
+                render_dict['cost_time'] = get_interval(t1)
                 render_text = ujson.dumps(render_dict, ensure_ascii=False, indent=4)
+            else:
+                render_dict['cost_time'] = get_interval(t1)
             # print(render_dict)
             # return HTMLResponse(render_text)
             # rules经过{{host}}渲染后这里不需要二次渲染
@@ -461,66 +460,6 @@ def get_js_vip_parse(*,
 
     def getCryptoJS():
         return get_file_content('crypto-hiker.js')
-
-    def fetch(_url, _object):
-        if not isinstance(_object, dict):
-            _object = ujson.loads(_object.json())
-
-        method = (_object.get('method') or 'get').lower()
-        timeout = _object.get('timeout') or 5
-        body = _object.get('body') or ''
-        data = _object.get('data') or {}
-        if body and not data:
-            for p in body.split('&'):
-                k, v = p.split('=')
-                data[k] = v
-        headers = _object.get('headers')
-        withHeaders = bool(_object.get('withHeaders') or False)
-        r = None
-        if method == 'get':
-            r = requests.get(_url, headers=headers, params=data, timeout=timeout, verify=False)
-            r.encoding = r.apparent_encoding
-        else:
-            _request = None
-            if method == 'post':
-                _request = requests.post
-            elif method == 'put':
-                _request = requests.put
-            elif method == 'delete':
-                _request = requests.delete
-            elif method == 'head':
-                _request = requests.head
-            if _request:
-                r = _request(_url, headers=headers, data=data, timeout=timeout, verify=False)
-                r.encoding = r.apparent_encoding
-
-        if withHeaders:
-            return ujson.dumps({'body': r.text if r else '', 'headers': r.headers if r else {}})
-        else:
-            return r.text if r else ''
-
-    def 重定向(_url: str):
-        if _url.startswith('http'):
-            return f'redirect://{_url}'
-        else:
-            return str(_url)
-
-    def toast(_url: str):
-        return f'toast://{_url}'
-
-    def image(_text: str):
-        return f'image://{_text}'
-
-    def base64ToImage(_image_base64: str):
-        if ',' in _image_base64:
-            _image_base64 = _image_base64.split(',')[1]
-        _img_data = base64.b64decode(_image_base64)
-        return _img_data
-
-    def get_interval(t):
-        interval = time() - t
-        interval = round(interval * 1000, 2)
-        return interval
 
     prefix_code = get_file_content('qjs_env.js')
     ctx.add_callable("getParams", getParams)

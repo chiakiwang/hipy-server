@@ -32,7 +32,7 @@ def _render(self, content: typing.Any) -> bytes:
         content,
         ensure_ascii=False,
         allow_nan=False,
-        indent=None,
+        indent=self.indent or None,
         separators=(",", ":"),
         cls=DateEncoder,
     ).encode("utf-8")
@@ -42,7 +42,7 @@ def _render(self, content: typing.Any) -> bytes:
 # setattr(JSONResponse,'render',_render)
 
 class MyJSONResponse(JSONResponse):
-    pass
+    indent = 4
     # def render(self, content: typing.Any) -> bytes:
     #     return json.dumps(
     #         content,
