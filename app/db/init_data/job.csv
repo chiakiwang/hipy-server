@@ -1,4 +1,4 @@
 id,created_time,creator_id,modified_time,modifier_id,is_deleted,job_id,job_name,job_group,func_name,func_args,func_kwargs,cron_model,coalesce,next_run,cron_expression,status,misfire_policy,active
-1,2023-12-10 21:31:19,1,2024-02-04 20:06:53.090887,1,0,demo,测试,setInterval,tasks.demo_task.demo,['hello world'],"{'a':'1','b':'2'}",cron,0,2024-02-04 20:07:03.090693,30 20 * * * ?,1,1,True
-14,2023-12-13 00:26:59,1,2024-02-04 20:06:53.090887,1,0,demo2,测试2,setInterval,tasks.demo_task.demo,['哈哈哈哈哈'],{'key':'你好吗'},cron,0,2024-02-04 20:07:03.103650,30 10 * * * ?,1,1,True
-15,2023-12-13 00:53:05,1,2024-02-04 20:06:53.090887,1,0,kzz,可转债打新查询,setInterval,tasks.kzz_spider.get_now_kzz,,{'dayeExtra':8},cron,0,2024-02-04 20:07:03.104646,0 0 8 1/1 * ?,1,1,True
+1,2023-12-10 21:31:19,1,2024-02-05 10:08:30.162503,1,0,demo,测试,setInterval,tasks.demo_task.demo,['hello world'],"{'a':'1','b':'2'}",cron,0,2024-02-05 10:08:40.162776,30 20 * * * ?,1,1,True
+14,2023-12-13 00:26:59,1,2024-02-05 10:08:30.162503,1,0,demo2,测试2,setInterval,tasks.demo_task.demo,['哈哈哈哈哈'],{'key':'你好吗'},cron,0,2024-02-05 10:08:40.165766,30 10 * * * ?,1,1,True
+15,2023-12-13 00:53:05,1,2024-02-05 10:08:30.162503,1,0,kzz,可转债打新查询,setInterval,tasks.kzz_spider.get_now_kzz,,{'dayeExtra':8},cron,0,2024-02-05 10:08:40.165766,0 0 8 1/1 * ?,1,1,True

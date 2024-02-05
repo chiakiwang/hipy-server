@@ -31,6 +31,7 @@ from fastapi.responses import FileResponse
 from apps.system.curd.curd_dict_data import curd_dict_data
 from apps.vod.curd.curd_rules import curd_vod_rules
 from apps.vod.curd.curd_configs import curd_vod_configs
+from pathlib import Path
 
 try:
     from redis.asyncio import Redis as asyncRedis
@@ -316,6 +317,7 @@ def get_file_path(db, group, filename):
         folder_path = groups[group]
         folder_path = os.path.join(project_dir, folder_path)
         file_path = os.path.join(folder_path, filename)
+        file_path = Path(file_path).as_posix()
         if not os.path.exists(file_path):
             logger.info(f'{error_msg},file_path:{file_path}')
             return 404
@@ -431,13 +433,16 @@ def get_js_vip_parse(*,
         else:
             return request.query_params.__dict__['_dict']
 
-    resp = get_file_path(db, 'jiexi_js', filename)
+    resp = get_file_path(db, 'js_parse_api', filename)
     if isinstance(resp, int):
         raise HTTPException(status_code=resp)
     url = getParams('url')
     if not url or not url.startswith('http'):
         return respErrorJson(error=error_code.ERROR_INTERNAL.set_msg(f'url必填!{url},且必须是http开头'))
     file_path = resp[0]
+    if not file_path.endswith('.js'):
+        return respErrorJson(
+            error=error_code.ERROR_INTERNAL.set_msg(f'暂不支持非js文件解析api:{file_path.split("/")[-1]}'))
     if not Context:
         return respErrorJson(error=error_code.ERROR_INTERNAL.set_msg(f'缺少必要的依赖库quickjs，无法执行js解析'))
     ctx = Context()
