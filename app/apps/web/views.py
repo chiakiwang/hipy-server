@@ -24,7 +24,7 @@ from utils.web import htmler, render_template_string, remove_comments, parseJson
 from utils.cmd import update_db
 from utils.httpapi import get_location_by_ip, getHotSuggest
 from network.request import Request
-from common.resp import respSuccessJson, respErrorJson, respParseJson, abort
+from common.resp import respSuccessJson, respErrorJson, respParseJson, respVodJson, abort
 from .schemas import database_schemas
 from fastapi.templating import Jinja2Templates
 from fastapi.responses import FileResponse
@@ -281,15 +281,16 @@ async def hipy_configs(*,
             render_text = render_template_string(file_content, **context)
             # 单引号替换双引号
             render_text = render_text.replace("'", '"')
+            render_dict = ujson.loads(render_text)
             if custom_content and custom_dict:
-                render_dict = ujson.loads(render_text)
                 merge_config(render_dict, custom_dict)
                 render_text = ujson.dumps(render_dict, ensure_ascii=False, indent=4)
             # print(render_dict)
             # return HTMLResponse(render_text)
             # rules经过{{host}}渲染后这里不需要二次渲染
             # render_text = render_template_string(render_text, **context)
-            return Response(status_code=200, media_type='text/plain', content=render_text)
+            # return Response(status_code=200, media_type='text/plain', content=render_text)
+            return respVodJson(render_dict)
         except Exception as e:
             raise HTTPException(status_code=500, detail=f"{e}")
             # raise HTTPException(status_code=500)
