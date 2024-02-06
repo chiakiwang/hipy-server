@@ -14,6 +14,9 @@ eval(getCryptoJS());
 let _t2 = new Date().getTime()
 // print(`加载getCryptoJS耗时:${_t2 - _t1}毫秒`);
 // console.log(`加载getCryptoJS耗时:${_t2 - _t1}毫秒`);
+// print(console, JSON.stringify(Object.keys(console)))
+// print(jsp, JSON.stringify(Object.keys(jsp)))
+// print(local, JSON.stringify(Object.keys(local)))
 
 function base64Encode(text) {
     return CryptoJS.enc.Base64.stringify(CryptoJS.enc.Utf8.parse(text));
@@ -29,11 +32,17 @@ function md5(text) {
     return CryptoJS.MD5(text).toString();
 }
 
-const jsp = {
-    pdfa: pdfa,
-    pdfh: pdfh,
-    pd: pd,
-};
+// const jsp = {
+//     pdfa: pdfa,
+//     pdfh: pdfh,
+//     pd: pd,
+// };
+
+// const local = {
+//     set: local_set,
+//     get: local_get,
+//     delete: local_delete,
+// };
 
 function request(url, obj) {
     let new_obj;

@@ -17,11 +17,11 @@ from sqlalchemy.orm import Session
 from sqlalchemy import asc
 from core.config import settings
 from core.logger import logger
-from t4.base.htmlParser import jsoup
 from utils.web import htmler, render_template_string, remove_comments, parseJson
 from utils.cmd import update_db
-from utils.vod_tool import fetch, 重定向, toast, image, base64ToImage, get_interval, requests
+from utils.vod_tool import base64ToImage, get_interval
 from utils.httpapi import get_location_by_ip, getHotSuggest
+from utils.quickjs_ctx import initContext
 from network.request import Request
 from common.resp import respSuccessJson, respErrorJson, respParseJson, respVodJson, abort
 from .schemas import database_schemas
@@ -297,7 +297,7 @@ async def hipy_configs(*,
         return abort(404, f'invalid value_type:{cf_value_type},only file allowed')
 
 
-def get_file_path(db, group, filename):
+def get_file_path(db: Session, group, filename):
     """
     获取本地文件路径和类型
     @param db: 数据库游标
@@ -330,6 +330,16 @@ def get_file_path(db, group, filename):
     else:
         logger.info(f'{error_msg},groups:{groups}')
         return 404
+
+
+def get_file_content(db: Session, file_name: str):
+    try:
+        with open(get_file_path(db, 'drpy_libs', file_name)[0], encoding='utf-8') as f:
+            content = f.read()
+        return content
+    except Exception as e:
+        logger.info(f'获取文件{file_name}发生错误:{e}')
+        return ''
 
 
 @router.get("/files/{group}/{filename:path}", summary="T4静态文件")
@@ -433,6 +443,9 @@ def get_js_vip_parse(*,
         else:
             return request.query_params.__dict__['_dict']
 
+    def getCryptoJS():
+        return get_file_content(db, 'crypto-hiker.js')
+
     resp = get_file_path(db, 'js_parse_api', filename)
     if isinstance(resp, int):
         raise HTTPException(status_code=resp)
@@ -445,37 +458,12 @@ def get_js_vip_parse(*,
             error=error_code.ERROR_INTERNAL.set_msg(f'暂不支持非js文件解析api:{file_path.split("/")[-1]}'))
     if not Context:
         return respErrorJson(error=error_code.ERROR_INTERNAL.set_msg(f'缺少必要的依赖库quickjs，无法执行js解析'))
+
+    # ==================== 初始化js引擎开始 ======================
     ctx = Context()
     with open(file_path, encoding='utf-8') as f:
         js_code = f.read()
-
-    def get_file_content(file_name: str):
-        try:
-            with open(get_file_path(db, 'drpy_libs', file_name)[0], encoding='utf-8') as f:
-                content = f.read()
-            return content
-        except Exception as e:
-            logger.info(f'获取文件{file_name}发生错误:{e}')
-            return ''
-
-    def getCryptoJS():
-        return get_file_content('crypto-hiker.js')
-
-    prefix_code = get_file_content('qjs_env.js')
-    ctx.add_callable("getParams", getParams)
-    ctx.add_callable("log", logger.info)
-    ctx.add_callable("print", print)
-    ctx.add_callable("fetch", fetch)
-    ctx.eval("const console = {log};")
-    ctx.add_callable("getCryptoJS", getCryptoJS)
-    jsp = jsoup(url)
-    ctx.add_callable("pdfh", jsp.pdfh)
-    ctx.add_callable("pdfa", jsp.pdfa)
-    ctx.add_callable("pd", jsp.pd)
-    ctx.add_callable("重定向", 重定向)
-    ctx.add_callable("toast", toast)
-    ctx.add_callable("image", image)
-
+    prefix_code = get_file_content(db, 'qjs_env.js')
     try:
         vod_configs_obj = curd_vod_configs.getByKey(db, key='vod_hipy_env')
         env = vod_configs_obj.get('value')
@@ -483,21 +471,8 @@ def get_js_vip_parse(*,
     except Exception as e:
         logger.info(f'获取环境变量发生错误:{e}')
         env = {}
-    set_values = {
-        'vipUrl': url,
-        'realUrl': '',
-        'input': url,
-        'fetch_params': {'headers': {'Referer': url}, 'timeout': 10, 'encoding': 'utf-8'},
-        'env': env,
-        'params': getParams()
-    }
-    for key, value in set_values.items():
-        if isinstance(value, dict):
-            ctx.eval(f'var {key} = {value}')
-        else:
-            ctx.set(key, value)
-
-    ctx.eval(prefix_code)
+    initContext(ctx, url, prefix_code, env, getParams, getCryptoJS)
+    # ==================== 初始化js引擎结束 ======================
     try:
         ctx.eval(js_code.strip().replace('js:', '', 1))
         realUrl = str(ctx.eval('lazy()'))
