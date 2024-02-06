@@ -19,7 +19,7 @@ class Settings(BaseSettings):
     ECHO_SQL: bool = False  # 是否打印sql语句
     AUTO_ADD_PERM_LABEL: bool = False  # 是否在访问到有权限标识的路径的时候自动添加权限标识到数据库
 
-    API_DOMAIN: str = "http://127.0.0.1:9898"  # 本api程序的域名
+    API_DOMAIN: str = "http://127.0.0.1:5705"  # 本api程序的域名
     WEB_DOMAIN: str = "http://127.0.0.1:8080"  # 前端vue程序的域名
 
     # 跨域
