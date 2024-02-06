@@ -1,6 +1,7 @@
 from cgitb import reset
 import email
 from email.policy import default
+from smtplib import SMTPServerDisconnected
 from typing import Optional, Union, Any, Generator, List, Tuple, Iterable
 
 try:
@@ -61,10 +62,13 @@ def get_redis(request: Request) -> Optional[Redis]:
 def get_email_sender() -> Optional[EmailSender]:
     if not settings.SMTP_HOST:
         return None
-    email_sender = EmailSender(settings.SMTP_HOST, settings.SMTP_USER, settings.SMTP_PASSWORD,
-                               settings.EMAIL_FROM_EMAIL, settings.SMTP_PORT, settings.SMTP_TLS)
-    email_sender.template_path = settings.EMAIL_TEMPLATES_DIR
-    return email_sender
+    try:
+        email_sender = EmailSender(settings.SMTP_HOST, settings.SMTP_USER, settings.SMTP_PASSWORD,
+                                   settings.EMAIL_FROM_EMAIL, settings.SMTP_PORT, settings.SMTP_TLS)
+        email_sender.template_path = settings.EMAIL_TEMPLATES_DIR
+        return email_sender
+    except SMTPServerDisconnected:
+        return None
 
 
 async def check_jwt_token(redis: Redis = Depends(get_redis), token: Optional[str] = Header(None)) -> Union[str, Any]:

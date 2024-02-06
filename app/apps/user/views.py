@@ -206,7 +206,7 @@ async def submitRegister(*,
         'is_active': True,
     }
     if not redis or not email:  # 没有redis 或 没有邮箱服务时 直接注册成功
-        return respSuccessJson() if curd_user.create(db, user_data) \
+        return respSuccessJson() if curd_user.create(db, obj_in=user_data) \
             else respErrorJson(error=error_code.ERROR_USER_REGISTER_EXISTS)
     uuid = get_uuid()
     await redis.setex(constants.REDIS_KEY_REGISTER_TOKEN_KEY_PREFIX + uuid,
