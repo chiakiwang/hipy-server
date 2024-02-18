@@ -397,12 +397,12 @@ class Spider(BaseSpider):  # 元类 默认的元类 type
             'User-Agent': 'Mozilla/5.0 (Linux；； Android 11；； M2007J3SC Build/RKQ1.200826.002；； wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/99.0.4844.48 Mobile Safari/537.36',
             'Referer': id,
         }
-        return {
-            'parse': 1,  # 1=嗅探,0=播放
-            'playUrl': '',  # 解析链接
-            'url': id,  # 直链或待嗅探地址
-            'header': headers,  # 播放UA
-        }
+        # return {
+        #     'parse': 1,  # 1=嗅探,0=播放
+        #     'playUrl': '',  # 解析链接
+        #     'url': id,  # 直链或待嗅探地址
+        #     'header': headers,  # 播放UA
+        # }
         r = self.fetch(id)
         html = r.text
         text = html.split('window.wp_nonce=')[1].split('eval')[0]
