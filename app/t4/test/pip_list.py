@@ -6,7 +6,8 @@
 # Date  : 2023/12/13
 import os
 import subprocess
-from core.config import settings
+
+PIP_PROXY = "https://mirrors.cloud.tencent.com/pypi/simple"
 
 
 # 执行cmd命令并返回字符串
@@ -58,12 +59,12 @@ def get_pip_package(shell_result):
 
 
 def do_cmd_upgrade(package):
-    adbshell = f"pip3 install -i {settings.PIP_PROXY} --upgrade {package}"
+    adbshell = f"pip3 install -i {PIP_PROXY} --upgrade {package}"
     return do_cmd(adbshell)
 
 
 def do_cmd_install(package):
-    adbshell = f"pip3 install -i {settings.PIP_PROXY} {package}"
+    adbshell = f"pip3 install -i {PIP_PROXY} {package}"
     return do_cmd(adbshell)
 
 
@@ -98,7 +99,7 @@ __all__ = [
 ]
 
 if __name__ == "__main__":
-    package = "requests"
+    # package = "requests"
     # print(get_pip_someone_package(package))
-    # print(get_pip_package_info())
+    print(get_pip_package_info())
     # print(get_requirements())
