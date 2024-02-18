@@ -129,6 +129,11 @@ sudo supervisorctl start hipy-server:   # 启动项目
 https://raw.hellogithub.com/hosts
 ```
 
+### 大文件查找命令
+
+```shell
+find / -type f -size +50M | xargs ls -Slh
+```
 
 ### 版权
 
