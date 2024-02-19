@@ -37,6 +37,7 @@ id,created_time,creator_id,modified_time,modifier_id,is_deleted,name,group,path,
 23,2024-02-01 14:31:22.123053,1,2024-02-05 09:56:10.419503,1,0,荐片,t4/files/drpy_js,E:/pywork/hipy/hipy-server/app/t4/files/drpy_js/荐片.js,True,23,.js,,1,True,1,1,0
 25,2024-02-01 14:31:22.131846,1,2024-02-05 09:56:10.428067,1,0,alist,t4/files/drpy_libs,E:/pywork/hipy/hipy-server/app/t4/files/drpy_libs/alist.js,True,25,.js,,1,True,0,0,0
 27,2024-02-01 14:31:22.138315,1,2024-02-05 09:56:10.431879,1,0,atob,t4/files/drpy_libs,E:/pywork/hipy/hipy-server/app/t4/files/drpy_libs/atob.js,True,27,.js,,1,True,0,0,0
+74,2024-02-19 17:22:19.433622,1,2024-02-19 17:36:35.962759,1,0,蚂蚁影视,t4/files/drpy_js,E:/pywork/hipy/hipy-server/app/t4/files/drpy_js/蚂蚁影视.js,True,68,.js,,1,True,1,0,0
 48,2024-02-01 14:31:22.210714,1,2024-02-05 10:51:07.630351,1,0,custom,t4/files/txt,E:/pywork/hipy/hipy-server/app/t4/files/txt/custom.conf,True,48,.conf,,1,True,0,0,0
 2,2024-02-01 14:31:22.043862,1,2024-02-05 09:56:10.372399,1,0,base_java_loader,t4/spiders,E:/pywork/hipy/hipy-server/app/t4/spiders/base_java_loader.py,True,0,.py,,1,False,1,1,0
 12,2024-02-01 14:31:22.085792,1,2024-02-05 09:56:10.391946,1,0,新浪资源,t4/spiders,E:/pywork/hipy/hipy-server/app/t4/spiders/新浪资源.py,True,12,.py,,1,True,1,1,0
