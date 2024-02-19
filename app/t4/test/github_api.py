@@ -17,16 +17,20 @@ proxy = "https://ghproxy.liuzhicong.com/"
 def getContents(repo, path, token):
     headers = {
         "Accept": "application/vnd.github.v3+json",
+        "Connection": "keep-alive",
+        "Host": HOST,
+        "User-Agent": 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4638.54 Safari/537.36',
     }
     guest_token = token or ""
     if guest_token:
-        headers["Authorization"] = "token " + guest_token
+        # headers["Authorization"] = "token " + guest_token
+        headers["Authorization"] = "Bearer " + guest_token
     res = requests.get(basicUrl + "/repos/" + repo + "/contents/" + (path or ""), headers=headers)
     res = res.json()
     return res
 
 
-def get_js_files(repo='hjdhnx/dr_py', path='js', token='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'):
+def get_js_files(repo='hjdhnx/dr_py', path='js', token='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'):
     files = getContents(repo, path, token)
     js_files = [file for file in files if str(file['name']).endswith('.js') and file['type'] == 'file']
     js_files = [{
@@ -50,4 +54,4 @@ if __name__ == '__main__':
     js_files = get_js_files()
     print(js_files)
     print(len(js_files))
-    write_json(js_files)
+    # write_json(js_files)

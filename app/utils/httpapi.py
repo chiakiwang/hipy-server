@@ -84,10 +84,14 @@ def getHotSuggest(s_from, size):
 def getGitContents(repo, path, token):
     headers = {
         "Accept": "application/vnd.github.v3+json",
+        "Connection": "keep-alive",
+        "Host": GIT_HOST,
+        "User-Agent": 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4638.54 Safari/537.36',
     }
     guest_token = token or ""
     if guest_token:
-        headers["Authorization"] = "token " + guest_token
+        # headers["Authorization"] = "token " + guest_token
+        headers["Authorization"] = "Bearer " + guest_token
     request = Request(method="get", url=GIT_URL + "/repos/" + repo + "/contents/" + (path or ""),
                       headers=headers, agent=False, follow_redirects=True,
                       timeout=5)

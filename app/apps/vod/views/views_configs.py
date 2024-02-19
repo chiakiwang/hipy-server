@@ -244,7 +244,7 @@ async def refreshConfigs(*,
         {
             'name': 'git访问令牌',
             'key': 'vod_git_token',
-            'value': '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',
+            'value': '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',
             'remark': '从 http://github.com/settings/tokens 获取的token，可以操作api以及破解git访问次数限制每小时60次提升至5000次',
             'value_type': 'str',
         },
