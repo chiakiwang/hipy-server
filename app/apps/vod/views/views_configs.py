@@ -234,6 +234,20 @@ async def refreshConfigs(*,
             'remark': 'hipy的环境变量，json数据',
             'value_type': 'json',
         },
+        {
+            'name': 'git访问代理',
+            'key': 'vod_git_proxy',
+            'value': 'https://ghproxy.liuzhicong.com/',
+            'remark': '代理加速git访问，解决被墙问题',
+            'value_type': 'url',
+        },
+        {
+            'name': 'git访问令牌',
+            'key': 'vod_git_token',
+            'value': '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',
+            'remark': '从 http://github.com/settings/tokens 获取的token，可以操作api以及破解git访问次数限制每小时60次提升至5000次',
+            'value_type': 'str',
+        },
     ]
     exist_records = []
     for config in configs_data:
