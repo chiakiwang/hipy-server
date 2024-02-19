@@ -244,8 +244,22 @@ async def refreshConfigs(*,
         {
             'name': 'git访问令牌',
             'key': 'vod_git_token',
-            'value': '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',
+            'value': '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',
             'remark': '从 http://github.com/settings/tokens 获取的token，可以操作api以及破解git访问次数限制每小时60次提升至5000次',
+            'value_type': 'str',
+        },
+        {
+            'name': 'drpy源仓库1',
+            'key': 'vod_drpy_house1',
+            'value': 'hjdhnx/dr_py|js',
+            'remark': 'drpy源的github仓库。repo|path',
+            'value_type': 'str',
+        },
+        {
+            'name': 'drpy源仓库2',
+            'key': 'vod_drpy_house2',
+            'value': 'heroaku/TVboxo|Js',
+            'remark': 'drpy源的github仓库。repo|path',
             'value_type': 'str',
         },
     ]

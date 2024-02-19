@@ -88,5 +88,23 @@ class CURDVodConfigs(CRUDBase):
         logger.info('=========执行删除方法自动清除hipy配置缓存=========')
         return res
 
+    def getHouses(self, db: Session):
+        """
+        获取状态为正常的仓库配置
+        @param db:
+        @return:
+        """
+        obj = db.query(*self.query_columns).filter(self.model.key.ilike(f"%vod_drpy_house%"),
+                                                   self.model.is_deleted == 0,
+                                                   self.model.status.in_((1,))).all()
+        obj_list = [dict(o) for o in obj]
+        obj_list = [{
+            "id": o["id"],
+            "name": o["name"],
+            "key": o["key"],
+            "value": o["value"],
+        } for o in obj_list]
+        return obj_list
+
 
 curd_vod_configs = CURDVodConfigs(VodConfigs)

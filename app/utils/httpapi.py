@@ -5,9 +5,13 @@
 # Author's Blog: https://blog.csdn.net/qq_32394351
 # Date  : 2023/12/9
 
+import re
 from network.request import Request
 from t4.base.htmlParser import jsoup
 import ujson
+
+GIT_HOST = "api.github.com"
+GIT_URL = "https://" + GIT_HOST
 
 
 def get_location_by_ip(ipaddr):
@@ -75,3 +79,30 @@ def getHotSuggest(s_from, size):
         return getHotSuggest1(size=size)
     else:
         return getHotSuggest2(size=size)
+
+
+def getGitContents(repo, path, token):
+    headers = {
+        "Accept": "application/vnd.github.v3+json",
+    }
+    guest_token = token or ""
+    if guest_token:
+        headers["Authorization"] = "token " + guest_token
+    request = Request(method="get", url=GIT_URL + "/repos/" + repo + "/contents/" + (path or ""),
+                      headers=headers, agent=False, follow_redirects=True,
+                      timeout=5)
+    r = request.request()
+    res = r.json()
+    return res
+
+
+def getJSFiles(repo, path, token, proxy):
+    files = getGitContents(repo, path, token)
+    js_files = [file for file in files if str(file['name']).endswith('.js') and file['type'] == 'file']
+    js_files = [{
+        "rule": re.sub('\.js$', '', js_file['name']),
+        "name": js_file['name'],
+        "size": f"{round(js_file['size'] / 1024, 2)}kb",
+        "url": proxy + js_file['download_url'],
+    } for js_file in js_files]
+    return js_files
