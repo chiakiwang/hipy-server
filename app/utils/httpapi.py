@@ -98,6 +98,7 @@ def getGitContents(repo, path, token):
 
 def getJSFiles(repo, path, token, proxy):
     files = getGitContents(repo, path, token)
+    # print(files)
     js_files = [file for file in files if str(file['name']).endswith('.js') and file['type'] == 'file']
     js_files = [{
         "rule": re.sub('\.js$', '', js_file['name']),
