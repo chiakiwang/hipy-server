@@ -13,8 +13,8 @@ from fastapi import APIRouter, Depends, HTTPException, Request
 from sqlalchemy.orm import Session, joinedload
 from time import time
 from utils.vod_tool import get_interval
-from common import deps
-from common.resp import respSuccessJson
+from common import deps, error_code
+from common.resp import respSuccessJson, respErrorJson
 from ..curd.curd_configs import curd_vod_configs as curd
 import os
 import io
@@ -135,7 +135,10 @@ def refreshRecords(*,
         name = house['name']
         repo = house['value'].split('|')[0]
         path = house['value'].split('|')[1]
-        js_files = getJSFiles(repo, path, token, proxy)
+        try:
+            js_files = getJSFiles(repo, path, token, proxy)
+        except Exception as e:
+            return respErrorJson(error=error_code.ERROR_INTERNAL.set_msg(f'建议清空或更换配置中心的git令牌再试：{e}'))
         for js_file in js_files:
             js_file['id'] = _id
             js_file['from'] = name
