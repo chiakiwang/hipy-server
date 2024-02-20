@@ -23,18 +23,19 @@ def main(task_id):
         "size": f"{round(txt_file['size'] / 1024, 2)}kb",
         "url": proxy + txt_file['download_url'],
     } for txt_file in txt_files]
-    content = ''
+    contents = []
     error = []
     for txt_file in txt_files:
         url = txt_file['url']
         name = txt_file['name']
         try:
             r = requests.get(url, timeout=5)
-            content += r.text
+            contents.append(r.text.strip())
         except Exception as e:
             error.append(name)
             print(f'未能成功获取{name}的文件内容:{e}')
 
+    content = '\n'.join(contents)
     # 获取项目根目录
     BASE_DIR = os.path.abspath(os.path.join(os.path.abspath(os.path.dirname(__file__)), '..'))
     tv_path = os.path.join(BASE_DIR, 't4/files/txt/tv.txt')
@@ -43,7 +44,9 @@ def main(task_id):
     with open(tv_path, 'w+', encoding='utf-8') as f:
         f.write(content)
     items = content.split('\n')
-    result = f'爬取直播文件行数:{len(items)},未能获取{",".join(error)}等文件内容'
+    result = f'爬取直播文件行数:{len(items)}'
+    if len(error) > 0:
+        result += f',未能获取{",".join(error)}等文件内容'
     print(result)
     return result
 
