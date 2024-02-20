@@ -41,12 +41,18 @@ def main(task_id):
     tv_path = os.path.join(BASE_DIR, 't4/files/txt/tv.txt')
     tv_path = Path(tv_path).as_posix()
     # print(tv_path)
-    with open(tv_path, 'w+', encoding='utf-8') as f:
-        f.write(content)
     items = content.split('\n')
+    if len(items) > 5000 and 'CCTV' in content and '卫视' in content:
+        with open(tv_path, 'w+', encoding='utf-8') as f:
+            f.write(content)
+            write_status = '本次成功写入本地文件'
+    else:
+        write_status = '本次未写入本地文件[内容行数不够5000或不含cctv或卫视]'
+
     result = f'爬取直播文件行数:{len(items)}'
     if len(error) > 0:
-        result += f',未能获取{",".join(error)}等文件内容'
+        result += f',未能获取{",".join(error)}等文件内容。'
+    result += write_status
     print(result)
     return result
 
