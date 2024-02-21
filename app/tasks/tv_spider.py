@@ -24,13 +24,19 @@ def main(task_id):
         "url": proxy + txt_file['download_url'],
     } for txt_file in txt_files]
     contents = []
+    my_content = ''
     error = []
     for txt_file in txt_files:
         url = txt_file['url']
         name = txt_file['name']
+        print(name)
         try:
             r = requests.get(url, timeout=5)
-            contents.append(r.text.strip())
+            text = r.text.strip()
+            contents.append(text)
+            if name == 'itvlist.txt':
+                my_content = text
+
         except Exception as e:
             error.append(name)
             print(f'未能成功获取{name}的文件内容:{e}')
@@ -40,19 +46,32 @@ def main(task_id):
     BASE_DIR = os.path.abspath(os.path.join(os.path.abspath(os.path.dirname(__file__)), '..'))
     tv_path = os.path.join(BASE_DIR, 't4/files/txt/tv.txt')
     tv_path = Path(tv_path).as_posix()
+
+    mytv_path = os.path.join(BASE_DIR, 't4/files/txt/mytv.txt')
+    mytv_path = Path(mytv_path).as_posix()
     # print(tv_path)
     items = content.split('\n')
     if len(items) > 5000 and 'CCTV' in content and '卫视' in content:
         with open(tv_path, 'w+', encoding='utf-8') as f:
             f.write(content)
-            write_status = '本次成功写入本地文件'
+            write_status = '本次成功写入本地文件tv.txt'
     else:
-        write_status = '本次未写入本地文件[内容行数不够5000或不含cctv或卫视]'
+        write_status = '本次未写入本地文件tv.txt[内容行数不够5000或不含cctv或卫视]'
 
     result = f'爬取直播文件行数:{len(items)}'
     if len(error) > 0:
         result += f',未能获取{",".join(error)}等文件内容。'
+
+    items = my_content.split('\n')
+    if len(items) > 500 and 'CCTV' in content and '卫视' in content:
+        with open(mytv_path, 'w+', encoding='utf-8') as f:
+            f.write(my_content)
+            write_status2 = ' 本次成功写入本地文件mytv.txt'
+    else:
+        write_status2 = ' 本次未写入本地文件mytv.txt[内容行数不够500或不含cctv或卫视]'
+
     result += write_status
+    result += write_status2
     print(result)
     return result
 
