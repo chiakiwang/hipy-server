@@ -23,6 +23,7 @@ from apps.vod.curd.curd_configs import curd_vod_configs
 from common import deps
 from core.logger import logger
 from utils.path import get_api_path, get_file_modified_time, get_now
+import sys
 
 router = APIRouter()
 
@@ -110,6 +111,11 @@ def vod_generate(*, api: str = "", request: Request,
 
     except Exception as e:
         return respErrorJson(error_code.ERROR_INTERNAL.set_msg(f"内部服务器错误:{e}"))
+
+    # 开发者模式会在首页显示内存占用
+    debug = getParams('debug')
+    # if debug:
+    #     logger.info(f'API_STORE变量当前内存占用为:{sys.getsizeof(API_STORE)}bytes')
 
     ac = getParams('ac')
     ids = getParams('ids')
@@ -285,5 +291,7 @@ def vod_generate(*, api: str = "", request: Request,
     home_data = vod.homeContent(filterable) or {}
     home_video_data = vod.homeVideoContent() or {}
     home_data.update(home_video_data)
+    if debug:
+        home_data.update({'API_STORE_SIZE': sys.getsizeof(API_STORE)})
 
     return respVodJson(home_data)
