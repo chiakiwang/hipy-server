@@ -55,6 +55,7 @@ api里会自动含有ext参数是base64编码后的选中的筛选条件
 class Spider(BaseSpider):  # 元类 默认的元类 type
     api: str = 'https://www.bttwo.net'
     api_ext_file: str = api + '/movie_bt/'
+    search_api: str = ''
 
     def getName(self):
         return "规则名称如:基础示例"
@@ -219,6 +220,7 @@ class Spider(BaseSpider):  # 元类 默认的元类 type
         html = self.html(html)
         d = []
 
+        self.search_api = "".join(html.xpath('//*[contains(@class,"w-search-form")]/@action')).strip()
         lis = html.xpath('//*[contains(@class,"leibox")]/ul/li')
         print(len(lis))
         for li in lis:
@@ -327,8 +329,10 @@ class Spider(BaseSpider):  # 元类 默认的元类 type
             "Host": "www.bttwo.net",
             "Referer": self.api
         }
-
-        url = f'{self.api}/xssearch?q={quote(wd)}'
+        self.log(f'self.search_api:{self.search_api}')
+        search_api = self.search_api or f'{self.api}/xsssearch'
+        url = f'{search_api}?q={quote(wd)}'
+        print(url)
         r = self.fetch(url, headers=headers)
         cookies = ['myannoun=1']
         for key, value in r.headers.items():
@@ -518,11 +522,11 @@ if __name__ == '__main__':
 
     spider = Spider()
     t4_spider_init(spider)
-    spider.init_api_ext_file()  # 生成筛选对应的json文件
+    # spider.init_api_ext_file()  # 生成筛选对应的json文件
 
-    # print(spider.homeVideoContent())
+    print(spider.homeVideoContent())
     # print(spider.categoryContent('movie_bt', 1, True, {}))
-    # print(spider.searchContent('斗罗大陆'))
+    print(spider.searchContent('斗罗大陆'))
     # print(spider.detailContent(['https://www.bttwo.net/movie/20107.html']))
     # print(spider.playerContent('在线播放', spider.decodeStr('https%3A%2F%2Fwww.bttwo.net%2Fv_play%2FbXZfMzY4Nzgtbm1fMQ%3D%3D.html','utf-8'), None))
     # print(spider.playerContent('在线播放', spider.decodeStr('https://www.bttwo.net/v_play/bXZfMTMyNjkwLW5tXzE=.html','utf-8'), None))

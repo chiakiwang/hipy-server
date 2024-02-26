@@ -393,6 +393,6 @@ if __name__ == '__main__':
     # print(spider.homeVideoContent())
     # print(spider.categoryContent('23', 1, True, {'year': '2024'}))
     # print(spider.detailContent([7533]))
-    # print(spider.searchContent('斗罗大陆'))
+    print(spider.searchContent('斗罗大陆'))
     print(spider.playerContent('线路J', '1&duoduan&7533', None))
     print(spider.playerContent('线路Z', '1&ziru&7533', None))

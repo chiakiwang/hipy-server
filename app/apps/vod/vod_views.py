@@ -22,11 +22,15 @@ from apps.vod.curd.curd_configs import curd_vod_configs
 
 from common import deps
 from core.logger import logger
+from utils.path import get_api_path, get_file_modified_time, get_now
 
 router = APIRouter()
 
 access_name = 'vod:generate'
 api_url = ''
+API_STORE = {
+
+}
 
 
 # u: Users = Depends(deps.user_perm([f"{access_name}:get"]))
@@ -40,6 +44,7 @@ def vod_generate(*, api: str = "", request: Request,
     通过动态import的形式，统一处理vod:爬虫源T4接口
     ext参数默认为空字符串，传入api配置里对应的ext，可以是文本和链接
     """
+    global API_STORE
 
     def getParams(key=None, value=''):
         return request.query_params.get(key) or value
@@ -79,8 +84,30 @@ def vod_generate(*, api: str = "", request: Request,
         if vod_passwd and pwd != vod_passwd:
             return abort(403)
 
+    # 需要初始化
+    need_init = False
     try:
-        vod = Vod(api=api, query_params=request.query_params, t4_api=t4_api).module
+        api_path = get_api_path(api)
+        api_time = get_file_modified_time(api_path)
+        api_store_lists = list(API_STORE.keys())
+        if api not in api_store_lists:
+            # 没初始化过，需要初始化
+            need_init = True
+        else:
+            _api = API_STORE[api] or {'time': None}
+            _api_time = _api['time']
+            # 内存储存时间 < 文件修改时间 需要重新初始化
+            if not _api_time or _api_time < api_time:
+                need_init = True
+
+        if need_init:
+            logger.info(f'需要初始化源:源路径:{api_path},源最后修改时间:{api_time}')
+            vod = Vod(api=api, query_params=request.query_params, t4_api=t4_api).module
+            # 记录初始化时间|下次文件修改后判断储存的时间 < 文件修改时间又会重新初始化
+            API_STORE[api] = {'vod': vod, 'time': get_now()}
+        else:
+            vod = API_STORE[api]['vod']
+
     except Exception as e:
         return respErrorJson(error_code.ERROR_INTERNAL.set_msg(f"内部服务器错误:{e}"))
 
@@ -108,25 +135,27 @@ def vod_generate(*, api: str = "", request: Request,
     ad_name = getParams('name') or 'm3u8'
 
     extend = extend or api_ext
-    vod.setExtendInfo(extend)
 
-    # 获取依赖项
-    depends = vod.getDependence()
-    modules = []
-    module_names = []
-    for lib in depends:
-        try:
-            module = Vod(api=lib, query_params=request.query_params, t4_api=t4_api).module
-            modules.append(module)
-            module_names.append(lib)
-        except Exception as e:
-            logger.info(f'装载依赖{lib}发生错误:{e}')
-            # return respErrorJson(error_code.ERROR_INTERNAL.set_msg(f"内部服务器错误:{e}"))
+    if need_init:
+        vod.setExtendInfo(extend)
 
-    if len(module_names) > 0:
-        logger.info(f'当前依赖列表:{module_names}')
+        # 获取依赖项
+        depends = vod.getDependence()
+        modules = []
+        module_names = []
+        for lib in depends:
+            try:
+                module = Vod(api=lib, query_params=request.query_params, t4_api=t4_api).module
+                modules.append(module)
+                module_names.append(lib)
+            except Exception as e:
+                logger.info(f'装载依赖{lib}发生错误:{e}')
+                # return respErrorJson(error_code.ERROR_INTERNAL.set_msg(f"内部服务器错误:{e}"))
 
-    vod.init(modules)
+        if len(module_names) > 0:
+            logger.info(f'当前依赖列表:{module_names}')
+
+        vod.init(modules)
 
     if ext and not ext.startswith('http'):
         try:
