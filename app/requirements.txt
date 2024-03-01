@@ -41,4 +41,3 @@ pyquery
 jsonpath
 jpype1
 quickjs
-pythonmonkey

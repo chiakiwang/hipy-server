@@ -28,8 +28,8 @@ print('md5 text:',text)
 text = CryptoJS.base64Encode('123456')
 print('base64 text:',text)
 
-# text = CryptoJS.CryptoJS.MD5('123456').toString()
-# print('md5 text:',text)
+text = CryptoJS.CryptoJS.MD5('123456').toString()
+print('md5 text:',text)
 
 # import pythonmonkey as pm
 #
