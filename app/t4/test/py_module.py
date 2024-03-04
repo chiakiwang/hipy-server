@@ -27,12 +27,28 @@ class Local:
             f.write(json.dumps(_dict, ensure_ascii=False))
 
 
-local = Local('./store.json')
-if not local.get('url'):
-    local.set('url', 'https://github.com/Distributive-Network/PythonMonkey/issues/253')
+class MyLocal:
+
+    def __int__(self):
+        self.local = Local('./store.json')
+        if not self.local.get('url'):
+            self.local.set('url', 'https://github.com/Distributive-Network/PythonMonkey/issues/253')
+
+    @staticmethod
+    def set(*args):
+        local = Local('./store.json')
+        return local.set(*args)
+
+    @staticmethod
+    def get(*args):
+        local = Local('./store.json')
+        return local.get(*args)
+
+
+print(type(MyLocal.get))
 
 exports = {
     'print': print,
-    'set': local.set,
-    'get': local.get,
+    'set': MyLocal.set,
+    'get': MyLocal.get,
 }
