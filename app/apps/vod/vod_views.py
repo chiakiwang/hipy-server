@@ -57,7 +57,7 @@ API_STORE = {
 
 @router.get(api_url + '_test', summary="t")
 def vod_test():
-    # http://localhost:5707/api/v1/vod_tes
+    # http://localhost:5707/api/v1/vod_test
     api_path = get_api_path('996影视.js')
     api_text = get_file_text(api_path)
     # DRPY.init(api_text) # 执行就会被退出
