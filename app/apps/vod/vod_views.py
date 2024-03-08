@@ -6,6 +6,7 @@
 # Date  : 2023/12/7
 import base64
 import json
+import os
 
 from fastapi import APIRouter, Request, Depends, Response, Query, File, UploadFile
 from fastapi.responses import RedirectResponse
@@ -22,8 +23,28 @@ from apps.vod.curd.curd_configs import curd_vod_configs
 
 from common import deps
 from core.logger import logger
-from utils.path import get_api_path, get_file_modified_time, get_now
+from core.constants import BASE_DIR
+from utils.path import get_api_path, get_file_text, get_file_modified_time, get_now
+from pathlib import Path
 import sys
+
+DRPY = None
+try:
+    import pythonmonkey as pm
+    from pythonmonkey import eval as js_eval, require as js_require
+    from utils.quickjs_ctx import initGlobalThis
+
+    # drpy_file = Path(os.path.join(BASE_DIR, './t4/files/drpy3_libs/drpy3.js')).as_posix()
+    drpy_file = Path(os.path.join(BASE_DIR, './t4/files/drpy3_libs/drpy3.min.js')).as_posix()
+    initGlobalThis(pm)
+    DRPY = js_require(drpy_file)
+    # DRPY = js_require('../../t4/files/drpy3_libs/drpy3.min.js')
+    # print(DRPY)
+    print(f'当前环境支持drpy3-t4源,成功从{drpy_file}加载pythonmonkey,版本号:', pm.__version__)
+
+except Exception as e:
+    # print(f'当前环境不支持drpy3-t4源,加载pythonmonkey发生错误:{e}')
+    pass
 
 router = APIRouter()
 
@@ -32,6 +53,16 @@ api_url = ''
 API_STORE = {
 
 }
+
+
+@router.get(api_url + '_test', summary="t")
+def vod_test():
+    # http://localhost:5707/api/v1/vod_tes
+    api_path = get_api_path('996影视.js')
+    api_text = get_file_text(api_path)
+    # DRPY.init(api_text) # 执行就会被退出
+    api_text += f'\nvar DRPY = {DRPY}'
+    return Response(api_text, media_type='text/javascript; charset=utf-8')
 
 
 # u: Users = Depends(deps.user_perm([f"{access_name}:get"]))
@@ -45,7 +76,14 @@ def vod_generate(*, api: str = "", request: Request,
     通过动态import的形式，统一处理vod:爬虫源T4接口
     ext参数默认为空字符串，传入api配置里对应的ext，可以是文本和链接
     """
+
+    # 接口是drpy源
+    is_drpy = api.endswith('.js')
+    if is_drpy:
+        return respErrorJson(error_code.ERROR_PARAMETER_ERROR.set_msg('暂不支持drpy源'))
+
     global API_STORE
+    global DRPY
 
     def getParams(key=None, value=''):
         return request.query_params.get(key) or value
@@ -58,6 +96,7 @@ def vod_generate(*, api: str = "", request: Request,
     whole_url = str(request.url)
     # 拼接字符串得到t4_api本地代理接口地址
     api_url = str(request.url).split('?')[0]
+
     t4_api = f'{api_url}?proxy=true&do=py'
     # 获取请求类型
     req_method = request.method.lower()
@@ -103,7 +142,12 @@ def vod_generate(*, api: str = "", request: Request,
 
         if need_init:
             logger.info(f'需要初始化源:源路径:{api_path},源最后修改时间:{api_time}')
-            vod = Vod(api=api, query_params=request.query_params, t4_api=t4_api).module
+            if is_drpy:
+                # print(get_file_text(api_path))
+                # DRPY.init(get_file_text(api_path)) # 调用就崩溃
+                vod = DRPY
+            else:
+                vod = Vod(api=api, query_params=request.query_params, t4_api=t4_api).module
             # 记录初始化时间|下次文件修改后判断储存的时间 < 文件修改时间又会重新初始化
             API_STORE[api] = {'vod': vod, 'time': get_now()}
         else:
@@ -142,7 +186,7 @@ def vod_generate(*, api: str = "", request: Request,
 
     extend = extend or api_ext
 
-    if need_init:
+    if need_init and not is_drpy:
         vod.setExtendInfo(extend)
 
         # 获取依赖项
@@ -171,7 +215,11 @@ def vod_generate(*, api: str = "", request: Request,
             logger.error(f'解析发生错误:{e}。未知的ext:{ext}')
 
     # rule_title = vod.getName().encode('utf-8').decode('latin1')
-    rule_title = vod.getName()
+    if is_drpy:
+        rule_title = api.split('/')[-1]
+    else:
+        rule_title = vod.getName()
+
     if rule_title:
         logger.info(f'加载爬虫源:{rule_title}')
 
@@ -215,7 +263,11 @@ def vod_generate(*, api: str = "", request: Request,
 
     if play:  # t4播放
         try:
-            play_url = vod.playerContent(flag, play, vipFlags=None)
+            if is_drpy:
+                play_url = vod.play(flag, play, [])
+            else:
+                play_url = vod.playerContent(flag, play, vipFlags=None)
+
             if isinstance(play_url, str):
                 player_dict = {'parse': 0, 'playUrl': '', 'jx': 0, 'url': play_url}
             elif isinstance(play_url, dict):
@@ -263,7 +315,10 @@ def vod_generate(*, api: str = "", request: Request,
             # print(filters,type(filters))
             # print(fl,type(fl))
             logger.info(fl)
-            data = vod.categoryContent(t, pg, filterable, fl)
+            if is_drpy:
+                data = vod.category(t, pg, filterable, fl)
+            else:
+                data = vod.categoryContent(t, pg, filterable, fl)
             return respVodJson(data)
         except Exception as e:
             error_msg = f"categoryContent执行发生内部服务器错误:{e}"
@@ -273,7 +328,10 @@ def vod_generate(*, api: str = "", request: Request,
     if ac and ids:  # 二级
         try:
             id_list = ids.split(',')
-            data = vod.detailContent(id_list)
+            if is_drpy:
+                data = vod.detail(id_list[0])
+            else:
+                data = vod.detailContent(id_list)
             return respVodJson(data)
         except Exception as e:
             error_msg = f"detailContent执行发生内部服务器错误:{e}"
@@ -281,16 +339,25 @@ def vod_generate(*, api: str = "", request: Request,
             return respErrorJson(error_code.ERROR_INTERNAL.set_msg(error_msg))
     if wd:  # 搜索
         try:
-            data = vod.searchContent(wd, quick, pg)
+            if is_drpy:
+                data = vod.search(wd, quick, pg)
+            else:
+                data = vod.searchContent(wd, quick, pg)
             return respVodJson(data)
         except Exception as e:
             error_msg = f"searchContent执行发生内部服务器错误:{e}"
             logger.error(error_msg)
             return respErrorJson(error_code.ERROR_INTERNAL.set_msg(error_msg))
 
-    home_data = vod.homeContent(filterable) or {}
-    home_video_data = vod.homeVideoContent() or {}
-    home_data.update(home_video_data)
+    if is_drpy:
+        home_data = vod.home(filterable) or {}
+        home_video_data = vod.homeVod() or {}
+        home_data.update(home_video_data)
+    else:
+        home_data = vod.homeContent(filterable) or {}
+        home_video_data = vod.homeVideoContent() or {}
+        home_data.update(home_video_data)
+
     if debug:
         home_data.update({'API_STORE_SIZE': sys.getsizeof(API_STORE)})
 

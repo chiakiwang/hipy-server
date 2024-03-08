@@ -16,8 +16,19 @@ def get_file_modified_time(filepath: str):
     return modified_time
 
 
+def get_file_text(filepath: str):
+    text = ''
+    if os.path.exists(filepath):
+        with open(filepath, mode='r', encoding='utf-8') as f:
+            text = f.read()
+    return text
+
+
 def get_api_path(api: str):
-    api_path = os.path.join(BASE_DIR, f't4/spiders/{api}.py')
+    if api.endswith('.js'):
+        api_path = os.path.join(BASE_DIR, f't4/files/drpy_js/{api}')
+    else:
+        api_path = os.path.join(BASE_DIR, f't4/spiders/{api}.py')
     api_path = Path(api_path).as_posix()
     return api_path
 

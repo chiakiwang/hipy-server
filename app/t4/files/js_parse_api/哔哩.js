@@ -1,4 +1,5 @@
 // print(env);
+// http://localhost:5707/parse/api/哔哩.js?url=https://www.bilibili.com/bangumi/play/ep704873
 // input = 'https://www.bilibili.com/bangumi/play/ep704873';
 var flag = ['bilibili'];
 

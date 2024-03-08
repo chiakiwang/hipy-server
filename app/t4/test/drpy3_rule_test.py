@@ -16,7 +16,12 @@ if __name__ == '__main__':
 
     drpy = js_require('../files/drpy3_libs/drpy3.min.js')
     print(drpy)
-    drpy.init(test_rule_url)
+    # drpy.init(test_rule_url)
+
+    with open('../files/drpy_js/996影视.js', encoding='utf-8') as f:
+        rule = f.read()
+    drpy.init(rule)
+
     # print(drpy.home())
     # print(drpy.homeVod())
     # print(drpy.category(3,1,False,{}))
