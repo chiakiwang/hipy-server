@@ -2,3 +2,35 @@ id,created_time,creator_id,modified_time,modifier_id,is_deleted,job_id,job_name,
 308,2024-02-20 16:24:53.310246,0,2024-02-20 16:24:53.310246,0,0,tv_spider,tv源爬虫,setInterval,tasks.tv_spider.main,[],{},"爬取直播文件行数:9618,未能获取weishi.txt等文件内容",,1,2024-02-20 16:24:46.222442
 309,2024-02-21 16:00:05.704055,0,2024-02-21 16:00:05.704055,0,0,tv_spider,tv源爬虫,setInterval,tasks.tv_spider.main,[],{},"爬取直播文件行数:10140,未能获取qita.txt,weishi.txt等文件内容。本次成功写入本地文件tv.txt 本次成功写入本地文件mytv.txt",,1,2024-02-21 16:00:00.000000
 310,2024-02-26 16:00:08.075412,0,2024-02-26 16:00:08.075412,0,0,tv_spider,tv源爬虫,setInterval,tasks.tv_spider.main,[],{},爬取直播文件行数:10914本次成功写入本地文件tv.txt 本次成功写入本地文件mytv.txt,,1,2024-02-26 16:00:00.000000
+311,2024-02-28 16:00:07.589344,0,2024-02-28 16:00:07.589344,0,0,tv_spider,tv源爬虫,setInterval,tasks.tv_spider.main,[],{},爬取直播文件行数:11081本次成功写入本地文件tv.txt 本次成功写入本地文件mytv.txt,,1,2024-02-28 16:00:00.000000
+312,2024-02-29 12:00:08.891500,0,2024-02-29 12:00:08.891500,0,0,tv_spider,tv源爬虫,setInterval,tasks.tv_spider.main,[],{},爬取直播文件行数:9511本次成功写入本地文件tv.txt 本次成功写入本地文件mytv.txt,,1,2024-02-29 12:00:00.000000
+313,2024-02-29 16:00:05.471054,0,2024-02-29 16:00:05.471054,0,0,tv_spider,tv源爬虫,setInterval,tasks.tv_spider.main,[],{},爬取直播文件行数:9511本次成功写入本地文件tv.txt 本次成功写入本地文件mytv.txt,,1,2024-02-29 16:00:00.000000
+314,2024-03-08 12:00:10.298743,0,2024-03-08 12:00:10.298743,0,0,tv_spider,tv源爬虫,setInterval,tasks.tv_spider.main,[],{},"  File ""D:\mypython\hipy-server\lib\site-packages\apscheduler\executors\base.py"", line 125, in run_job
+    retval = job.func(*job.args, **job.kwargs)
+  File ""E:\pywork\hipy\hipy-server\app\tasks\tv_spider.py"", line 18, in main
+    files = getGitContents('ssili126/tv', '', '')
+  File ""E:\pywork\hipy\hipy-server\app\utils\httpapi.py"", line 98, in getGitContents
+    r = request.request()
+  File ""E:\pywork\hipy\hipy-server\app\network\request.py"", line 125, in request
+    response = httpx.Client(proxies=proxies).request(method=self.method, url=self.url, **self.requests_kwargs)
+  File ""D:\mypython\hipy-server\lib\site-packages\httpx\_client.py"", line 821, in request
+    return self.send(request, auth=auth, follow_redirects=follow_redirects)
+  File ""D:\mypython\hipy-server\lib\site-packages\httpx\_client.py"", line 922, in send
+    raise exc
+  File ""D:\mypython\hipy-server\lib\site-packages\httpx\_client.py"", line 916, in send
+    response.read()
+  File ""D:\mypython\hipy-server\lib\site-packages\httpx\_models.py"", line 805, in read
+    self._content = b"""".join(self.iter_bytes())
+  File ""D:\mypython\hipy-server\lib\site-packages\httpx\_models.py"", line 823, in iter_bytes
+    for raw_bytes in self.iter_raw():
+  File ""D:\mypython\hipy-server\lib\site-packages\httpx\_models.py"", line 881, in iter_raw
+    for raw_stream_bytes in self.stream:
+  File ""D:\mypython\hipy-server\lib\site-packages\httpx\_client.py"", line 124, in __iter__
+    for chunk in self._stream:
+  File ""D:\mypython\hipy-server\lib\site-packages\httpx\_transports\default.py"", line 105, in __iter__
+    yield part
+  File ""D:\Program Files\Python38\lib\contextlib.py"", line 131, in __exit__
+    self.gen.throw(type, value, traceback)
+  File ""D:\mypython\hipy-server\lib\site-packages\httpx\_transports\default.py"", line 77, in map_httpcore_exceptions
+    raise mapped_exc(message) from exc
+",The read operation timed out,0,2024-03-08 12:00:00.000000

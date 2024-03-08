@@ -33,3 +33,5 @@ id,created_time,creator_id,modified_time,modifier_id,is_deleted,dict_label,dict_
 27,2024-01-15 16:24:01.167540,1,2024-02-04 17:13:14.059809,1,0,禁用,False,0,,False,0,2,10
 35,2024-02-04 17:14:42.752940,1,2024-02-05 09:55:00.551827,1,0,js_parse_api,False,t4/files/js_parse_api,js实现的vip解析接口文件,False,0,8,9
 34,2024-02-04 17:14:13.807944,1,2024-02-05 09:55:21.063489,1,0,jar,False,t4/files/jar,drpy2及tvbox配置需要的外挂jar,False,0,7,9
+36,2024-03-08 15:50:48.583918,1,2024-03-08 15:50:48.583918,0,0,drpy3_libs,False,t4/files/drpy3_libs,"drpy3的t4源需要的js依赖文件及模块,commonJS格式",False,0,9,9
+37,2024-03-08 15:51:32.506584,1,2024-03-08 15:51:32.506584,0,0,drpy3_js,False,t4/files/drpy3_js,drpy3的t4源在运行过程中自动缓存线上文件到此目录,False,0,10,9
