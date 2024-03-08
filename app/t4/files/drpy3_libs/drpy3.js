@@ -2,18 +2,8 @@ const CryptoJS = require('./crypto-js')
 const cheerio = require('./cheerio.min')
 const 模板 = require('./模板')
 const gbkTool = require('./gbk')
-const pmEnv = require('./pm_env')
-// var {rule} = require('./pm_env')
-
-// import './rsa.js'
-
-// import cheerio from "https://ghproxy.net/https://raw.githubusercontent.com/hjdhnx/dr_py/main/libs/cheerio.min.js";
-// import "https://ghproxy.net/https://raw.githubusercontent.com/hjdhnx/dr_py/main/libs/crypto-js.js";
-// import 模板 from"https://ghproxy.net/https://raw.githubusercontent.com/hjdhnx/dr_py/main/js/模板.js";
-// import {gbkTool} from 'https://ghproxy.net/https://raw.githubusercontent.com/hjdhnx/dr_py/main/libs/gbk.js'
 
 function init_test(){
-    // console.log(typeof(CryptoJS));
     console.log("init_test_start");
     // print(模板);
     // print(typeof(模板.getMubans));
@@ -21,31 +11,6 @@ function init_test(){
     console.log(RKEY);
     console.log(JSON.stringify(rule));
     console.log("init_test_end");
-
-    // console.log(typeof (CryptoJS));
-    // console.log(typeof (JSEncrypt));
-    // var publicKey = "-----BEGIN PUBLIC KEY-----\n" +
-    //     "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDTTt5d1LYtIxiW9ekKFBVonFOT\n" +
-    //     "XJHv4PY4xCDLPYbHWRKa/mRO7J11OJX+cR7bqzNq6uxH1W339wV\n" +
-    //     "lLP/x3Rl1RBh4prj0eYOEIsDVTvLTJONKazRtQrZ7yzSZ69o/3CQv\n" +
-    //     "ex6kb4js+9zho4U9fwIDAQAB\n" +
-    //     "-----END PUBLIC KEY-----";
-    // var text = '你好';
-    // const encryptor = new JSEncrypt();
-    // console.log(typeof (encryptor.setPublicKey));
-    // console.log(typeof (encryptor.encrypt));
-    // encryptor.setPublicKey(publicKey) // 设置公钥
-    // var str = encryptor.encrypt(text) // 对数据进行加密
-    // console.log("加密数据：" + str);
-    // log('rsax:'+typeof(rsax));
-    // log('rsaX:'+typeof(rsaX));
-    // let data = base64Encode('你好');
-    // let publicKey = 'dzyyds';
-    // console.log(typeof (RSA.encode));
-    // let encryptBase64Data = RSA.encode(data,publicKey);
-    // log('encryptBase64Data:'+encryptBase64Data);
-    // let str = RSA.decode(data,publicKey);
-    // log('str:'+str);
 }
 
 
@@ -70,8 +35,8 @@ function pre(){
 }
 
 let rule = {};
-let vercode = typeof(pdfl) ==='function'?'drpy2.1':'drpy2';
-const VERSION = vercode+' 3.9.49beta2 20231122';
+let vercode = typeof(pdfl) ==='function'?'drpy3.1':'drpy3';
+const VERSION = vercode+' 3.9.49beta36 202400308';
 /** 已知问题记录
  * 1.影魔的jinjia2引擎不支持 {{fl}}对象直接渲染 (有能力解决的话尽量解决下，支持对象直接渲染字符串转义,如果加了|safe就不转义)[影魔牛逼，最新的文件发现这问题已经解决了]
  * Array.prototype.append = Array.prototype.push; 这种js执行后有毛病,for in 循环列表会把属性给打印出来 (这个大毛病需要重点排除一下)
@@ -909,7 +874,6 @@ function getHome(url){
     if(!url){
         return ''
     }
-    console.log('url:',url)
     let tmp = url.split('//');
     url = tmp[0] + '//' + tmp[1].split('/')[0];
     try {
@@ -946,7 +910,7 @@ function buildUrl(url,obj){
  * 远程依赖执行函数
  * @param url 远程js地址
  */
-function require2(url){
+function $require(url){
     eval(request(url));
 }
 /**
@@ -1019,7 +983,6 @@ function request(url,obj,ocr_flag){
     console.log('request:'+url+`|method:${obj.method||'GET'}|body:${obj.body||''}`);
     let res = req(url, obj);
     let html = res.content||'';
-    console.log('html:',html);
     if(obj.withHeaders){
         let htmlWithHeaders = res.headers;
         htmlWithHeaders.body = html;
@@ -1148,6 +1111,7 @@ function homeParse(homeObj) {
         MY_URL = rule.url;
         if (p.length >= 3) { // 可以不写正则
             try {
+                console.log(homeObj.MY_URL)
                 let html = getHtml(homeObj.MY_URL);
                 if (html) {
                     homeHtmlCache = html;
@@ -1190,7 +1154,7 @@ function homeParse(homeObj) {
     if(homeObj.filter){
         resp.filters = homeObj.filter;
     }
-    console.log(JSON.stringify(resp));
+    // console.log(JSON.stringify(resp));
     return JSON.stringify(resp);
 
 }

@@ -45,9 +45,7 @@ class MyLocal:
 
     @staticmethod
     def get(*args):
-        # print(1111111111111)
         # local = Local('./store.json')
-        # print(*args)
         return local.get(*args)
 
 
@@ -57,6 +55,5 @@ exports = {
     'print': print,
     'set': MyLocal.set,
     'get': MyLocal.get,
-    'get2': MyLocal.get,
-    # 'get3': local.get,
+    'get2': local.get,
 }

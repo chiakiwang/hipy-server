@@ -15,9 +15,18 @@ warnings.filterwarnings("ignore")
 requests.packages.urllib3.disable_warnings()
 
 
-def fetch(_url, _object):
-    if not isinstance(_object, dict):
+def base_request(_url, _object, _js_type=0):
+    """
+    基础网络请求封装，兼容qjs和pythonmonkey引擎二次使用
+    @param _url:网页地址
+    @param _object: 必要参数字典 method,timeout,body,data,headers,withHeaders 等
+    @param _js_type: 0 qjs 1 pythonmonkey
+    @return:
+    """
+    if not isinstance(_object, dict) and _js_type == 0:
         _object = ujson.loads(_object.json())
+    elif _js_type == 1:
+        _object = dict(_object)
 
     method = (_object.get('method') or 'get').lower()
     timeout = _object.get('timeout') or 5
@@ -27,7 +36,12 @@ def fetch(_url, _object):
         for p in body.split('&'):
             k, v = p.split('=')
             data[k] = v
-    headers = _object.get('headers')
+    headers = _object.get('headers') or {}
+
+    # 修复pythonmonkey没有自动把 JSObjectProxy 转为python的dict导致的后续错误
+    data = dict(data)
+    headers = dict(headers)
+
     withHeaders = bool(_object.get('withHeaders') or False)
     r = None
     if method == 'get':
@@ -47,10 +61,36 @@ def fetch(_url, _object):
             r = _request(_url, headers=headers, data=data, timeout=timeout, verify=False)
             r.encoding = r.apparent_encoding
 
-    if withHeaders:
-        return ujson.dumps({'body': r.text if r else '', 'headers': r.headers if r else {}})
-    else:
+    empty_result = {'content': '', 'body': '', 'headers': {}}
+    if withHeaders and _js_type == 0:
+        result = {'body': r.text, 'headers': dict(r.headers)} if r else empty_result
+        return ujson.dumps(result)
+    elif not withHeaders and _js_type == 0:
         return r.text if r else ''
+    elif _js_type == 1:
+        return {'content': r.text, 'headers': dict(r.headers)} if r else empty_result
+    else:
+        return empty_result
+
+
+def fetch(_url, _object):
+    """
+    qjs试用的fetch函数
+    @param _url:
+    @param _object:
+    @return:
+    """
+    return base_request(_url, _object, 0)
+
+
+def req(_url, _object):
+    """
+    tvbox注入的pythonmoneky版req函数
+    @param _url:
+    @param _object:
+    @return:
+    """
+    return base_request(_url, _object, 1)
 
 
 def 重定向(_url: str):

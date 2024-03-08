@@ -1,13 +1,7 @@
 ;(function (root, factory) {
-	// console.log('exports:',typeof exports)
-	// console.log('define:',typeof define)
-	// console.log('globalThis:',typeof globalThis)
 	if (typeof exports === "object") {
 		// CommonJS
 		module.exports = exports = factory();
-		// console.log('exports:',exports)
-		// console.log('exports:',Object.keys(exports))
-		// globalThis.CryptoJS = exports
 	}
 	else if (typeof define === "function" && define.amd) {
 		// AMD

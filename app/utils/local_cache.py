@@ -62,12 +62,12 @@ class LocalCache():
             self.cacheKeysNum = 0
 
     @deferFunc
-    def get(self, _id, key):
+    def get(self, _id, key, value=None):
         _key = f'{_id}{key}'
         if _key in self.caches:
-            return self.caches[_key]
+            return self.caches[_key] or value
         else:
-            return None
+            return value
 
     @deferFunc
     def set(self, _id, key, value):
