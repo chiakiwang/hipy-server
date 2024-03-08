@@ -6,6 +6,15 @@
 
 import pythonmonkey as pm
 from pythonmonkey import eval as js_eval, require as js_require
+from utils.quickjs_ctx import initGlobalThis
 print(pm.__version__)
+initGlobalThis(pm)
 local = js_require('./py_module')
-print(local)
+# print(local)
+local.set('url','https://www.baidu.com1')
+# print(local.get2('url'))
+
+drpy = js_require('./drpy2')
+print(drpy)
+
+drpy.init('http://drpy.nokia.press/raw/js/369%E5%BD%B1%E8%A7%86.js')

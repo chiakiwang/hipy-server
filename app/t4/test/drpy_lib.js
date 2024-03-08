@@ -3,6 +3,7 @@ const cheerio = require('./cheerio.min')
 const 模板 = require('./模板')
 const gbkTool = require('./gbk')
 const pmEnv = require('./pm_env')
+var {rule} = require('./pm_env')
 
 function base64Encode(text){
     return CryptoJS.enc.Base64.stringify(CryptoJS.enc.Utf8.parse(text));

@@ -4,4 +4,5 @@ module.exports = {
     print: py_module.print,
     set: py_module.set,
     get: py_module.get,
+    get2: py_module.get2,
 }

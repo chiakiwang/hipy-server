@@ -17,6 +17,7 @@ class Local:
     def get(self, key, value=''):
         with open(self.path, encoding='utf-8') as f:
             _dict = json.loads(f.read())
+        print(_dict)
         return _dict.get(key) or value
 
     def set(self, key, value):
@@ -25,6 +26,9 @@ class Local:
         _dict[key] = value
         with open(self.path, mode='w+', encoding='utf-8') as f:
             f.write(json.dumps(_dict, ensure_ascii=False))
+
+
+local = Local('./store.json')
 
 
 class MyLocal:
@@ -36,19 +40,23 @@ class MyLocal:
 
     @staticmethod
     def set(*args):
-        local = Local('./store.json')
+        # local = Local('./store.json')
         return local.set(*args)
 
     @staticmethod
     def get(*args):
-        local = Local('./store.json')
+        # print(1111111111111)
+        # local = Local('./store.json')
+        # print(*args)
         return local.get(*args)
 
 
-print(type(MyLocal.get))
+# print(type(MyLocal.get))
 
 exports = {
     'print': print,
     'set': MyLocal.set,
     'get': MyLocal.get,
+    'get2': MyLocal.get,
+    # 'get3': local.get,
 }

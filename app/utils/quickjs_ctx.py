@@ -60,7 +60,26 @@ def initGlobalThis(ctx):
     globalThis.log = print
     globalThis.print = print
     globalThis.fetch = fetch
-    jsp = jsoup(_url)
+    globalThis.req = fetch
+
+    def pdfh(html, parse: str, base_url: str = ''):
+        jsp = jsoup(base_url)
+        return jsp.pdfh(html,parse)
+
+    def pd(html, parse: str, base_url: str = ''):
+        jsp = jsoup(base_url)
+        return jsp.pd(html,parse)
+
+    def pdfa(html, parse: str, base_url: str = ''):
+        jsp = jsoup(base_url)
+        return jsp.pdfa(html,parse)
+
+    globalThis.pdfh = pdfh
+    globalThis.pdfa = pdfa
+    globalThis.pd = pd
+
+
+
     # jsIniter = ctx.eval("""
     #     (pdfh,pdfa,pd,local_get,local_set,local_delete)=>{
     #     console.log(123);

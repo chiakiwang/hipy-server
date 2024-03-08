@@ -28,4 +28,5 @@ exports = {
     "local": local,
     "jsoup": jsoup,
     "get_env": get_env,
+    "rule":{}
 }
