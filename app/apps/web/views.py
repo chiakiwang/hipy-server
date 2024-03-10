@@ -97,7 +97,7 @@ def merge_config(base_conf: dict, custom_conf: dict):
         # 合并列表
         if base_conf.get(key) and isinstance(base_conf[key], list) and isinstance(value, list):
             for v in value:
-                if not hasattr(v, 'order_num'):
+                if 'order_num' not in v:
                     v['order_num'] = 9999
             base_conf[key].extend(value)
             if key == 'sites':
