@@ -87,6 +87,7 @@ class InitializeApp(object):
             scheduler_register()
 
             logger.info(f'服务器参数:{get_server_info()}')
+            logger.info(f'本地地址: http://localhost:{settings.PORT}')
             logger.info(f'局域网地址: http://{get_host_ip()}:{settings.PORT}')
 
         @app.on_event('shutdown')
