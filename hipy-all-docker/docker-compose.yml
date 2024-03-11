@@ -17,7 +17,7 @@ services:
     image: redis:latest
     command: redis-server --requirepass hipy
     volumes:
-       - /mnt/usb1_3_4-1/docker/hipy/redis_data/:/home/hipy/redis_data/
+       - /home/hipy/redis_data/:/home/hipy/redis_data/
     ports:
       - "6379:6379"
     expose:
@@ -34,7 +34,7 @@ services:
       - POSTGRES_PASSWORD=hipy
       - POSTGRES_DB=hipy
     volumes:
-      - /mnt/usb1_3_4-1/docker/hipy/postgres/data:/home/hipy/postgresql/data
+      - /home/hipy/postgres/data:/home/hipy/postgres/data
     ports:
       - "5432:5432"
     expose:
@@ -48,7 +48,7 @@ services:
     image: hipy-server:20240302
     restart: always
     volumes:
-      - /mnt/usb1_3_4-1/docker/hipy/hipy-server/app:/home/hipy/hipy_server/app
+      - /home/hipy/hipy-server/app:/home/hipy/hipy_server/app
     depends_on:
       - postgres
       - redis
@@ -64,8 +64,8 @@ services:
     image: nginx
     restart: always
     volumes:
-      - /mnt/usb1_3_4-1/docker/hipy/hipy-ui/dashboard/dist:/usr/share/nginx/html
-      - /mnt/usb1_3_4-1/docker/hipy/nginx/etc:/etc
+      - /home/hipy/hipy-ui/dashboard/dist:/usr/share/nginx/html
+      - /home/hipy/nginx/etc:/etc
     depends_on:
       - hipyserver
     ports:

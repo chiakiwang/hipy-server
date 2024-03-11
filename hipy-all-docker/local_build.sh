@@ -49,7 +49,7 @@ echo '复制替换打包脚本防止报错'
 cp -Raf package.json  ./hipy-ui/dashboard
 sleep 3
 echo '创建打包容器'
-docker run -itd -v /home/sanshu/hipy/hipy-ui/dashboard:/home/node -w /home/node --name hipy-node node
+docker run -itd -v /home/hipy/hipy-ui/dashboard:/home/node -w /home/node --name hipy-node node
 docker exec hipy-node npm config set registry https://registry.npmmirror.com
 docker exec hipy-node npm i
 docker exec hipy-node npm install -g npm@10.5.0

@@ -25,7 +25,7 @@ cp -Raf .env.staging ./hipy-ui/dashboard
 mv ./node_modules ./hipy-ui/dashboard
 sleep 3
 echo '启动前端 UI 打包 node 容器'
-docker run -itd -v /mnt/usb1_3_4-1/docker/hipy/hipy-ui/dashboard:/home/node -w /home/node --name hipy-node node
+docker run -itd -v /home/hipy/hipy-ui/dashboard:/home/node -w /home/node --name hipy-node node
 sleep 3
 echo '开始打包前端 UI'
 docker exec hipy-node npm i
