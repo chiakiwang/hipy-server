@@ -37,6 +37,3 @@ jobs:
          EXCLUDE: "configs,db/hipy.db,main.py"
          #SCRIPT_BEFORE: rm -rf /home/www/test/*
          SCRIPT_AFTER: chmod -R 777 /home/www/test
-
-       
-Branches · khzhg/hipy-server
