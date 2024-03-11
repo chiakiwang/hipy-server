@@ -34,6 +34,6 @@ jobs:
           # 目标目录
          TARGET: '/home/www/test'
           # 排除目录
-         EXCLUDE: "configs,db/hipy.db"
+         EXCLUDE: "configs,db/hipy.db,main.py"
          #SCRIPT_BEFORE: rm -rf /home/www/test/*
          SCRIPT_AFTER: chmod -R 777 /home/www/test
