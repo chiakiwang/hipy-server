@@ -7,3 +7,28 @@
 6.全部准备好以后，打开终端cd到文件存放目录，输入. ./build.sh 或者 . ./local_build.sh 脚本会全自动执行
 如中途遇到错误请把红色的或者error位置截图，或自行百度
 7.如果需要升级，执行. ./hipy_update.sh
+8.docker换源
+vi /etc/docker/daemon.json
+{
+  "registry-mirrors": [
+    "https://dockerproxy.com",
+    "https://hub-mirror.c.163.com",
+    "https://mirror.baidubce.com",
+    "https://ccr.ccs.tencentyun.com",
+    "https://dockerproxy.com"
+  ]
+}
+
+systemctl daemon-reload
+systemctl restart docker
+
+docker pull postgres:latest
+docker pull redis:latest
+docker pull nginx:latest
+
+docker pull dockerproxy.com/library/postgres:latest
+docker pull dockerproxy.com/library/redis:latest
+docker pull dockerproxy.com/library/nginx:latest
+
+
+docker-compose up -d
