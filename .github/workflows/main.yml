@@ -1,11 +1,3 @@
-Skip to content
-
-Code
-Pull requests
-push code
-push code #12
-Workflow file for this run
-.github/workflows/main.yml at e4c9aae
 name: push code
 on: 
   push: 
