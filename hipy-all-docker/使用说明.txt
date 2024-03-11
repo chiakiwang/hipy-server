@@ -29,3 +29,6 @@ docker pull nginx:latest
 docker pull dockerproxy.com/library/postgres:latest
 docker pull dockerproxy.com/library/redis:latest
 docker pull dockerproxy.com/library/nginx:latest
+
+
+docker-compose up -d

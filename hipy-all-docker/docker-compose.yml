@@ -17,7 +17,7 @@ services:
     image: redis:latest
     command: redis-server --requirepass hipy
     volumes:
-       - /home/hipy/redis_data/:/home/hipy/redis_data/
+       - /home/hipy/redis_data/:/data/
     ports:
       - "6379:6379"
     expose:
@@ -34,7 +34,7 @@ services:
       - POSTGRES_PASSWORD=hipy
       - POSTGRES_DB=hipy
     volumes:
-      - /home/hipy/postgres/data:/home/hipy/postgres/data
+      - /home/hipy/postgres/data:/var/lib/postgresql/data
     ports:
       - "5432:5432"
     expose:
