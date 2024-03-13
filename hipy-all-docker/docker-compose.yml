@@ -48,7 +48,7 @@ services:
     image: hipy-server:hipy
     restart: always
     volumes:
-      - /home/hipy/hipy-server/app:/home/hipy/hipy_server/app
+      - /home/hipy/hipy-server/app:/home/hipy_server/app
     depends_on:
       - postgres
       - redis
