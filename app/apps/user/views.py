@@ -149,7 +149,11 @@ async def changeUserInfo(*,
                          obj: user_info_schemas.ChangeUserInfoSchema
                          ):
     user_id = token_data.sub
-    curd_user.update(db, _id=user_id, obj_in=obj, modifier_id=user_id)
+    user_exist = curd_user.isExistUserName(db, _id=user_id, username=obj.username)
+    if user_exist:
+        return respErrorJson(error=error_code.ERROR_USER_EXIST.set_msg(f'已存在相同的用户名:{obj.username}'))
+    else:
+        curd_user.update(db, _id=user_id, obj_in=obj, modifier_id=user_id)
     return respSuccessJson()
 
 

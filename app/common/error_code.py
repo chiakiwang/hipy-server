@@ -10,6 +10,7 @@ class ErrorBase(BaseModel):
         self.msg = msg
         return self
 
+
 # 报错
 ERROR_INTERNAL = ErrorBase(code=500, msg="内部错误")
 # 找不到路径
@@ -22,6 +23,7 @@ ERROR_USER_TOKEN_FAILURE = ErrorBase(code=5004, msg="未登录或登录过期")
 ERROR_USER_NOT_FOUND = ErrorBase(code=5004, msg="用户不存在")
 ERROR_USER_PASSWORD_ERROR = ErrorBase(code=5005, msg="密码错误")
 ERROR_USER_NOT_ACTIVATE = ErrorBase(code=5006, msg="用户账号尚未激活")
+ERROR_USER_EXIST = ErrorBase(code=5006, msg="已存在相同的用户名")
 ERROR_USER_ACCOUNT_EXISTS = ErrorBase(code=5007, msg="账号已存在")
 ERROR_USER_EMAIL_NOT_EXISTS = ErrorBase(code=5008, msg="邮箱不存在")
 ERROR_FORGET_PWD_TOKEN_ERROR = ErrorBase(code=5009, msg="重置密码链接错误或已过期")
