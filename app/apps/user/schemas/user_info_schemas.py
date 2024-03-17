@@ -47,6 +47,7 @@ class ForgetPasswordSetPasswordSchema(BaseModel):
 
 
 class ChangeUserInfoSchema(BaseModel):
+    username: str
     nickname: str
     email: str
     phone: str

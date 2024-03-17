@@ -16,6 +16,17 @@ class CURDUser(CRUDBase):
         """
         return db.query(Users).filter(Users.username == username).first()
 
+    def isExistUserName(self, db: Session, *, _id: int, username: str):
+        """
+        获取是否存在某用户名的用户，且id不是当前记录
+        @param db:
+        @param _id:
+        @param username:
+        @return:
+        """
+        records = db.query(self.model).filter(self.model.id != _id, self.model.username == username).all()
+        return len(records) > 0
+
     def getByEmail(self, db: Session, *, email: str):
         """
         通过email获取用户
@@ -80,15 +91,15 @@ class CURDUser(CRUDBase):
 
     def getMenus(self, db: Session, _id: int = None):
         menu_id_in = [menu['id'] for menu in db
-            .query(distinct(RoleMenu.menu_id).label('id'))
-            .join(Roles, Roles.id == RoleMenu.role_id)
-            .join(UserRole, Roles.id == UserRole.role_id)
-            .filter(UserRole.user_id == _id, Roles.is_deleted == 0, RoleMenu.is_deleted == 0)
-            .all()] if _id is not None else None
+        .query(distinct(RoleMenu.menu_id).label('id'))
+        .join(Roles, Roles.id == RoleMenu.role_id)
+        .join(UserRole, Roles.id == UserRole.role_id)
+        .filter(UserRole.user_id == _id, Roles.is_deleted == 0, RoleMenu.is_deleted == 0)
+        .all()] if _id is not None else None
         q = db.query(
             Menus.id, Menus.path, Menus.name, Menus.icon, Menus.parent_id, Menus.is_frame, Menus.title,
             Menus.no_cache, Menus.component, Menus.hidden
-        ).filter(Menus.is_deleted == 0,  Menus.status == 0)
+        ).filter(Menus.is_deleted == 0, Menus.status == 0)
         if menu_id_in:
             q = q.filter(Menus.id.in_(menu_id_in))
 
@@ -110,11 +121,11 @@ class CURDUser(CRUDBase):
 
     def getMenusTree(self, db: Session, _id: int = None):
         menu_id_in = [menu['id'] for menu in db
-            .query(distinct(RoleMenu.menu_id).label('id'))
-            .join(Roles, Roles.id == RoleMenu.role_id)
-            .join(UserRole, Roles.id == UserRole.role_id)
-            .filter(UserRole.user_id == _id, Roles.is_deleted == 0, RoleMenu.is_deleted == 0)
-            .all()] if _id is not None else None
+        .query(distinct(RoleMenu.menu_id).label('id'))
+        .join(Roles, Roles.id == RoleMenu.role_id)
+        .join(UserRole, Roles.id == UserRole.role_id)
+        .filter(UserRole.user_id == _id, Roles.is_deleted == 0, RoleMenu.is_deleted == 0)
+        .all()] if _id is not None else None
 
         def __get_children_menus(menu_id: int = 0):
             q = db.query(
@@ -142,6 +153,7 @@ class CURDUser(CRUDBase):
                     'children': __get_children_menus(child['id'])
                 })
             return result
+
         return __get_children_menus()
 
     def setAvatar(self, db: Session, _id: int, avatar_path: str, modifier_id: int = 0):

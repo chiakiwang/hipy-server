@@ -22,9 +22,9 @@ if __name__ == '__main__':
         rule = f.read()
     drpy.init(rule)
 
-    # print(drpy.home())
+    print(drpy.home())
     # print(drpy.homeVod())
     # print(drpy.category(3,1,False,{}))
-    print(drpy.detail('3$/detail/790.html'))
+    # print(drpy.detail('3$/detail/790.html'))
     # print(drpy.play('索尼','https://www.cs1369.com/play/790-1-1.html',[]))
     # print(drpy.search('斗罗大陆',False,1))
