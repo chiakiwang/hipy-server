@@ -34,3 +34,29 @@ id,created_time,creator_id,modified_time,modifier_id,is_deleted,job_id,job_name,
   File ""D:\mypython\hipy-server\lib\site-packages\httpx\_transports\default.py"", line 77, in map_httpcore_exceptions
     raise mapped_exc(message) from exc
 ",The read operation timed out,0,2024-03-08 12:00:00.000000
+315,2024-03-10 12:00:06.000038,0,2024-03-10 12:00:06.000038,0,0,tv_spider,tv源爬虫,setInterval,tasks.tv_spider.main,[],{},爬取直播文件行数:7824本次成功写入本地文件tv.txt 本次成功写入本地文件mytv.txt,,1,2024-03-10 12:00:00.000000
+316,2024-03-17 08:00:08.432901,0,2024-03-17 08:00:08.432901,0,0,tv_spider,tv源爬虫,setInterval,tasks.tv_spider.main,[],{},"  File ""F:\python\mypython\hipy-server\lib\site-packages\apscheduler\executors\base.py"", line 125, in run_job
+    retval = job.func(*job.args, **job.kwargs)
+  File ""F:\pywork\hipy\hipy-server\app\tasks\tv_spider.py"", line 18, in main
+    files = getGitContents('ssili126/tv', '', '')
+  File ""F:\pywork\hipy\hipy-server\app\utils\httpapi.py"", line 98, in getGitContents
+    r = request.request()
+  File ""F:\pywork\hipy\hipy-server\app\network\request.py"", line 125, in request
+    response = httpx.Client(proxies=proxies).request(method=self.method, url=self.url, **self.requests_kwargs)
+  File ""F:\python\mypython\hipy-server\lib\site-packages\httpx\_client.py"", line 821, in request
+    return self.send(request, auth=auth, follow_redirects=follow_redirects)
+  File ""F:\python\mypython\hipy-server\lib\site-packages\httpx\_client.py"", line 908, in send
+    response = self._send_handling_auth(
+  File ""F:\python\mypython\hipy-server\lib\site-packages\httpx\_client.py"", line 936, in _send_handling_auth
+    response = self._send_handling_redirects(
+  File ""F:\python\mypython\hipy-server\lib\site-packages\httpx\_client.py"", line 973, in _send_handling_redirects
+    response = self._send_single_request(request)
+  File ""F:\python\mypython\hipy-server\lib\site-packages\httpx\_client.py"", line 1009, in _send_single_request
+    response = transport.handle_request(request)
+  File ""F:\python\mypython\hipy-server\lib\site-packages\httpx\_transports\default.py"", line 218, in handle_request
+    resp = self._pool.handle_request(req)
+  File ""D:\soft\python\388\lib\contextlib.py"", line 131, in __exit__
+    self.gen.throw(type, value, traceback)
+  File ""F:\python\mypython\hipy-server\lib\site-packages\httpx\_transports\default.py"", line 77, in map_httpcore_exceptions
+    raise mapped_exc(message) from exc
+",_ssl.c:1108: The handshake operation timed out,0,2024-03-17 08:00:00.000000
