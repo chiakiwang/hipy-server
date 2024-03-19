@@ -142,14 +142,14 @@ async def setRecordRawContent(*,
     is_exist = rule_data.is_exist
     logger.info(f'rule_path:{rule_path}, is_exist:{is_exist}')
     obj_in = {}
-    msg = '修改成功'
     if os.path.exists(rule_path):
         with open(rule_path, mode='w+', encoding='utf-8') as f:
             f.write(obj.content)
+        msg = '修改成功'
     else:
         if is_exist:
             obj_in.update({'is_exist': False})
-            msg = '修改失败,待修改的文件路径不存在'
+        msg = f'修改失败,待修改的文件路径不存在:{rule_path},可能是同步的他人路径生成的数据库导致的,可以尝试初始化源解决问题'
     curd.update(db, _id=_id, obj_in=obj_in, modifier_id=u['id'])
     return respSuccessJson(msg=msg)
 
