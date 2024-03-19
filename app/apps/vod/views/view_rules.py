@@ -13,6 +13,7 @@ from sqlalchemy import asc, desc, func
 
 from core.config import settings
 from core.logger import logger
+from core.constants import BASE_DIR
 from ...permission.models import Users
 
 from common import deps, error_code
@@ -69,6 +70,7 @@ async def searchRecords(*,
 
     res = curd.search(db, status=status, name=name, group=group, file_type=file_type, page=page,
                       page_size=page_size, order_bys=order_bys)
+    res['BASE_DIR'] = Path(BASE_DIR).as_posix() + '/'
     return respSuccessJson(res)
 
 
@@ -140,16 +142,17 @@ async def setRecordRawContent(*,
     rule_data = curd.get(db, _id=_id, to_dict=False)
     rule_path = rule_data.path
     is_exist = rule_data.is_exist
+    rule_path = Path(os.path.join(BASE_DIR, rule_path)).as_posix()
     logger.info(f'rule_path:{rule_path}, is_exist:{is_exist}')
     obj_in = {}
-    msg = '修改成功'
     if os.path.exists(rule_path):
         with open(rule_path, mode='w+', encoding='utf-8') as f:
             f.write(obj.content)
+        msg = '修改成功'
     else:
         if is_exist:
             obj_in.update({'is_exist': False})
-            msg = '修改失败,待修改的文件路径不存在'
+        msg = f'修改失败,待修改的文件路径不存在:{rule_path},可能是同步的他人路径生成的数据库导致的,可以尝试初始化源解决问题'
     curd.update(db, _id=_id, obj_in=obj_in, modifier_id=u['id'])
     return respSuccessJson(msg=msg)
 
@@ -272,6 +275,8 @@ async def uploadData(*,
         for i in files:
             fpath = os.path.join(spiders_dir, i.filename)
             fpath = Path(fpath).as_posix()
+            # 相对路径
+            relative_path = Path(os.path.join(group, i.filename)).as_posix()
             # 如果已存在并不支持覆盖，就跳过文件
             if os.path.exists(fpath) and not updateSupport:
                 skip_files.append(i.filename)
@@ -282,7 +287,8 @@ async def uploadData(*,
             file_info = {
                 'name': base_name,
                 'group': group,
-                'path': fpath,
+                # 'path': fpath,
+                'relative_path': relative_path,
                 'is_exist': True,
                 'file_type': extension,
                 'searchable': 0,
@@ -362,15 +368,18 @@ async def refreshRules(*,
 
         for file in files:
             fpath = os.path.join(spiders_dir, file)
+            # 绝对路径
             fpath = Path(fpath).as_posix()
-            # print(fpath)
+            # 相对路径
+            relative_path = Path(os.path.join(value, file)).as_posix()
             name = os.path.basename(fpath)
             base_name, extension = os.path.splitext(name)
             if os.path.isfile(fpath):
                 file_info = {
                     'name': base_name,
                     'group': group_value,
-                    'path': fpath,
+                    # 'path': fpath,
+                    'path': relative_path,
                     'is_exist': True,
                     'file_type': extension,
                     'searchable': 0,
@@ -400,7 +409,7 @@ async def refreshRules(*,
     records = curd.set_exist_by_ids(db, _ids=exist_records)
     logger.info(files_data)
     logger.info(f'将{len(records)}条记录设置为不存在')
-    return respSuccessJson(data={'spiders_dirs': spiders_dirs}, msg='刷新成功')
+    return respSuccessJson(data={'spiders_dirs': spiders_dirs, 'project_dir': project_dir}, msg='刷新成功')
 
 
 @router.put(api_url + "/{_id}/active", summary="修改源是否显示")
@@ -456,6 +465,7 @@ async def delRecord(*,
                        'base_java_loader', 'base_spider', 'cntv央视',
                        'test_1']
         for fpath in paths:
+            fpath = Path(os.path.join(BASE_DIR, fpath)).as_posix()
             name = os.path.basename(fpath)
             base_name, extension = os.path.splitext(name)
             if '/t4/spiders/' in fpath and base_name in white_paths:
