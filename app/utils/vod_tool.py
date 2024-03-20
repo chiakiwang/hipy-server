@@ -91,11 +91,6 @@ def req(_url, _object):
     @param _object:
     @return:
     """
-    if not isinstance(_object, dict):
-        try:
-            _object = ujson.loads(_object.json())
-        except:
-            pass
     return base_request(_url, _object, 1)
 
 
