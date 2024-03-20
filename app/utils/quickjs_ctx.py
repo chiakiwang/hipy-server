@@ -4,6 +4,7 @@
 # Author: DaShenHan&道长-----先苦后甜，任凭晚风拂柳颜------
 # Author's Blog: https://blog.csdn.net/qq_32394351
 # Date  : 2024/2/6
+import ujson
 
 # from core.logger import logger
 from t4.base.htmlParser import jsoup
@@ -17,8 +18,8 @@ def initContext(ctx, url, prefix_code, env, getParams, getCryptoJS):
     # ctx.add_callable("log", logger.info)
     ctx.add_callable("log", print)
     ctx.add_callable("print", print)
-    ctx.add_callable("fetch", fetch)
-    ctx.add_callable("req", req)
+    ctx.add_callable("fetch", lambda _url, _object: ctx.parse_json(ujson.dumps(fetch(_url, _object))))
+    ctx.add_callable("req", lambda _url, _object: ctx.parse_json(ujson.dumps(req(_url, _object))))
     ctx.add_callable("urljoin", urljoin)
     ctx.add_callable("joinUrl", urljoin)
     ctx.eval("const console = {log};")

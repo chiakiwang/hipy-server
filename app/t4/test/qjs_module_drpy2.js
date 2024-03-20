@@ -2186,7 +2186,9 @@ function init(ext) {
             rule = ext;
         } else if (typeof ext == 'string') {
             if (ext.startsWith('http')) {
+                log('xxxxxxxxxxx')
                 let js = request(ext,{'method':'GET'});
+                log('--------')
                 if (js){
                     eval(js.replace('var rule', 'rule'));
                 }
