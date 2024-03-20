@@ -26,7 +26,7 @@ def initContext(ctx, url, prefix_code, env, getParams, getCryptoJS):
     ctx.add_callable("getCryptoJS", getCryptoJS)
     jsp = jsoup(url)
     ctx.add_callable("pdfh", jsp.pdfh)
-    ctx.add_callable("pdfa", jsp.pdfa)
+    ctx.add_callable("pdfa", lambda html, parse: ctx.parse_json(ujson.dumps(jsp.pdfa(html, parse))))
     ctx.add_callable("pd", jsp.pd)
     ctx.eval("var jsp = {pdfh, pdfa, pd};")
     ctx.add_callable("local_set", local.set)
