@@ -20,6 +20,7 @@ def initContext(ctx, url, prefix_code, env, getParams, getCryptoJS):
     ctx.add_callable("fetch", fetch)
     ctx.add_callable("req", req)
     ctx.add_callable("urljoin", urljoin)
+    ctx.add_callable("joinUrl", urljoin)
     ctx.eval("const console = {log};")
     ctx.add_callable("getCryptoJS", getCryptoJS)
     jsp = jsoup(url)
