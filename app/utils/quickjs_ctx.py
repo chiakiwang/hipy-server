@@ -12,22 +12,52 @@ from utils.vod_tool import fetch, req, 重定向, toast, image
 from urllib.parse import urljoin
 from utils.local_cache import local
 
+_ENV = {
+    'debug': 0
+}
+
 
 def initContext(ctx, url, prefix_code, env, getParams, getCryptoJS):
+    """
+    qjs引擎的注入函数
+    @param ctx:
+    @param url:
+    @param prefix_code:
+    @param env:
+    @param getParams:
+    @param getCryptoJS:
+    @return:
+    """
+    global _ENV
+    _ENV['debug'] = env.get('debug')
+
+    def toJsObJect(any):
+        if isinstance(any, dict) or isinstance(any, list):
+            return ctx.parse_json(ujson.dumps(any, ensure_ascii=False))
+        return any
+
+    def toDict(_object):
+        return ujson.loads(_object.json())
+
+    def handleLog(*args):
+        if _ENV.get('debug'):
+            print(*args)
+
     ctx.add_callable("getParams", getParams)
     # ctx.add_callable("log", logger.info)
-    ctx.add_callable("log", print)
-    ctx.add_callable("print", print)
+    ctx.add_callable("log", handleLog)
+    ctx.add_callable("print", handleLog)
     ctx.add_callable("fetch", fetch)
     # ctx.add_callable("req", lambda _url, _object: ctx.parse_json(ujson.dumps(req(_url, _object))))
-    ctx.add_callable("req", lambda _url, _object: ctx.parse_json(ujson.dumps(req(_url, ujson.loads(_object.json())))))
+    ctx.add_callable("req", lambda _url, _object: toJsObJect(req(_url, toDict(_object))))
     ctx.add_callable("urljoin", urljoin)
     ctx.add_callable("joinUrl", urljoin)
     ctx.eval("const console = {log};")
     ctx.add_callable("getCryptoJS", getCryptoJS)
     jsp = jsoup(url)
     ctx.add_callable("pdfh", jsp.pdfh)
-    ctx.add_callable("pdfa", lambda html, parse: ctx.parse_json(ujson.dumps(jsp.pdfa(html, parse))))
+    # ctx.add_callable("pdfa", lambda html, parse: ctx.parse_json(ujson.dumps(jsp.pdfa(html, parse))))
+    ctx.add_callable("pdfa", lambda html, parse: toJsObJect(jsp.pdfa(html, parse)))
     ctx.add_callable("pd", jsp.pd)
     ctx.eval("var jsp = {pdfh, pdfa, pd};")
     ctx.add_callable("local_set", local.set)
@@ -57,6 +87,11 @@ def initContext(ctx, url, prefix_code, env, getParams, getCryptoJS):
 
 
 def initGlobalThis(ctx):
+    """
+    pythonmonkey引擎的注入函数
+    @param ctx:
+    @return:
+    """
     globalThis = ctx.eval("globalThis;")
     _url = 'https://www.baidu.com'
     globalThis.fetch_params = {'headers': {'Referer': _url}, 'timeout': 10, 'encoding': 'utf-8'}

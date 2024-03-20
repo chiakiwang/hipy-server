@@ -24,7 +24,7 @@ id,created_time,creator_id,modified_time,modifier_id,is_deleted,name,group,path,
 28,2024-02-01 14:31:22.141613,1,2024-03-19 11:00:52.993774,1,0,base64,t4/files/drpy_libs,t4/files/drpy_libs/base64.js,True,28,.js,,1,0,0,0,True
 29,2024-02-01 14:31:22.144645,1,2024-03-19 11:00:53.003773,1,0,cheerio.min,t4/files/drpy_libs,t4/files/drpy_libs/cheerio.min.js,True,29,.js,,1,0,0,0,True
 30,2024-02-01 14:31:22.147509,1,2024-03-19 11:00:53.006377,1,0,crypto-hiker,t4/files/drpy_libs,t4/files/drpy_libs/crypto-hiker.js,True,30,.js,,1,0,0,0,True
-31,2024-02-01 14:31:22.150591,1,2024-03-19 11:00:53.009950,1,0,crypto-js,t4/files/drpy_libs,t4/files/drpy_libs/crypto-js.js,True,31,.js,,1,0,0,0,True
+31,2024-02-01 14:31:22.150591,1,2024-03-19 11:00:53.009950,1,0,crypto-js,t4/files/drpy_libs,t4/files/drpy_libs/qjs_module_crypto.js,True,31,.js,,1,0,0,0,True
 33,2024-02-01 14:31:22.158067,1,2024-03-19 11:00:53.016402,1,0,drpy2,t4/files/drpy_libs,t4/files/drpy_libs/drpy2.js,True,33,.js,,1,0,0,0,True
 34,2024-02-01 14:31:22.161255,1,2024-03-19 11:00:53.019803,1,0,drpy2.min,t4/files/drpy_libs,t4/files/drpy_libs/drpy2.min.js,True,34,.js,,1,0,0,0,True
 35,2024-02-01 14:31:22.164177,1,2024-03-19 11:00:53.023420,1,0,drT,t4/files/drpy_libs,t4/files/drpy_libs/drT.js,True,35,.js,,1,0,0,0,True
@@ -67,7 +67,7 @@ id,created_time,creator_id,modified_time,modifier_id,is_deleted,name,group,path,
 66,2024-02-05 09:48:57.524729,1,2024-03-19 11:00:53.098109,1,0,custom_spider_dz1201,t4/files/jar,t4/files/jar/custom_spider_dz1201.jar,True,66,.jar,,1,0,0,0,True
 67,2024-02-05 09:56:10.488387,1,2024-03-19 11:00:53.100893,1,0,哔哩,t4/files/js_parse_api,t4/files/js_parse_api/哔哩.js,True,67,.js,,1,0,0,0,True
 78,2024-03-08 15:53:21.065726,1,2024-03-19 11:00:53.104527,1,0,cheerio.min,t4/files/drpy3_libs,t4/files/drpy3_libs/cheerio.min.js,True,72,.js,,1,0,0,0,True
-79,2024-03-08 15:53:21.070369,1,2024-03-19 11:00:53.112948,1,0,crypto-js,t4/files/drpy3_libs,t4/files/drpy3_libs/crypto-js.js,True,73,.js,,1,0,0,0,True
+79,2024-03-08 15:53:21.070369,1,2024-03-19 11:00:53.112948,1,0,crypto-js,t4/files/drpy3_libs,t4/files/drpy3_libs/qjs_module_crypto.js,True,73,.js,,1,0,0,0,True
 80,2024-03-08 15:53:21.072166,1,2024-03-19 11:00:53.127639,1,0,drpy3,t4/files/drpy3_libs,t4/files/drpy3_libs/drpy3.js,True,74,.js,,1,0,0,0,True
 81,2024-03-08 15:53:21.075372,1,2024-03-19 11:00:53.133969,1,0,drpy3.min,t4/files/drpy3_libs,t4/files/drpy3_libs/drpy3.min.js,True,75,.js,,1,0,0,0,True
 82,2024-03-08 15:53:21.077160,1,2024-03-19 11:00:53.137899,1,0,gbk,t4/files/drpy3_libs,t4/files/drpy3_libs/gbk.js,True,76,.js,,1,0,0,0,True
