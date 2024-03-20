@@ -18,6 +18,7 @@ def initContext(ctx, url, prefix_code, env, getParams, getCryptoJS):
     ctx.add_callable("log", print)
     ctx.add_callable("print", print)
     ctx.add_callable("fetch", fetch)
+    ctx.add_callable("req", req)
     ctx.add_callable("urljoin", urljoin)
     ctx.eval("const console = {log};")
     ctx.add_callable("getCryptoJS", getCryptoJS)

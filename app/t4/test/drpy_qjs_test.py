@@ -37,3 +37,5 @@ if __name__ == '__main__':
     ctx.module(
         qjs_module_drpy2 + '\nglobalThis.' + key + ' = { init, home, homeVod, category, detail, play, search, proxy, sniffer, isVideo};')
     print(ctx.eval('typeof globalThis.SPKEY.init'))
+    test_rule_url = 'https://ghproxy.liuzhicong.com/https://github.com/hjdhnx/dr_py/raw/main/js/996%E5%BD%B1%E8%A7%86.js'
+    print(ctx.eval(f'globalThis.SPKEY.init("{test_rule_url}")'))
