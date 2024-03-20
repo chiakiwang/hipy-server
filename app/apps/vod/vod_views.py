@@ -174,7 +174,11 @@ def vod_generate(*, api: str = "", request: Request,
         vod.init(modules)
 
     elif need_init and is_drpy:
-        vod.init(get_file_text(api_path))
+        try:
+            vod.init(get_file_text(api_path))
+        except Exception as e:
+            logger.info(f'初始化drpy源:{api}发生了错误:{e},下次将会重新初始化')
+            del API_STORE[api]
 
     if ext and not ext.startswith('http'):
         try:
@@ -185,6 +189,7 @@ def vod_generate(*, api: str = "", request: Request,
 
     if is_drpy:
         rule_title = api.split('/')[-1]
+        vod.setDebug(debug)
     else:
         rule_title = vod.getName()
 

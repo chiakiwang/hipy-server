@@ -7,7 +7,7 @@
 import os
 import ujson
 from quickjs import Context
-from utils.quickjs_ctx import initContext
+from utils.quickjs_ctx import initContext, _ENV
 from t4.test.ad_remove import fixAdM3u8
 
 
@@ -45,6 +45,10 @@ class Drpy:
         self.ctx = ctx
         self.key = key
         self.t4_js_api = t4_js_api
+
+    @staticmethod
+    def setDebug(debug):
+        _ENV['debug'] = debug
 
     def toJsObJect(self, any):
         if isinstance(any, dict) or isinstance(any, list):
@@ -126,7 +130,8 @@ class Drpy:
 
 if __name__ == '__main__':
     drpy = Drpy(debug=1)
-    drpy.init('https://ghproxy.liuzhicong.com/https://github.com/hjdhnx/dr_py/raw/main/js/996%E5%BD%B1%E8%A7%86.js')
+    # drpy.init('https://ghproxy.liuzhicong.com/https://github.com/hjdhnx/dr_py/raw/main/js/996%E5%BD%B1%E8%A7%86.js')
+    drpy.init('https://ghproxy.liuzhicong.com/https://github.com/hjdhnx/dr_py/raw/main/js/农民影视.js')
     print(drpy.homeContent())
     # print(drpy.categoryContent(3, 1, False, {}))
     # print(drpy.detailContent("3$/detail/790.html"))

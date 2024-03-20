@@ -19,9 +19,13 @@
 }{% else %}
 {
     "key":"dr_{{ rule.name }}",
+    "key":"{% if mode == 0 %}drpy_t4_{{ rule.name }}{% else %}drpy_t3_{{ rule.name }}{% endif %}",
     "name":"{{ rule.name }}(drpy)",
+    "name":"{% if mode == 0 %}{{ rule.name }}(drpy_t4){% else %}{{ rule.name }}(drpy_t3){% endif %}",
     "type":3,
+    "type":{% if mode == 0 %}4{% else %}3{% endif %},
     "api":"{{ config.vod_drpy_api }}",
+    "api":"{% if mode == 0 %}{{ host }}/api/v1/vod/{{ rule.name }}.js{% if config.vod_passwd %}?pwd={{config.vod_passwd}}{% endif %}{% else %}{{ config.vod_drpy_api }}{% endif %}",
     "searchable": {{ rule.searchable or 0}},
     "quickSearch": {{ rule.quickSearch or 0}},
     "filterable": {{ rule.filterable or 0}},
