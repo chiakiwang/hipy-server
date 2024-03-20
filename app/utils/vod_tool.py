@@ -68,7 +68,8 @@ def base_request(_url, _object, _js_type=0):
     elif not withHeaders and _js_type == 0:
         return r.text if r else ''
     elif _js_type == 1:
-        return {'content': r.text, 'headers': dict(r.headers)} if r else empty_result
+        result = {'content': r.text, 'headers': dict(r.headers)} if r else empty_result
+        return result
     else:
         return empty_result
 

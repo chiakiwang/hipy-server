@@ -4,6 +4,7 @@
 # Author: DaShenHan&道长-----先苦后甜，任凭晚风拂柳颜------
 # Author's Blog: https://blog.csdn.net/qq_32394351
 # Date  : 2024/2/6
+import ujson
 
 # from core.logger import logger
 from t4.base.htmlParser import jsoup
@@ -18,12 +19,15 @@ def initContext(ctx, url, prefix_code, env, getParams, getCryptoJS):
     ctx.add_callable("log", print)
     ctx.add_callable("print", print)
     ctx.add_callable("fetch", fetch)
+    # ctx.add_callable("req", lambda _url, _object: ctx.parse_json(ujson.dumps(req(_url, _object))))
+    ctx.add_callable("req", lambda _url, _object: ctx.parse_json(ujson.dumps(req(_url, ujson.loads(_object.json())))))
     ctx.add_callable("urljoin", urljoin)
+    ctx.add_callable("joinUrl", urljoin)
     ctx.eval("const console = {log};")
     ctx.add_callable("getCryptoJS", getCryptoJS)
     jsp = jsoup(url)
     ctx.add_callable("pdfh", jsp.pdfh)
-    ctx.add_callable("pdfa", jsp.pdfa)
+    ctx.add_callable("pdfa", lambda html, parse: ctx.parse_json(ujson.dumps(jsp.pdfa(html, parse))))
     ctx.add_callable("pd", jsp.pd)
     ctx.eval("var jsp = {pdfh, pdfa, pd};")
     ctx.add_callable("local_set", local.set)
