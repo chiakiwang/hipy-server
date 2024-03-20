@@ -134,7 +134,7 @@ class jsoup:
         if not all([html, parse]):
             return []
         parse = self.parseHikerToJq(parse)
-        print(f'pdfa:{parse}')
+        # print(f'pdfa:{parse}')
         if PARSE_CACHE:
             if self.pdfa_html != html:
                 self.pdfa_html = html

@@ -33,10 +33,13 @@ def initContext(ctx, url, prefix_code, env, getParams, getCryptoJS):
     def toDict(_object):
         return ujson.loads(_object.json())
 
+    def empty(*args):
+        pass
+
     ctx.add_callable("getParams", getParams)
     # ctx.add_callable("log", logger.info)
-    ctx.add_callable("log", print)
-    ctx.add_callable("print", print)
+    ctx.add_callable("log", print if env.get('debug') else empty)
+    ctx.add_callable("print", print if env.get('debug') else empty)
     ctx.add_callable("fetch", fetch)
     # ctx.add_callable("req", lambda _url, _object: ctx.parse_json(ujson.dumps(req(_url, _object))))
     ctx.add_callable("req", lambda _url, _object: toJsObJect(req(_url, toDict(_object))))
