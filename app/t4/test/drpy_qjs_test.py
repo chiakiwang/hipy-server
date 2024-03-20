@@ -10,6 +10,13 @@ if __name__ == '__main__':
     ctx = Context()
     with open('qjs_module_muban.js', encoding='utf-8') as f:
         qjs_module_muban = f.read()
-    ctx.module(qjs_module_muban)
-    muban = ctx.get('muban')
-    print(muban)
+    with open('qjs_module_cheerio.js', encoding='utf-8') as f:
+        qjs_module_cheerio = f.read()
+    # ctx.module(qjs_module_muban+'\nglobalThis.muban = muban;')
+    ctx.module(qjs_module_muban + '\nglobalThis.muban = muban;')
+    print(ctx.eval('muban.mxpro.一级'))
+
+    # ctx.module(qjs_module_cheerio.replace('export','globalThis.cheerio =') + '\nglobalThis.jinja2 = dh;')
+    # ctx.module(qjs_module_cheerio.replace('export','globalThis.cheerio =') + '\nglobalThis.jinja2 = dh;')
+    ctx.module(qjs_module_cheerio + '\nglobalThis.jinja2 = dh;')
+    print(ctx.eval('typeof jinja2'))
