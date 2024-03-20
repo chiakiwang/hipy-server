@@ -53,7 +53,7 @@ alembic upgrade head
 克隆项目主分支
 
 ```shell
-git clone -b main https://github.com/hjdhnx/hipy-server.git
+git clone -b master https://github.com/hjdhnx/hipy-server.git
 ```
 
 数据库中创建DB
