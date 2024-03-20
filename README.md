@@ -3,7 +3,8 @@
 ##### 技术栈:  python|fastapi|redis|sqlachemy|postgresql|mysql|sqlite
 
 [套装传送门:hipy-ui](https://github.com/hjdhnx/hipy-ui/)  
-[巨人的肩膀](https://github.com/JohnDoe1996/fastAPI-vue)
+[巨人的肩膀](https://github.com/JohnDoe1996/fastAPI-vue)  
+[手机端搭建教程下载](https://wwi.lanzoup.com/iODLy1rykpjc)
 
 # <center> hipy-server </center>
 
