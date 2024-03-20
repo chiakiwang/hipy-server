@@ -5,18 +5,35 @@
 # Date  : 2024/3/20
 
 from quickjs import Context
+from utils.quickjs_ctx import initContext
 
 if __name__ == '__main__':
     ctx = Context()
+    initContext(ctx, url='', prefix_code='true', env={}, getParams=lambda: {}, getCryptoJS=lambda: 'true')
     with open('qjs_module_muban.js', encoding='utf-8') as f:
         qjs_module_muban = f.read()
     with open('qjs_module_cheerio.js', encoding='utf-8') as f:
         qjs_module_cheerio = f.read()
-    # ctx.module(qjs_module_muban+'\nglobalThis.muban = muban;')
-    ctx.module(qjs_module_muban + '\nglobalThis.muban = muban;')
-    print(ctx.eval('muban.mxpro.一级'))
+    with open('qjs_module_gbk.js', encoding='utf-8') as f:
+        qjs_module_gbk = f.read()
+    with open('crypto-js.js', encoding='utf-8') as f:
+        qjs_module_crypto = f.read()
+    with open('qjs_module_drpy2.js', encoding='utf-8') as f:
+        qjs_module_drpy2 = f.read()
+    ctx.eval(qjs_module_muban)
+    print(ctx.eval('模板.muban'))
+    print(ctx.eval('typeof(模板)'))
 
-    # ctx.module(qjs_module_cheerio.replace('export','globalThis.cheerio =') + '\nglobalThis.jinja2 = dh;')
-    # ctx.module(qjs_module_cheerio.replace('export','globalThis.cheerio =') + '\nglobalThis.jinja2 = dh;')
-    ctx.module(qjs_module_cheerio + '\nglobalThis.jinja2 = dh;')
-    print(ctx.eval('typeof jinja2'))
+    ctx.module(qjs_module_cheerio)
+    print(ctx.eval('typeof cheerio.jinja2'))
+
+    ctx.module(qjs_module_gbk)
+    print('typeof gbkTool().encode:', ctx.eval('typeof gbkTool().encode'))
+
+    ctx.module(qjs_module_crypto)
+    print('typeof CryptoJS.enc.Utf8.parse:', ctx.eval('typeof CryptoJS.enc.Utf8.parse'))
+
+    key = "SPKEY"
+    ctx.module(
+        qjs_module_drpy2 + '\nglobalThis.' + key + ' = { init, home, homeVod, category, detail, play, search, proxy, sniffer, isVideo};')
+    print(ctx.eval('typeof globalThis.SPKEY.init'))
