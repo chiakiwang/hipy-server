@@ -24,61 +24,58 @@ class Drpy:
         @param t4_js_api: 本地代理url
         @param debug: 开启调试模式|默认关闭，开启后可以显示源里打印的日志
         """
-        base_path = os.path.dirname(__file__)
         key = '_' + get_md5(api)
+        self.executor = ThreadPoolExecutor(max_workers=1)
+        self._lock = threading.Lock()
+        self._api = api
+        self.key = key
+        self.t4_js_api = t4_js_api
+        self.debug = debug
+        self.ctx = self.submit(self.initCtx)
+
+    def initCtx(self) -> Context:
+        base_path = os.path.dirname(__file__)
 
         def _(p):
             return os.path.join(base_path, p)
 
         with open(_('qjs_module_muban.js'), encoding='utf-8') as f:
-            self._qjs_module_muban = f.read()
+            _qjs_module_muban = f.read()
         with open(_('qjs_module_cheerio.js'), encoding='utf-8') as f:
-            self._qjs_module_cheerio = f.read()
+            _qjs_module_cheerio = f.read()
         with open(_('qjs_module_gbk.js'), encoding='utf-8') as f:
-            self._qjs_module_gbk = f.read()
+            _qjs_module_gbk = f.read()
         with open(_('qjs_module_crypto.js'), encoding='utf-8') as f:
-            self._qjs_module_crypto = f.read()
+            _qjs_module_crypto = f.read()
         with open(_('qjs_module_drpy2.js'), encoding='utf-8') as f:
-            self._qjs_module_drpy2 = f.read() + f'\nglobalThis.{key} = ' + '{ init, home, homeVod, category, detail, ' \
+            _qjs_module_drpy2 = f.read() + f'\nglobalThis.{self.key} = ' + '{ init, home, homeVod, category, detail, ' \
                                                                            'play, search, proxy, sniffer, isVideo};'
 
-        self.executor = ThreadPoolExecutor(max_workers=1)
-        self._lock = threading.Lock()
-
-        future = self.executor.submit(self.initCtx, debug)
-        wait([future])
-        self.ctx = future.result()
-
-        self._api = api
-        self.key = key
-        self.t4_js_api = t4_js_api
-
-    def initCtx(self, debug) -> Context:
         ctx = Context()
-        initContext(ctx, url='', prefix_code='true', env={'debug': debug}, getParams=lambda: {},
+        initContext(ctx, url='', prefix_code='true', env={'debug': self.debug}, getParams=lambda: {},
                     getCryptoJS=lambda: 'true')
-        ctx.module(self._qjs_module_muban)
-        ctx.module(self._qjs_module_cheerio)
-        ctx.module(self._qjs_module_gbk)
-        ctx.module(self._qjs_module_crypto)
-        ctx.module(self._qjs_module_drpy2)
+        ctx.module(_qjs_module_muban)
+        ctx.module(_qjs_module_cheerio)
+        ctx.module(_qjs_module_gbk)
+        ctx.module(_qjs_module_crypto)
+        ctx.module(_qjs_module_drpy2)
         return ctx
 
-    def setDebug(self, debug):
+    def submit(self, function, *args):
         with self._lock:
-            future = self.executor.submit(self.ctx.set, '_debug', debug)
+            future = self.executor.submit(function, *args)
             wait([future])
             return future.result()
+
+    def setDebug(self, debug):
+        return self.submit(self.ctx.set, '_debug', debug)
 
     def getName(self):
         return self._api.split('/')[-1]
 
     def toJsObJect(self, any):
         if isinstance(any, dict) or isinstance(any, list):
-            with self._lock:
-                future = self.executor.submit(self.ctx.parse_json, ujson.dumps(any, ensure_ascii=False))
-                wait([future])
-                return future.result()
+            return self.submit(self.ctx.parse_json, ujson.dumps(any, ensure_ascii=False))
         return any
 
     @staticmethod
@@ -90,10 +87,7 @@ class Drpy:
         return ujson.loads(_str)
 
     def call(self, func: str, *args):
-        with self._lock:
-            future = self.executor.submit(self._call, func, *args)
-            wait([future])
-            return future.result()
+        return self.submit(self._call, func, *args)
 
     def _call(self, func: str, *args):
         return self.ctx.eval(f'globalThis.{self.key}.{func}')(*args)
@@ -162,19 +156,20 @@ class Drpy:
 
 if __name__ == '__main__':
     drpy = Drpy(debug=1)
-    drpy.init('https://ghproxy.liuzhicong.com/https://github.com/hjdhnx/dr_py/raw/main/js/555影视[飞].js')
+    # drpy.init('https://ghproxy.liuzhicong.com/https://github.com/hjdhnx/dr_py/raw/main/js/荐片.js')
+    # drpy.init('https://ghproxy.liuzhicong.com/https://github.com/hjdhnx/dr_py/raw/main/js/555影视[飞].js')
     # drpy.init('https://ghproxy.liuzhicong.com/https://github.com/hjdhnx/dr_py/raw/main/js/农民影视.js')
     # drpy.init('https://ghproxy.liuzhicong.com/https://github.com/hjdhnx/dr_py/raw/main/js/奇珍异兽.js')
-    drpy.setDebug(0)
+    drpy.setDebug(1)
     print(drpy.homeContent())
-    f = quickjs.Function(
-        "adder", """
-                function adder(x, y) {
-                    return x + y;
-                }
-                """)
+    # f = quickjs.Function(
+    #     "adder", """
+    #             function adder(x, y) {
+    #                 return x + y;
+    #             }
+    #             """)
 
-    # print(drpy.categoryContent(3, 1, False, {}))
+    print(drpy.categoryContent(3, 1, False, {}))
     # print(drpy.detailContent("3$/detail/790.html"))
     # print(drpy.playerContent("索尼", "https://www.cs1369.com/play/790-1-1.html", []))
     # print(drpy.searchContent("斗罗大陆", False, 1))
