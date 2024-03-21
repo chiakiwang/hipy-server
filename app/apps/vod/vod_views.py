@@ -101,8 +101,8 @@ def vod_generate(*, api: str = "", request: Request,
     need_init = False
 
     # 无法加缓存，不知道怎么回事。多线程访问会报错的
-    if is_drpy and api in API_STORE:
-        del API_STORE[api]
+    # if is_drpy and api in API_STORE:
+    #     del API_STORE[api]
 
     try:
         api_path = get_api_path(api)
@@ -314,13 +314,6 @@ def vod_generate(*, api: str = "", request: Request,
             error_msg = f"searchContent执行发生内部服务器错误:{e}"
             logger.error(error_msg)
             return respErrorJson(error_code.ERROR_INTERNAL.set_msg(error_msg))
-
-    # futures = [vod.executor.submit(vod.homeContent, filterable)]
-    # futures2 = [vod.executor.submit(vod.homeVideoContent)]
-    # for future in vod.as_completed(futures):
-    #     home_data = future.result() or {}
-    # for future2 in vod.as_completed(futures2):
-    #     home_video_data = future2.result() or {}
 
     home_data = vod.homeContent(filterable) or {}
     home_video_data = vod.homeVideoContent() or {}

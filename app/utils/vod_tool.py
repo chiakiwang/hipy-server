@@ -44,9 +44,18 @@ def base_request(_url, _object, _js_type=0):
 
     withHeaders = bool(_object.get('withHeaders') or False)
     r = None
+    r_text = ''
+    r_headers = {}
     if method == 'get':
-        r = requests.get(_url, headers=headers, params=data, timeout=timeout, verify=False)
-        r.encoding = r.apparent_encoding
+        try:
+            r = requests.get(_url, headers=headers, params=data, timeout=timeout, verify=False)
+            r.encoding = r.apparent_encoding
+            r_text = r.text
+            r_headers = dict(r.headers)
+        except Exception as e:
+            error = f'base_request {method} 发生了错误:{e}'
+            r_headers['error'] = error
+            print(error)
     else:
         _request = None
         if method == 'post':
@@ -57,18 +66,26 @@ def base_request(_url, _object, _js_type=0):
             _request = requests.delete
         elif method == 'head':
             _request = requests.head
+
         if _request:
-            r = _request(_url, headers=headers, data=data, timeout=timeout, verify=False)
-            r.encoding = r.apparent_encoding
+            try:
+                r = _request(_url, headers=headers, data=data, timeout=timeout, verify=False)
+                r.encoding = r.apparent_encoding
+                r_text = r.text
+                r_headers = dict(r.headers)
+            except Exception as e:
+                error = f'base_request {method} 发生了错误:{e}'
+                r_headers['error'] = error
+                print(error)
 
     empty_result = {'content': '', 'body': '', 'headers': {}}
     if withHeaders and _js_type == 0:
-        result = {'body': r.text, 'headers': dict(r.headers)} if r else empty_result
+        result = {'body': r_text, 'headers': r_headers} if r else empty_result
         return ujson.dumps(result)
     elif not withHeaders and _js_type == 0:
-        return r.text if r else ''
+        return r_text if r else ''
     elif _js_type == 1:
-        result = {'content': r.text, 'headers': dict(r.headers)} if r else empty_result
+        result = {'content': r_text, 'headers': r_headers} if r else empty_result
         return result
     else:
         return empty_result
