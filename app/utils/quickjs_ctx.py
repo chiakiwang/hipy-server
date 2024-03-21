@@ -12,10 +12,6 @@ from utils.vod_tool import fetch, req, 重定向, toast, image
 from urllib.parse import urljoin
 from utils.local_cache import local
 
-_ENV = {
-    'debug': 0
-}
-
 
 def initContext(ctx, url, prefix_code, env, getParams, getCryptoJS):
     """
@@ -28,8 +24,6 @@ def initContext(ctx, url, prefix_code, env, getParams, getCryptoJS):
     @param getCryptoJS:
     @return:
     """
-    global _ENV
-    _ENV['debug'] = env.get('debug')
 
     def toJsObJect(any):
         if isinstance(any, dict) or isinstance(any, list):
@@ -40,9 +34,12 @@ def initContext(ctx, url, prefix_code, env, getParams, getCryptoJS):
         return ujson.loads(_object.json())
 
     def handleLog(*args):
-        if _ENV.get('debug'):
+        if ctx.get('_debug'):
             print(*args)
 
+    _debug = bool(env.get('debug') or False)
+    # print('_debug:', _debug)
+    ctx.set('_debug', _debug)
     ctx.add_callable("getParams", getParams)
     # ctx.add_callable("log", logger.info)
     ctx.add_callable("log", handleLog)
