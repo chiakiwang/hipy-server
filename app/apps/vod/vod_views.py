@@ -25,6 +25,7 @@ from common import deps
 from core.logger import logger
 from core.constants import BASE_DIR
 from utils.path import get_api_path, get_file_text, get_file_modified_time, get_now
+from dateutil.relativedelta import relativedelta
 from pathlib import Path
 import sys
 from t4.qjs_drpy.qjs_drpy import Drpy
@@ -51,6 +52,9 @@ def vod_generate(*, api: str = "", request: Request,
 
     # 接口是drpy源
     is_drpy = api.endswith('.js')
+    # 缓存初始化结果持续秒数|默认2小时
+    _seconds = 60 * 60 * 2
+    # _seconds = 10
     global API_STORE
 
     def getParams(key=None, value=''):
@@ -78,6 +82,8 @@ def vod_generate(*, api: str = "", request: Request,
 
     # 开发者模式会在首页显示内存占用
     debug = getParams('debug')
+    # 如果传了nocache就会清除缓存
+    nocache = getParams('nocache')
 
     # 判断head请求但不是本地代理直接干掉
     # if req_method == 'head' and (t4_api + '&') not in whole_url:
@@ -100,8 +106,8 @@ def vod_generate(*, api: str = "", request: Request,
     need_init = False
 
     # 无法加缓存，不知道怎么回事。多线程访问会报错的
-    # if is_drpy and api in API_STORE:
-    #     del API_STORE[api]
+    if is_drpy and nocache and api in API_STORE:
+        del API_STORE[api]
 
     try:
         api_path = get_api_path(api)
@@ -114,7 +120,7 @@ def vod_generate(*, api: str = "", request: Request,
             _api = API_STORE[api] or {'time': None}
             _api_time = _api['time']
             # 内存储存时间 < 文件修改时间 需要重新初始化
-            if not _api_time or _api_time < api_time:
+            if not _api_time or _api_time < api_time or (_api_time + relativedelta(seconds=_seconds) < get_now()):
                 need_init = True
 
         if need_init:
