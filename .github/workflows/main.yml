@@ -34,7 +34,7 @@ jobs:
           # 目标目录
          TARGET: '/home/www/hipy/app'
           # 排除目录
-         EXCLUDE: "configs,db/hipy.db,main.py"
+         EXCLUDE: "configs,main.py"
          SCRIPT_BEFORE: docker stop hipy-server
          SCRIPT_AFTER: |
           chmod -R 777 /home/www/hipy/app
