@@ -9,20 +9,22 @@ import threading
 
 import ujson
 from quickjs import Context
-from utils.quickjs_ctx import initContext, _ENV
+from utils.quickjs_ctx import initContext
+from utils.tools import get_md5
 from t4.test.ad_remove import fixAdM3u8
 from concurrent.futures import ThreadPoolExecutor, as_completed, wait
 
 
 class Drpy:
-    def __init__(self, key='drpy', t4_js_api='', debug=0):
+    def __init__(self, api='drpy', t4_js_api='', debug=0):
         """
         初始化一个drpy类
-        @param key: 源的唯一标识。可以传_+md5('xx影视.js')
+        @param api: 可以传api如996影视.js
         @param t4_js_api: 本地代理url
         @param debug: 开启调试模式|默认关闭，开启后可以显示源里打印的日志
         """
         base_path = os.path.dirname(__file__)
+        key = '_' + get_md5(api)
 
         def _(p):
             return os.path.join(base_path, p)
@@ -45,6 +47,7 @@ class Drpy:
         ctx.module(_qjs_module_gbk)
         ctx.module(_qjs_module_crypto)
         ctx.module(_qjs_module_drpy2)
+        self._api = api
         self.ctx = ctx
         self.key = key
         self.t4_js_api = t4_js_api
@@ -52,9 +55,17 @@ class Drpy:
         self.as_completed = as_completed
         self._lock = threading.Lock()
 
-    @staticmethod
-    def setDebug(debug):
-        _ENV['debug'] = debug
+    def setDebug(self, debug):
+        with self._lock:
+            future = self.executor.submit(self._setDebug, debug)
+            wait([future])
+            return future.result()
+
+    def _setDebug(self, debug):
+        return self.ctx.set('_debug', debug)
+
+    def getName(self):
+        return self._api.split('/')[-1]
 
     def toJsObJect(self, any):
         if isinstance(any, dict) or isinstance(any, list):
@@ -151,8 +162,9 @@ if __name__ == '__main__':
     drpy.init('https://ghproxy.liuzhicong.com/https://github.com/hjdhnx/dr_py/raw/main/js/996%E5%BD%B1%E8%A7%86.js')
     # drpy.init('https://ghproxy.liuzhicong.com/https://github.com/hjdhnx/dr_py/raw/main/js/农民影视.js')
     # drpy.init('https://ghproxy.liuzhicong.com/https://github.com/hjdhnx/dr_py/raw/main/js/奇珍异兽.js')
+    drpy.setDebug(0)
     print(drpy.homeContent())
-    print(drpy.categoryContent(3, 1, False, {}))
-    print(drpy.detailContent("3$/detail/790.html"))
+    # print(drpy.categoryContent(3, 1, False, {}))
+    # print(drpy.detailContent("3$/detail/790.html"))
     # print(drpy.playerContent("索尼", "https://www.cs1369.com/play/790-1-1.html", []))
     # print(drpy.searchContent("斗罗大陆", False, 1))

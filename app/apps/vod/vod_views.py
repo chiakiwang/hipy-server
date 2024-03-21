@@ -28,7 +28,6 @@ from utils.path import get_api_path, get_file_text, get_file_modified_time, get_
 from pathlib import Path
 import sys
 from t4.qjs_drpy.qjs_drpy import Drpy
-from utils.tools import get_md5
 
 router = APIRouter()
 
@@ -121,7 +120,7 @@ def vod_generate(*, api: str = "", request: Request,
         if need_init:
             logger.info(f'需要初始化源:源路径:{api_path},源最后修改时间:{api_time}')
             if is_drpy:
-                vod = Drpy('_' + get_md5(api), t4_js_api, debug)
+                vod = Drpy(api, t4_js_api, debug)
             else:
                 vod = Vod(api=api, query_params=request.query_params, t4_api=t4_api).module
             # 记录初始化时间|下次文件修改后判断储存的时间 < 文件修改时间又会重新初始化
@@ -157,6 +156,9 @@ def vod_generate(*, api: str = "", request: Request,
 
     extend = extend or api_ext
 
+    if is_drpy:
+        vod.setDebug(debug)
+
     if need_init and not is_drpy:
         vod.setExtendInfo(extend)
 
@@ -185,21 +187,16 @@ def vod_generate(*, api: str = "", request: Request,
             logger.info(f'初始化drpy源:{api}发生了错误:{e},下次将会重新初始化')
             del API_STORE[api]
 
+    rule_title = vod.getName()
+    if rule_title:
+        logger.info(f'加载爬虫源:{rule_title}')
+
     if ext and not ext.startswith('http'):
         try:
             # ext = json.loads(base64.b64decode(ext).decode("utf-8"))
             filters = base64.b64decode(ext).decode("utf-8")
         except Exception as e:
             logger.error(f'解析发生错误:{e}。未知的ext:{ext}')
-
-    if is_drpy:
-        rule_title = api.split('/')[-1]
-        vod.setDebug(debug)
-    else:
-        rule_title = vod.getName()
-
-    if rule_title:
-        logger.info(f'加载爬虫源:{rule_title}')
 
     if is_proxy:
         # 测试地址:
