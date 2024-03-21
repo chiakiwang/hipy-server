@@ -101,8 +101,8 @@ def vod_generate(*, api: str = "", request: Request,
     need_init = False
 
     # 无法加缓存，不知道怎么回事。多线程访问会报错的
-    if is_drpy and api in API_STORE:
-        del API_STORE[api]
+    # if is_drpy and api in API_STORE:
+    #     del API_STORE[api]
 
     try:
         api_path = get_api_path(api)
