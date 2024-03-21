@@ -37,6 +37,8 @@ def base_request(_url, _object, _js_type=0):
             k, v = p.split('=')
             data[k] = v
     headers = _object.get('headers') or {}
+    encoding = _object.get('encoding') or 'utf-8'
+    buffer = _object.get('buffer') or 1
 
     # 修复pythonmonkey没有自动把 JSObjectProxy 转为python的dict导致的后续错误
     data = dict(data)
@@ -45,12 +47,15 @@ def base_request(_url, _object, _js_type=0):
     withHeaders = bool(_object.get('withHeaders') or False)
     r = None
     r_text = ''
+    r_content = b''
     r_headers = {}
     if method == 'get':
         try:
             r = requests.get(_url, headers=headers, params=data, timeout=timeout, verify=False)
-            r.encoding = r.apparent_encoding
+            # r.encoding = r.apparent_encoding
+            r.encoding = encoding
             r_text = r.text
+            r_content = r.content
             r_headers = dict(r.headers)
         except Exception as e:
             error = f'base_request {method} 发生了错误:{e}'
@@ -70,14 +75,17 @@ def base_request(_url, _object, _js_type=0):
         if _request:
             try:
                 r = _request(_url, headers=headers, data=data, timeout=timeout, verify=False)
-                r.encoding = r.apparent_encoding
+                # r.encoding = r.apparent_encoding
+                r.encoding = encoding
                 r_text = r.text
+                r_content = r.content
                 r_headers = dict(r.headers)
             except Exception as e:
                 error = f'base_request {method} 发生了错误:{e}'
                 r_headers['error'] = error
                 print(error)
-
+    if buffer == 2:
+        r_text = base64.b64encode(r_content).decode("utf8")
     empty_result = {'content': '', 'body': '', 'headers': {}}
     if withHeaders and _js_type == 0:
         result = {'body': r_text, 'headers': r_headers} if r else empty_result
