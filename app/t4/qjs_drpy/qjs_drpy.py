@@ -6,8 +6,6 @@
 
 import os
 import threading
-
-import quickjs
 import ujson
 from quickjs import Context
 from utils.quickjs_ctx import initContext
