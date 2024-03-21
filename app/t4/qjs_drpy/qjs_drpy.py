@@ -5,11 +5,13 @@
 # Date  : 2024/3/20
 
 import os
+import threading
+
 import ujson
 from quickjs import Context
 from utils.quickjs_ctx import initContext, _ENV
 from t4.test.ad_remove import fixAdM3u8
-from concurrent.futures import ThreadPoolExecutor, as_completed
+from concurrent.futures import ThreadPoolExecutor, as_completed, wait
 
 
 class Drpy:
@@ -46,8 +48,9 @@ class Drpy:
         self.ctx = ctx
         self.key = key
         self.t4_js_api = t4_js_api
-        self.executor = ThreadPoolExecutor()
+        self.executor = ThreadPoolExecutor(max_workers=1)
         self.as_completed = as_completed
+        self._lock = threading.Lock()
 
     @staticmethod
     def setDebug(debug):
@@ -55,8 +58,14 @@ class Drpy:
 
     def toJsObJect(self, any):
         if isinstance(any, dict) or isinstance(any, list):
-            return self.ctx.parse_json(ujson.dumps(any, ensure_ascii=False))
+            with self._lock:
+                future = self.executor.submit(self._toJsObJect, any)
+                wait([future])
+                return future.result()
         return any
+
+    def _toJsObJect(self, any):
+        return self.ctx.parse_json(ujson.dumps(any, ensure_ascii=False))
 
     @staticmethod
     def toDict(_object):
@@ -67,6 +76,12 @@ class Drpy:
         return ujson.loads(_str)
 
     def call(self, func: str, *args):
+        with self._lock:
+            future = self.executor.submit(self._call, func, *args)
+            wait([future])
+            return future.result()
+
+    def _call(self, func: str, *args):
         return self.ctx.eval(f'globalThis.{self.key}.{func}')(*args)
 
     def init(self, extend=""):
@@ -133,11 +148,11 @@ class Drpy:
 
 if __name__ == '__main__':
     drpy = Drpy(debug=1)
-    # drpy.init('https://ghproxy.liuzhicong.com/https://github.com/hjdhnx/dr_py/raw/main/js/996%E5%BD%B1%E8%A7%86.js')
+    drpy.init('https://ghproxy.liuzhicong.com/https://github.com/hjdhnx/dr_py/raw/main/js/996%E5%BD%B1%E8%A7%86.js')
     # drpy.init('https://ghproxy.liuzhicong.com/https://github.com/hjdhnx/dr_py/raw/main/js/农民影视.js')
-    drpy.init('https://ghproxy.liuzhicong.com/https://github.com/hjdhnx/dr_py/raw/main/js/奇珍异兽.js')
+    # drpy.init('https://ghproxy.liuzhicong.com/https://github.com/hjdhnx/dr_py/raw/main/js/奇珍异兽.js')
     print(drpy.homeContent())
-    # print(drpy.categoryContent(3, 1, False, {}))
-    # print(drpy.detailContent("3$/detail/790.html"))
+    print(drpy.categoryContent(3, 1, False, {}))
+    print(drpy.detailContent("3$/detail/790.html"))
     # print(drpy.playerContent("索尼", "https://www.cs1369.com/play/790-1-1.html", []))
     # print(drpy.searchContent("斗罗大陆", False, 1))

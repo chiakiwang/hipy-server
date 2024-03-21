@@ -315,13 +315,6 @@ def vod_generate(*, api: str = "", request: Request,
             logger.error(error_msg)
             return respErrorJson(error_code.ERROR_INTERNAL.set_msg(error_msg))
 
-    # futures = [vod.executor.submit(vod.homeContent, filterable)]
-    # futures2 = [vod.executor.submit(vod.homeVideoContent)]
-    # for future in vod.as_completed(futures):
-    #     home_data = future.result() or {}
-    # for future2 in vod.as_completed(futures2):
-    #     home_video_data = future2.result() or {}
-
     home_data = vod.homeContent(filterable) or {}
     home_video_data = vod.homeVideoContent() or {}
     home_data.update(home_video_data)
