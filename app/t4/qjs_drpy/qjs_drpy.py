@@ -49,9 +49,8 @@ class Drpy:
             _qjs_module_drpy2 = f.read() + f'\nglobalThis.{self.key} = ' + '{ init, home, homeVod, category, detail, ' \
                                                                            'play, search, proxy, sniffer, isVideo};'
 
-        ctx = Context()
-        initContext(ctx, url='', prefix_code='true', env={'debug': self.debug}, getParams=lambda: {},
-                    getCryptoJS=lambda: 'true')
+        ctx = initContext(Context(), url='', prefix_code='true', env={'debug': self.debug}, getParams=lambda: {},
+                          getCryptoJS=lambda: 'true')
         ctx.module(_qjs_module_muban)
         ctx.module(_qjs_module_cheerio)
         ctx.module(_qjs_module_gbk)
@@ -87,38 +86,41 @@ class Drpy:
     def call(self, func: str, *args):
         return self.submit(self._call, func, *args)
 
-    def _call(self, func: str, *args):
-        return self.ctx.eval(f'globalThis.{self.key}.{func}')(*args)
+    def _call(self, func: str, *args, run_gc=True):
+        def convert_arg(arg):
+            if isinstance(arg, (type(None), str, bool, float, int)):
+                return arg
+            else:
+                # More complex objects are passed through JSON.
+                return self.ctx.parse_json(ujson.dumps(arg, ensure_ascii=False))
+
+        try:
+            return self.ctx.eval(f'globalThis.{self.key}.{func}')(*[convert_arg(a) for a in args])
+        finally:
+            if run_gc:
+                self.ctx.gc()
 
     def init(self, extend=""):
-        extend = self.toJsObJect(extend)
         self.call('init', extend)
 
     def homeContent(self, filter=None):
-        filter = self.toJsObJect(filter)
         return self.setDict(self.call('home', filter))
 
     def homeVideoContent(self):
         return self.setDict(self.call('homeVod'))
 
     def categoryContent(self, tid, pg, filter, extend):
-        filter = self.toJsObJect(filter)
-        extend = self.toJsObJect(extend)
         return self.setDict(self.call('category', tid, pg, filter, extend))
 
     def detailContent(self, ids):
         if isinstance(ids, list):
             ids = ids[0]
-        ids = self.toJsObJect(ids)
         return self.setDict(self.call('detail', ids))
 
     def searchContent(self, key, quick, pg=1):
         return self.setDict(self.call('search', key, quick, pg))
 
     def playerContent(self, flag, id, vipFlags=None):
-        if vipFlags is None:
-            vipFlags = []
-        vipFlags = self.toJsObJect(vipFlags)
         return self.setDict(self.call('play', flag, id, vipFlags))
 
     def isVideo(self):
@@ -148,7 +150,6 @@ class Drpy:
         return fixAdM3u8(*args)
 
     def localProxy(self, params):
-        params = self.toJsObJect(params)
         return self.toDict(self.call('proxy', params))
 
 
