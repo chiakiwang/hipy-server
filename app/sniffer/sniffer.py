@@ -264,8 +264,10 @@ if __name__ == '__main__':
     browser = Sniffer(driver_path=None)
     # ret = browser.snifferMediaUrl(url)
     ret = browser.snifferMediaUrl('https://jx.jsonplayer.com/player/?url=https://m.iqiyi.com/v_1pj3ayb1n70.html')
-    # ret = browser.snifferMediaUrl('https://jx.yangtu.top/?url=https://m.iqiyi.com/v_1pj3ayb1n70.html',custom_regex='http((?!http).){12,}?(download4|pcDownloadFile)')
+    print(ret)
+    ret = browser.snifferMediaUrl('https://jx.yangtu.top/?url=https://m.iqiyi.com/v_1pj3ayb1n70.html',
+                                  custom_regex='http((?!http).){12,}?(download4|pcDownloadFile)')
+    print(ret)
     browser.close()
     t2 = time()
-    print(ret)
     print(f'共计耗时:{round(t2 - t1, 2)}s')
