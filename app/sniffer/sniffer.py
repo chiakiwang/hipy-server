@@ -8,6 +8,7 @@
 # webdriver_manager 各个浏览器使用案例 https://blog.csdn.net/caixiangting/article/details/132049306
 
 import ujson
+from urllib.parse import urlparse
 from time import time, sleep
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
@@ -15,18 +16,32 @@ from selenium.webdriver.chrome.service import Service as ChromeService
 from webdriver_manager.chrome import ChromeDriverManager
 from webdriver_manager.microsoft import EdgeChromiumDriverManager
 import re
+import requests
 
 
 class Sniffer:
     # 正则嗅探匹配表达式
     urlRegex: str = 'http((?!http).){12,}?\\.(m3u8|mp4|flv|avi|mkv|rm|wmv|mpg|m4a|mp3)\\?.*|http((?!http).){12,}\\.(m3u8|mp4|flv|avi|mkv|rm|wmv|mpg|m4a|mp3)|http((?!http).)*?video/tos*'
+    urlNoHead: str = 'http((?!http).){12,}?(ac=dm&url=)'
     # 每次嗅探间隔毫秒
     delta: int = 250
 
     def __init__(self,
                  driver_path=None,
                  _type=0,
-                 wait=5, timeout=10, user_agent=None):
+                 wait=5,
+                 head_timeout=0.2,
+                 timeout=10, user_agent=None, custom_regex=None):
+        """
+        初始化
+        @param driver_path: 驱动器路径
+        @param _type: 使用的浏览器 0:谷歌 1:edge
+        @param wait:默认等待页面时间
+        @param head_timeout:head请求超时
+        @param timeout:嗅探超时
+        @param user_agent:请求头
+        @param custom_regex: 自定义嗅探正则
+        """
         if driver_path is None:
             driver_path = r'C:\Users\dashen\.wdm\drivers\chromedriver\win64\123.0.6312.58\chromedriver-win32/chromedriver.exe'
         if user_agent is None:
@@ -78,8 +93,10 @@ class Sniffer:
         self.options = options
         self.wait = wait
         self.timeout = timeout
+        self.head_timeout = head_timeout
         self.driver_path = driver_path
         self._type = _type
+        self.custom_regex = custom_regex
 
         self.driver = self.init_driver()
 
@@ -127,20 +144,23 @@ class Sniffer:
         url = self.driver.current_url
         return {'content': content, 'headers': {'location': url}}
 
-    def snifferMediaUrl(self, playUrl, mode=0):
+    def snifferMediaUrl(self, playUrl, mode=0, custom_regex=None):
         """
         输入播放地址，返回嗅探到的真实视频链接
         @param playUrl: 播放网页地址
         @param mode: 模式:0 嗅探到一个就返回 1:在10秒内嗅探所有的返回列表
+        @param custom_regex: 自定义嗅探正则
         @return:
         """
+        if custom_regex is None:
+            custom_regex = self.custom_regex
         realUrl = ''
         realUrls = []
         realHeaders = {}
         t1 = time()
+        cost = 0
         self.driver.get(playUrl)
-        t2 = time()
-        while (t2 - t1) < self.timeout and (not realUrl or mode == 1):
+        while cost < self.timeout and (not realUrl or mode == 1):
             messages = []
             urls = []
             # 获取性能数据
@@ -151,12 +171,55 @@ class Sniffer:
                 if message.get('params') and message['params'].get('request'):
                     messages.append(message)
                     url = message['params']['request']['url']
+                    method = message['params']['request']['method']
+                    headers = message['params']['request']['headers']
                     urls.append(url)
+                    if str(method).lower() == 'get' and str(url).startswith('http') and url != playUrl:
+                        parsed_url = urlparse(url)
+                        path = parsed_url.path
+                        filename = str(path.split('/')[-1])
+                        if ('.' not in filename and not re.search(self.urlNoHead, url, re.M | re.I)) or (
+                                '.' in filename and len(filename) > 1 and not filename.split('.')[1]):
+                            try:
+                                r = requests.head(url=url, headers=headers, timeout=self.head_timeout)
+                                rheaders = r.headers
+                                if rheaders['Content-Type'] == 'application/octet-stream' and '.m3u8' in rheaders[
+                                    'Content-Disposition']:
+                                    realUrl = url
+
+                                    if headers.get('Referer'):
+                                        realHeaders['referer'] = headers['Referer']
+                                    if headers.get('User-Agent'):
+                                        realHeaders['user-agent'] = headers['User-Agent']
+                                    if mode == 0:
+                                        break
+                                    else:
+                                        realUrls.append({
+                                            'url': realUrl,
+                                            'headers': headers,
+                                        })
+                            except Exception as e:
+                                print(f'head请求访问: {url} 发生了错误:{e}')
+
+                    if custom_regex and re.search(custom_regex, url, re.M | re.I):
+                        # print(message)
+                        realUrl = url
+
+                        if headers.get('Referer'):
+                            realHeaders['referer'] = headers['Referer']
+                        if headers.get('User-Agent'):
+                            realHeaders['user-agent'] = headers['User-Agent']
+                        if mode == 0:
+                            break
+                        else:
+                            realUrls.append({
+                                'url': realUrl,
+                                'headers': headers,
+                            })
                     if re.search(self.urlRegex, url, re.M | re.I):
                         if url.find('url=http') < 0 and url.find('v=http') < 0 and url.find('.css') < 0 and url.find(
                                 '.html') < 0:
                             realUrl = url
-                            headers = message['params']['request']['headers']
                             if headers.get('Referer'):
                                 realHeaders['referer'] = headers['Referer']
                             if headers.get('User-Agent'):
@@ -172,13 +235,17 @@ class Sniffer:
             # print(len(urls), urls)
             sleep(round(self.delta / 1000, 2))
             t2 = time()
+            cost = t2 - t1
 
+        cost_str = str(round(cost * 1000, 2)) + 'ms'
         if mode == 0 and realUrl:
-            return {'url': realUrl, 'headers': realHeaders, 'code': 200, 'msg': '嗅探成功'}
+            return {'url': realUrl, 'headers': realHeaders, 'from': playUrl, 'cost': cost_str, 'code': 200,
+                    'msg': '嗅探成功'}
         elif mode == 1 and realUrls:
-            return {'urls': realUrls, 'code': 200, 'msg': '嗅探成功'}
+            return {'urls': realUrls, 'code': 200, 'from': playUrl, 'cost': cost_str, 'msg': '嗅探成功'}
         else:
-            return {'url': realUrl, 'headers': realHeaders, 'code': 404, 'msg': '嗅探失败'}
+            return {'url': realUrl, 'headers': realHeaders, 'from': playUrl, 'cost': cost_str, 'code': 404,
+                    'msg': '嗅探失败'}
 
     def close(self):
         """
@@ -195,7 +262,9 @@ if __name__ == '__main__':
     # url = 'https://v.qq.com/x/page/i3038urj2mt.html'
     # url = 'http://www.mgtv.com/v/1/290346/f/3664551.html'
     browser = Sniffer(driver_path=None)
-    ret = browser.snifferMediaUrl(url)
+    # ret = browser.snifferMediaUrl(url)
+    ret = browser.snifferMediaUrl('https://jx.jsonplayer.com/player/?url=https://m.iqiyi.com/v_1pj3ayb1n70.html')
+    # ret = browser.snifferMediaUrl('https://jx.yangtu.top/?url=https://m.iqiyi.com/v_1pj3ayb1n70.html',custom_regex='http((?!http).){12,}?(download4|pcDownloadFile)')
     browser.close()
     t2 = time()
     print(ret)
