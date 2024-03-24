@@ -18,6 +18,9 @@ from webdriver_manager.microsoft import EdgeChromiumDriverManager
 import re
 import requests
 
+# 储存驱动器列表,给接口缓存用
+browser_drivers = []
+
 
 class Sniffer:
     # 正则嗅探匹配表达式
@@ -61,6 +64,8 @@ class Sniffer:
         options.add_argument("--no-displaying-insecure-content")
         # 跳过首次运行检查
         options.add_argument("--no-first-run")
+        # 不做浏览器默认检查
+        options.add_argument("no-default-browser-check")
         # 禁用扩展
         options.add_argument("--disable-extensions")
         # 允许Https加载http内容
@@ -100,6 +105,19 @@ class Sniffer:
 
         self.driver = self.init_driver()
 
+    @classmethod
+    def get_driver_path(cls, _type=0):
+        """
+        智能化获取驱动路径
+        @return:
+        """
+        driver_path = None
+        if _type == 0:
+            driver_path = ChromeDriverManager().install()
+        elif _type == 1:
+            driver_path = EdgeChromiumDriverManager().install()
+        return driver_path
+
     def init_driver(self):
         """
         初始化驱动程序
@@ -108,20 +126,23 @@ class Sniffer:
         _driver = None
         driver = None
         if self._type == 0:
-            if self.driver_path == 'auto':
-                self.driver_path = ChromeDriverManager().install()
             _driver = webdriver.Chrome
         elif self._type == 1:
-            if self.driver_path == 'auto':
-                self.driver_path = EdgeChromiumDriverManager().install()
             _driver = webdriver.Edge
 
         if _driver:
-            service = ChromeService(self.driver_path)
-            driver = _driver(service=service, options=self.options)
-            driver.implicitly_wait(5)  # 隐式等待时间
-            # 设置窗口大小
-            driver.set_window_size(1, 0)
+            if self.driver_path == 'auto':
+                self.driver_path = self.get_driver_path(self._type)
+
+            if self.driver_path:
+                service = ChromeService(self.driver_path)
+                driver = _driver(service=service, options=self.options)
+                driver.implicitly_wait(5)  # 隐式等待时间
+                # 设置窗口大小
+                driver.set_window_size(1, 0)
+                # 设置要屏蔽的URL
+                driver.execute_cdp_cmd('Network.setBlockedURLs',
+                                       {"urls": ["*.googleapis.com", "www.google-analytics.com", "*.facebook.net"]})
 
         return driver
 
@@ -157,9 +178,20 @@ class Sniffer:
         realUrl = ''
         realUrls = []
         realHeaders = {}
+        headUrls = []
         t1 = time()
         cost = 0
+        # 必须这行代码，配置最后的设置about:blank防止串数据
+        self.driver.execute_cdp_cmd('Network.enable', {})
+
+        # self.driver.execute_script(f"window.open('{playUrl}')")
+        # handles = self.driver.window_handles
+        # self.driver.switch_to.window(handles[-1])
+        # # 获取主窗口句柄
+        # main_window = self.driver.current_window_handle
+
         self.driver.get(playUrl)
+
         while cost < self.timeout and (not realUrl or mode == 1):
             messages = []
             urls = []
@@ -178,28 +210,34 @@ class Sniffer:
                         parsed_url = urlparse(url)
                         path = parsed_url.path
                         filename = str(path.split('/')[-1])
-                        if ('.' not in filename and not re.search(self.urlNoHead, url, re.M | re.I)) or (
+                        # 链接不含.并且正则匹配不在不head列表  或者 链接有.但是.后面没内容，也算空后缀
+                        if (filename and '.' not in filename and not re.search(self.urlNoHead, url, re.M | re.I)) or (
                                 '.' in filename and len(filename) > 1 and not filename.split('.')[1]):
-                            try:
-                                r = requests.head(url=url, headers=headers, timeout=self.head_timeout)
-                                rheaders = r.headers
-                                if rheaders['Content-Type'] == 'application/octet-stream' and '.m3u8' in rheaders[
-                                    'Content-Disposition']:
-                                    realUrl = url
+                            # 如果链接没有进行过head请求。防止多次嗅探的时候重复去head请求
+                            if url not in headUrls:
+                                try:
+                                    r = requests.head(url=url, headers=headers, timeout=self.head_timeout)
+                                    rheaders = r.headers
+                                    if rheaders.get('Content-Type') and rheaders[
+                                        'Content-Type'] == 'application/octet-stream' and '.m3u8' in rheaders[
+                                        'Content-Disposition']:
+                                        realUrl = url
 
-                                    if headers.get('Referer'):
-                                        realHeaders['referer'] = headers['Referer']
-                                    if headers.get('User-Agent'):
-                                        realHeaders['user-agent'] = headers['User-Agent']
-                                    if mode == 0:
-                                        break
-                                    else:
-                                        realUrls.append({
-                                            'url': realUrl,
-                                            'headers': headers,
-                                        })
-                            except Exception as e:
-                                print(f'head请求访问: {url} 发生了错误:{e}')
+                                        if headers.get('Referer'):
+                                            realHeaders['referer'] = headers['Referer']
+                                        if headers.get('User-Agent'):
+                                            realHeaders['user-agent'] = headers['User-Agent']
+                                        if mode == 0:
+                                            break
+                                        else:
+                                            realUrls.append({
+                                                'url': realUrl,
+                                                'headers': headers,
+                                            })
+                                except Exception as e:
+                                    print(f'head请求访问: {url} 发生了错误:{e}')
+
+                                headUrls.append(url)
 
                     if custom_regex and re.search(custom_regex, url, re.M | re.I):
                         # print(message)
@@ -238,6 +276,16 @@ class Sniffer:
             cost = t2 - t1
 
         cost_str = str(round(cost * 1000, 2)) + 'ms'
+        self.driver.get('about:blank')
+
+        # self.driver.close()
+        # self.driver.get('http://localhost:5707/blank')
+        # 循环遍历所有窗口句柄，关闭非主窗口句柄的窗口
+        # for handle in handles:
+        #     if handle != main_window:
+        #         self.driver.switch_to.window(handle)
+        #         self.driver.close()
+
         if mode == 0 and realUrl:
             return {'url': realUrl, 'headers': realHeaders, 'from': playUrl, 'cost': cost_str, 'code': 200,
                     'msg': '嗅探成功'}
@@ -257,12 +305,15 @@ class Sniffer:
 
 if __name__ == '__main__':
     t1 = time()
-    url = 'https://www.cs1369.com/play/2-1-94.html'
-    # url = 'https://v.qq.com/x/page/i3038urj2mt.html'
-    # url = 'https://v.qq.com/x/page/i3038urj2mt.html'
+    # url = 'https://www.cs1369.com/play/2-1-94.html'
+    url = 'https://v.qq.com/x/page/i3038urj2mt.html'
     # url = 'http://www.mgtv.com/v/1/290346/f/3664551.html'
     browser = Sniffer(driver_path=None)
-    # ret = browser.snifferMediaUrl(url)
+    # browser.driver.get('https://www.baidu.com')
+    ret = browser.snifferMediaUrl(url)
+    print(ret)
+    # ret = browser.snifferMediaUrl('http://www.mgtv.com/v/1/290346/f/3664551.html')
+    # print(ret)
     ret = browser.snifferMediaUrl('https://jx.jsonplayer.com/player/?url=https://m.iqiyi.com/v_1pj3ayb1n70.html')
     print(ret)
     ret = browser.snifferMediaUrl('https://jx.yangtu.top/?url=https://m.iqiyi.com/v_1pj3ayb1n70.html',

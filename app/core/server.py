@@ -19,6 +19,7 @@ from db.cache import registerRedis
 from common.task_apscheduler import scheduler_register, scheduler  # 固化数据库,scheduler.init_scheduler() 初始化
 from utils.notes import set_start_time
 from utils.server_info import get_server_info, get_host_ip
+from sniffer.sniffer import Sniffer, browser_drivers
 
 
 class InitializeApp(object):
@@ -86,6 +87,14 @@ class InitializeApp(object):
             # scheduler.init_scheduler()  # noqa 去掉不合理提示
             scheduler_register()
 
+            try:
+                driver_path = Sniffer.get_driver_path(0)
+                logger.info(f'获取到driver_path:{driver_path}')
+                browser = Sniffer(driver_path=driver_path)
+                browser_drivers.append(browser)
+            except Exception as e:
+                logger.info(f'初始化加载browser_drivers发生错误:{e}')
+
             logger.info(f'服务器参数:{get_server_info()}')
             logger.info(f'本地地址: http://localhost:{settings.PORT}')
             logger.info(f'局域网地址: http://{get_host_ip()}:{settings.PORT}')
@@ -98,3 +107,10 @@ class InitializeApp(object):
             """
             # await mysql.close_mysql()
             scheduler.shutdown()
+            for browser in browser_drivers:
+                try:
+                    browser.close()
+                    logger.info(f'停用browser:{browser}执行成功')
+                except Exception as e:
+                    logger.info(f'停用browser:{browser}发生了错误:{e}')
+            logger.info(f'hipy-server服务已停止')
