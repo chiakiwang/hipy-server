@@ -43,3 +43,4 @@ jpype1
 quickjs
 selenium
 webdriver-manager
+cloudscraper

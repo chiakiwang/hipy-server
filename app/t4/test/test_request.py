@@ -6,10 +6,19 @@
 # Date  : 2024/3/24
 
 import requests
+import cloudscraper
+scraper = cloudscraper.create_scraper()
 
 # headers = {'User-Agent': 'Mozilla/5.0 (Linux；； Android 11；； Mi 10 Pro) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.152 Mobile Safari/537.36', 'Referer': 'https://www.freeok.pro'}
+# headers = {
+#     'User-Agent': 'Mozilla/5.0',
+#     'Referer': 'https://www.freeok.pro'}
+# r = requests.get('https://www.freeok.pro', data={}, headers=headers)
+# print(r.content)
+
 headers = {
-    'User-Agent': 'Mozilla/5.0 (Linux；； Android 11；； Mi 10 Pro) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.152 Mobile Safari/537.36',
+    'User-Agent': 'Mozilla/5.0',
     'Referer': 'https://www.freeok.pro'}
-r = requests.get('https://www.freeok.pro', data={}, headers=headers)
+# r = scraper.get('https://www.freeok.pro', data={}, headers=headers)
+r = scraper.get('https://www.freeok.pro')
 print(r.content)

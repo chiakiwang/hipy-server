@@ -1,5 +1,6 @@
 ### linux系统安装selenium-需要python3.8环境
 
+sniffer.py
 ```shell
 apt update
 # apt install libxss1 libappindicator1 libindicator7  # 安装软件依赖
@@ -16,4 +17,10 @@ dpkg -i google-chrome-104.deb
 # dpkg -i google-chrome-stable_current_amd64.deb
 apt install -f
 dpkg -i google-chrome-104.deb
+```
+
+sniffer2.py
+```shell
+docker pull selenium/standalone-chrome-debug
+docker run -tid --name chrome-debug -h chrome-debug --memory 1g --memory-swap -1 -p 9516:4444 -p 31527:5900 selenium/standalone-chrome-debug
 ```
