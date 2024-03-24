@@ -88,12 +88,12 @@ def base_request(_url, _object, _js_type=0):
         r_text = base64.b64encode(r_content).decode("utf8")
     empty_result = {'content': '', 'body': '', 'headers': {}}
     if withHeaders and _js_type == 0:
-        result = {'body': r_text, 'headers': r_headers} if r else empty_result
+        result = {'body': r_text, 'headers': r_headers} if r_text else empty_result
         return ujson.dumps(result)
     elif not withHeaders and _js_type == 0:
-        return r_text if r else ''
+        return r_text if r_text else ''
     elif _js_type == 1:
-        result = {'content': r_text, 'headers': r_headers} if r else empty_result
+        result = {'content': r_text, 'headers': r_headers} if r_text else empty_result
         return result
     else:
         return empty_result

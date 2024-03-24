@@ -158,8 +158,11 @@ if __name__ == '__main__':
     # drpy.init('https://ghproxy.liuzhicong.com/https://github.com/hjdhnx/dr_py/raw/main/js/荐片.js')
     # drpy.init('https://ghproxy.liuzhicong.com/https://github.com/hjdhnx/dr_py/raw/main/js/555影视[飞].js')
     # drpy.init('https://ghproxy.liuzhicong.com/https://github.com/hjdhnx/dr_py/raw/main/js/农民影视.js')
-    drpy.init('https://ghproxy.liuzhicong.com/https://github.com/hjdhnx/dr_py/raw/main/js/996影视.js')
+    # drpy.init('https://ghproxy.liuzhicong.com/https://github.com/hjdhnx/dr_py/raw/main/js/996影视.js')
     # drpy.init('https://ghproxy.liuzhicong.com/https://github.com/hjdhnx/dr_py/raw/main/js/奇珍异兽.js')
+    with open('../files/drpy_js/freeok.js', encoding='utf-8') as f:
+        code = f.read()
+    drpy.init(code)
     drpy.setDebug(1)
     print(drpy.homeContent())
     # f = quickjs.Function(
@@ -169,7 +172,7 @@ if __name__ == '__main__':
     #             }
     #             """)
 
-    print(drpy.categoryContent('3', 1, False, {}))
+    # print(drpy.categoryContent('3', 1, False, {}))
     # print(drpy.detailContent("3$/detail/790.html"))
     # print(drpy.playerContent("索尼", "https://www.cs1369.com/play/790-1-1.html", []))
     # print(drpy.searchContent("斗罗大陆", False, 1))

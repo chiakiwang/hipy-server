@@ -11,6 +11,7 @@ from t4.base.htmlParser import jsoup
 from utils.vod_tool import fetch, req, 重定向, toast, image
 from urllib.parse import urljoin
 from utils.local_cache import local
+from sniffer.sniffer import browser_drivers
 
 
 def initContext(ctx, url, prefix_code, env, getParams, getCryptoJS):
@@ -37,6 +38,18 @@ def initContext(ctx, url, prefix_code, env, getParams, getCryptoJS):
         if ctx.get('_debug'):
             print(*args)
 
+    def snifferMediaUrl(url):
+        if browser_drivers:
+            return toJsObJect(browser_drivers[0].snifferMediaUrl(url))
+        else:
+            return None
+
+    def fetCodeByWebView(url):
+        if browser_drivers:
+            return toJsObJect(browser_drivers[0].fetCodeByWebView(url))
+        else:
+            return None
+
     _debug = bool(env.get('debug') or False)
     # print('_debug:', _debug)
     ctx.set('_debug', _debug)
@@ -45,6 +58,8 @@ def initContext(ctx, url, prefix_code, env, getParams, getCryptoJS):
     ctx.add_callable("log", handleLog)
     ctx.add_callable("print", handleLog)
     ctx.add_callable("fetch", fetch)
+    ctx.add_callable("snifferMediaUrl", snifferMediaUrl)
+    ctx.add_callable("fetCodeByWebView", fetCodeByWebView)
     # ctx.add_callable("req", lambda _url, _object: ctx.parse_json(ujson.dumps(req(_url, _object))))
     ctx.add_callable("req", lambda _url, _object: toJsObJect(req(_url, toDict(_object))))
     ctx.add_callable("urljoin", urljoin)

@@ -31,6 +31,7 @@ from apps.system.curd.curd_dict_data import curd_dict_data
 from apps.vod.curd.curd_rules import curd_vod_rules
 from apps.vod.curd.curd_configs import curd_vod_configs
 from pathlib import Path
+from sniffer.sniffer import Sniffer, browser_drivers
 
 try:
     from redis.asyncio import Redis as asyncRedis
@@ -60,6 +61,11 @@ async def read_root(request: Req):
 async def web_home():
     html = htmler.renderTemplate('index')
     return HTMLResponse(html)
+
+
+@router.get("/blank", summary="空白页面")
+async def web_blank():
+    return HTMLResponse(f'{time()}')
 
 
 @router.get('/favicon.ico', summary="网站默认图标")  # 设置icon
@@ -428,6 +434,35 @@ async def get_hot_search(*, request: Req, ):
     size = getParams('size')
     data = getHotSuggest(s_from, size)
     return respSuccessJson(data=data)
+
+
+@router.get('/sniffer', summary='嗅探器-根据传入的url嗅探页面上的真实视频地址')
+def get_sniffer_url(*,
+                    db: Session = Depends(deps.get_db),
+                    request: Req,
+                    ):
+    def getParams(_key=None, _value=''):
+        if _key:
+            return request.query_params.get(_key) or _value
+        else:
+            return request.query_params.__dict__['_dict']
+
+    url = getParams('url')
+    if not str(url).startswith('http'):
+        return respErrorJson(error_code.ERROR_PARAMETER_ERROR.set_msg('传入的url不合法'))
+
+    try:
+        if not browser_drivers:
+            driver_path = Sniffer.get_driver_path(0)
+            browser = Sniffer(driver_path=driver_path)
+            browser_drivers.append(browser)
+        else:
+            browser = browser_drivers[0]
+
+        ret = browser.snifferMediaUrl(url)
+        return respVodJson(data=ret)
+    except Exception as e:
+        return respErrorJson(error_code.ERROR_INTERNAL.set_msg(f'{e}'))
 
 
 @router.get('/parse/api/{filename:path}', summary="执行js后台解析")
