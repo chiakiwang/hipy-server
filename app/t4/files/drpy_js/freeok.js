@@ -7,7 +7,7 @@ var rule={
     quickSearch: 0,
     filterable: 0,
     headers: {
-    'User-Agent': 'Mozilla/5.0 (Linux；； Android 11；； Mi 10 Pro) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.152 Mobile Safari/537.36',
+    'User-Agent': 'Mozilla/5.0',
     },
     class_parse: '.navbar&&ul&&li;a&&Text;a&&href;/(\\d+).html',
     class_exclude:'留言|首页|网盘|',

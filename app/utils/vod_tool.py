@@ -14,15 +14,29 @@ import warnings
 warnings.filterwarnings("ignore")
 requests.packages.urllib3.disable_warnings()
 
+_cloudfare_enable = False
+try:
+    import cloudscraper
 
-def base_request(_url, _object, _js_type=0):
+    scraper = cloudscraper.create_scraper()
+    _cloudfare_enable = True
+except ImportError:
+    pass
+
+
+def base_request(_url, _object, _js_type=0, cloudfare=False):
     """
     基础网络请求封装，兼容qjs和pythonmonkey引擎二次使用
     @param _url:网页地址
     @param _object: 必要参数字典 method,timeout,body,data,headers,withHeaders 等
     @param _js_type: 0 qjs 1 pythonmonkey
+    @param cloudfare: 使用过5秒盾请求
     @return:
     """
+    if cloudfare and _cloudfare_enable:
+        s = scraper
+    else:
+        s = requests
     if not isinstance(_object, dict) and _js_type == 0:
         _object = ujson.loads(_object.json())
     elif _js_type == 1:
@@ -51,7 +65,7 @@ def base_request(_url, _object, _js_type=0):
     r_headers = {}
     if method == 'get':
         try:
-            r = requests.get(_url, headers=headers, params=data, timeout=timeout, verify=False)
+            r = s.get(_url, headers=headers, params=data, timeout=timeout, verify=True if cloudfare else False)
             # r.encoding = r.apparent_encoding
             r.encoding = encoding
             r_text = r.text
@@ -64,17 +78,17 @@ def base_request(_url, _object, _js_type=0):
     else:
         _request = None
         if method == 'post':
-            _request = requests.post
+            _request = s.post
         elif method == 'put':
-            _request = requests.put
+            _request = s.put
         elif method == 'delete':
-            _request = requests.delete
+            _request = s.delete
         elif method == 'head':
-            _request = requests.head
+            _request = s.head
 
         if _request:
             try:
-                r = _request(_url, headers=headers, data=data, timeout=timeout, verify=False)
+                r = _request(_url, headers=headers, data=data, timeout=timeout, verify=True if cloudfare else False)
                 # r.encoding = r.apparent_encoding
                 r.encoding = encoding
                 r_text = r.text
@@ -84,6 +98,8 @@ def base_request(_url, _object, _js_type=0):
                 error = f'base_request {method} 发生了错误:{e}'
                 r_headers['error'] = error
                 print(error)
+    if 'Just a moment...' in r_text and not cloudfare and _cloudfare_enable:
+        return base_request(_url, _object, _js_type, cloudfare=True)
     if buffer == 2:
         r_text = base64.b64encode(r_content).decode("utf8")
     empty_result = {'content': '', 'body': '', 'headers': {}}
