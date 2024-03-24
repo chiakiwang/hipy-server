@@ -310,7 +310,8 @@ if __name__ == '__main__':
     # url = 'http://www.mgtv.com/v/1/290346/f/3664551.html'
     browser = Sniffer(driver_path=None)
     # browser.driver.get('https://www.baidu.com')
-    ret = browser.snifferMediaUrl(url)
+    # ret = browser.snifferMediaUrl(url)
+    ret = browser.snifferMediaUrl('https://www.freeok.pro/xplay/63170-8-12.html')
     print(ret)
     # ret = browser.snifferMediaUrl('http://www.mgtv.com/v/1/290346/f/3664551.html')
     # print(ret)
