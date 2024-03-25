@@ -99,6 +99,7 @@ def base_request(_url, _object, _js_type=0, cloudfare=False):
                 r_headers['error'] = error
                 print(error)
     if 'Just a moment...' in r_text and not cloudfare and _cloudfare_enable:
+        # print('遇到了Just a moment...')
         return base_request(_url, _object, _js_type, cloudfare=True)
     if buffer == 2:
         r_text = base64.b64encode(r_content).decode("utf8")
