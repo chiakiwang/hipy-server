@@ -15,6 +15,7 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service as ChromeService
 from webdriver_manager.chrome import ChromeDriverManager
 from webdriver_manager.microsoft import EdgeChromiumDriverManager
+from pathlib import Path
 import re
 import requests
 
@@ -116,7 +117,7 @@ class Sniffer:
             driver_path = ChromeDriverManager().install()
         elif _type == 1:
             driver_path = EdgeChromiumDriverManager().install()
-        return driver_path
+        return Path(driver_path).as_posix()
 
     def init_driver(self):
         """
@@ -303,7 +304,7 @@ class Sniffer:
         self.driver.quit()
 
 
-if __name__ == '__main__':
+def main_test():
     t1 = time()
     # url = 'https://www.cs1369.com/play/2-1-94.html'
     url = 'https://v.qq.com/x/page/i3038urj2mt.html'
@@ -311,10 +312,10 @@ if __name__ == '__main__':
     browser = Sniffer(driver_path=None)
     # browser.driver.get('https://www.baidu.com')
     # ret = browser.snifferMediaUrl(url)
-    ret = browser.snifferMediaUrl('https://www.freeok.pro/xplay/63170-8-12.html')
-    print(ret)
-    # ret = browser.snifferMediaUrl('http://www.mgtv.com/v/1/290346/f/3664551.html')
+    # ret = browser.snifferMediaUrl('https://www.freeok.pro/xplay/63170-8-12.html')
     # print(ret)
+    ret = browser.snifferMediaUrl('http://www.mgtv.com/v/1/290346/f/3664551.html')
+    print(ret)
     ret = browser.snifferMediaUrl('https://jx.jsonplayer.com/player/?url=https://m.iqiyi.com/v_1pj3ayb1n70.html')
     print(ret)
     ret = browser.snifferMediaUrl('https://jx.yangtu.top/?url=https://m.iqiyi.com/v_1pj3ayb1n70.html',
@@ -323,3 +324,21 @@ if __name__ == '__main__':
     browser.close()
     t2 = time()
     print(f'共计耗时:{round(t2 - t1, 2)}s')
+
+
+def demo_test():
+    t1 = time()
+    fpath = Sniffer.get_driver_path(0)
+    # fpath = r'C:/Users/hjd/.wdm/drivers/chromedriver/win64/123.0.6312.58/chromedriver-win64/chromedriver.exe'
+    print('fpath:', fpath)
+    browser = Sniffer(driver_path=fpath, _type=0)
+    ret = browser.fetCodeByWebView('https://www.ip.cn/api/index?ip&type=0')
+    print(ret)
+    browser.close()
+    t2 = time()
+    print(f'共计耗时:{round(t2 - t1, 2)}s')
+
+
+if __name__ == '__main__':
+    demo_test()
+    # main_test()
