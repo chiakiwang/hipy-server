@@ -55,8 +55,9 @@ with sync_playwright() as p:
 
         page = browser.new_page()
         page.goto('https://jx.jsonplayer.com/player/?url=https://m.iqiyi.com/v_1pj3ayb1n70.html')
-        page.wait_for_selector('video#video')
-        videoUrl = page.get_attribute('#video', 'src')
+        # page.goto('https://jx.yangtu.top/?url=https://m.iqiyi.com/v_1pj3ayb1n70.html')  # 这个会崩
+        page.wait_for_selector('video')
+        videoUrl = page.get_attribute('video', 'src')
         print('videoUrl:', videoUrl)
         page.screenshot(path=f'screenshot3-{browser_type.name}.png')
         print(page.title())
