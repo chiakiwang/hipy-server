@@ -9,10 +9,17 @@ from core.logger import logger
 from datetime import datetime
 import requests
 
+try:
+    from playwright.sync_api import sync_playwright
+except ImportError:
+    sync_playwright = None
+
 
 # 这里面的定时任务第一个参数恒定为task_id，后面不定长传参
 
 def active_sniffer_after_run(*args, **kwargs):
+    if not sync_playwright:
+        return '无法激活'
     msg = f'----------------task_id:active_sniffer_after_run,args:{args},kwargs:{kwargs}----------------'
     # msg = f'----------------args:{args},kwargs:{kwargs}----------------'
     # print(msg)

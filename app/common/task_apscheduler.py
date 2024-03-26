@@ -47,6 +47,10 @@ def job_listener(Event):
             if Event.retval and ('激活成功' in Event.retval or '传入的url不合法' in Event.retval):
                 del_job(obj_in['job_name'])
                 logger.info('---嗅探器已激活---')
+            elif Event.retval and '无法激活' in Event.retval:
+                del_job(obj_in['job_name'])
+                logger.info('---嗅探器无法激活,缺少playwright---')
+
         else:
             logger.error("jobname=%s|jobtrigger=%s|errcode=%s|exception=[%s]|traceback=[%s]|scheduled_time=%s",
                          job.name,
