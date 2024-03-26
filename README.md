@@ -6,6 +6,7 @@
 [巨人的肩膀](https://github.com/JohnDoe1996/fastAPI-vue)  
 [手机端搭建教程下载](https://wwi.lanzoup.com/iODLy1rykpjc)  
 [推荐PC端使用zyplayer新版](https://github.com/Hiram-Wong/ZyPlayer/releases)  
+[并发测试](https://runnergo.apipost.cn/)  
 
 # <center> hipy-server </center>
 
