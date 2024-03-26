@@ -27,13 +27,14 @@ class SnifferPro:
     context = None
     requests = None
     user_agent = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.50 Safari/537.36'
+    print = lambda *args:None
 
     def __init__(self,
                  driver_path=None,
                  _type=0,
                  wait=5,
                  head_timeout=200,
-                 timeout=15000, user_agent=None, custom_regex=None, headless=True):
+                 timeout=15000, user_agent=None, custom_regex=None, headless=False,debug=True):
         """
         初始化
         @param driver_path: 驱动器路径
@@ -53,6 +54,8 @@ class SnifferPro:
         self.custom_regex = custom_regex
         self.headless = headless
         self.browser = self.init_browser()
+        if debug:
+            self.print = print
 
     def init_browser(self):
         """
@@ -136,10 +139,19 @@ class SnifferPro:
         @return:
         """
         page = self._get_page(headers)
-        page.goto(url)
-        page.wait_for_load_state('load')
-        content = page.content()
-        url = page.url
+        content = ''
+        url = ''
+        try:
+            page.goto(url)
+        except Exception as e:
+            print('发生了错误:',e)
+        else:
+            page.wait_for_load_state('load')
+            content = page.content()
+            url = page.url
+
+        print('成功关闭page')
+        page.close()
         return {'content': content, 'headers': {'location': url}}
 
     def snifferMediaUrl(self, playUrl, mode=0, custom_regex=None):
@@ -219,7 +231,12 @@ class SnifferPro:
         page.on('request', _on_request)
         cost = 0
         num = 0
-        page.goto(playUrl)
+        try:
+            page.goto(playUrl)
+        except Exception as e:
+            print('嗅探发生错误:',e)
+            return {'url': realUrl, 'headers': {}, 'from': playUrl, 'cost': cost, 'code': 404,
+                    'msg': '嗅探失败'}
         # print(page.content())
 
         # page.locator('#video').wait_for()
@@ -285,6 +302,8 @@ def main_test():
     # url = 'https://v.qq.com/x/page/i3038urj2mt.html'
     url = 'http://www.mgtv.com/v/1/290346/f/3664551.html'
     browser = SnifferPro(driver_path=None)
+    ret = browser.fetCodeByWebView('https://www.freeok.pro/xplay/63170-8-12.html')
+    print(ret)
     # browser.driver.get('https://www.baidu.com')
     # ret = browser.snifferMediaUrl(url)
     # # ret = browser.snifferMediaUrl('https://www.freeok.pro/xplay/63170-8-12.html')
