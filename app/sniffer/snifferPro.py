@@ -2,106 +2,300 @@
 # -*- coding: utf-8 -*-
 # File  : snifferPro.py
 # Author: DaShenHan&道长-----先苦后甜，任凭晚风拂柳颜------
-# Author's Blog: https://blog.csdn.net/qq_32394351
 # Date  : 2024/3/26
-# chromium 最快最好用
-import re
+# desc 利用playwright实现的简易播放地址嗅探器
+import os.path
 from urllib.parse import urlparse
+from time import time
+import re
 
-from playwright.sync_api import sync_playwright
-from time import time,sleep
+try:
+    from playwright.sync_api import sync_playwright
+except ImportError:
+    sync_playwright = None
 
-t1 = time()
-timeout = 10000
-delta = 250
-head_timeout = 200
-with sync_playwright() as p:
-    # for browser_type in [p.chromium, p.firefox, p.webkit]:
-    for browser_type in [p.chromium]:
-        browser = browser_type.launch(headless=True)
-        context = browser.new_context()
-        requests = context.request
-        # page = context.new_page()
-        page = browser.new_page()
-        page.set_default_navigation_timeout(timeout)
-        page.set_default_timeout(timeout)
+_description = r"""
+pip install playwright
+手动安装谷歌浏览器即可，不需要playwright install,因为它自带的三个浏览器都太垃圾了不好用
+参考官方接口文档
+https://playwright.dev/python/docs/intro
+https://playwright.dev/python/docs/api/class-playwright
+"""
 
-        #
-        # def handler():
-        #     print('出现了确认您是真人')
-        #     # page.get_by_role("button", name="No thanks").click()
-        #
-        #
-        # page.set_extra_http_headers(headers={
-        #     "user-agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1"})
-        #
-        # page.add_locator_handler(page.locator('.ctp-label',has_text="真人"), handler)
-        # page.goto('https://www.freeok.pro/xplay/63170-8-12.html')
-        # page.expect_request_finished()
-        # # page.locator('.ctp-label').wait_for()
-        # # page.wait_for_selector('.ctp-label')
-        # print('卡死')
-        #
-        # # page.wait_for_timeout(3000)
-        # print(page.content())
-        # html = page.content()
-        # while '是真人' in html:
-        #     page.wait_for_timeout(1000)
-        #     html = page.content()
-        #     print(html)
-        #     if '请完成以下操作，验证您是真人' in html:
-        #         break
-        # # print(page.content())
-        # print('点击确认框准备结束')
-        # # page.locator('input[type=checkbox]')
-        # # page.wait_for_selector('input[type=checkbox]').check()
-        # page.get_by_role("checkbox").check()
-        # page.get_by_role("textbox").click()
-        # exit()
+# 储存驱动器列表,给接口缓存用
+browser_drivers = []
 
 
+# 全部毫秒为单位不需要转换
+class Sniffer:
+    # 正则嗅探匹配表达式
+    urlRegex: str = 'http((?!http).){12,}?\\.(m3u8|mp4|flv|avi|mkv|rm|wmv|mpg|m4a|mp3)\\?.*|http((?!http).){12,}\\.(m3u8|mp4|flv|avi|mkv|rm|wmv|mpg|m4a|mp3)|http((?!http).)*?video/tos*'
+    urlNoHead: str = 'http((?!http).){12,}?(ac=dm&url=)'
+    # 每次嗅探间隔毫秒
+    delta: int = 50
+    playwright = None
+    browser = None
+    main_page = None
+    context = None
+    requests = None
+    user_agent: str = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.50 Safari/537.36'
+    pages = []
 
+    def __init__(self,
+                 timeout=10000, head_timeout=200, user_agent=None,
+                 custom_regex=None, headless=True, debug=False):
+        """
+        初始化
+        @param timeout: 全局嗅探超时
+        @param head_timeout: head访问超时
+        @param user_agent: 默认请求头
+        @param custom_regex: 自定义嗅探正则
+        @param headless: 无头模式
+        @param debug: 启用debug打印日志
+        """
 
-        urlRegex: str = 'http((?!http).){12,}?\\.(m3u8|mp4|flv|avi|mkv|rm|wmv|mpg|m4a|mp3)\\?.*|http((?!http).){12,}\\.(m3u8|mp4|flv|avi|mkv|rm|wmv|mpg|m4a|mp3)|http((?!http).)*?video/tos*'
-        urlNoHead: str = 'http((?!http).){12,}?(ac=dm&url=)'
+        if user_agent is not None:
+            self.user_agent = user_agent
+
+        self.timeout = timeout
+        self.head_timeout = head_timeout
+        self.debug = debug
+        self.custom_regex = custom_regex
+        self.headless = headless
+        self.browser = self.init_browser()
+
+    def log(self, *args):
+        """
+        打印日志print函数|根据类的实例化是否传入debug=True进行开启打印
+        @param args:
+        @return:
+        """
+        if self.debug:
+            print(*args)
+
+    @staticmethod
+    def remove_element(array, element):
+        """
+        移除列表指定元素
+        @param array:
+        @param element:
+        @return:
+        """
+        new_array = [x for x in array if x != element]
+        return new_array
+
+    def close_page(self, page):
+        """
+        移除页面储存列表的指定page
+        @param page:
+        @return:
+        """
+        self.pages = self.remove_element(self.pages, page)
+        page.close()
+        self.log('成功关闭page')
+
+    def init_browser(self):
+        """
+        初始化驱动程序
+        @return:
+        """
+        # 不用with的用法,单独开启进程
+        self.playwright = sync_playwright().start()
+        # 用手动安装的chrome浏览器。不用它自带的三个垃圾浏览器
+        browser = self.playwright.chromium.launch(channel="chrome", headless=self.headless)
+        # 模拟使用苹果手机
+        iphone = self.playwright.devices["iPhone 12 Pro"]
+        context = browser.new_context(**iphone)
+        # 开启一个主窗口方便后续的page新开和关闭不会退出程序
+        self.main_page = context.new_page()
+        # 上下文自带的request库，跟requests库有点类似，但是用法也有差别
+        self.requests = context.request
+        return browser
+
+    def setCookie(self, page, cookie=''):
+        """
+        设置cookie。可以在嗅探前或者获取源码前设置
+        @param _dict:
+        @return:
+        """
+        page.set_extra_http_headers(headers={'Cookie': cookie})
+
+    @staticmethod
+    def _route_interceptor(route):
+        """
+        全局路由拦截器,禁止加载某些资源
+        @param route:
+        @return:
+        """
+        excluded_resource_types = ["stylesheet", "image", "font"]
+        if route.request.resource_type in excluded_resource_types:
+            # print('禁止加载资源:', excluded_resource_types, route.request.url, route.request.resource_type)
+            route.abort()
+        else:
+            route.continue_()
+
+    @staticmethod
+    def _on_dialog(dialog):
+        """
+        全局弹窗拦截器
+        @param dialog:
+        @return:
+        """
+        # print('on_dialog:', dialog)
+        dialog.accept()
+
+    @staticmethod
+    def _on_pageerror(error):
+        """
+        全局页面请求错误拦截器
+        @param error:
+        @return:
+        """
+        # print('on_pageerror:', error)
+        pass
+
+    def _get_page(self, headers=None):
+        """
+        新建一个页面。注入好相关依赖
+        @param headers:
+        @return:
+        """
+        page = self.browser.new_page()
+
+        # 添加初始化脚本 提高速度并且过无法播放的验证
+        page.add_init_script(path=os.path.join(os.path.dirname(__file__), './stealth.min.js'))
+        # 设置全局导航超时
+        page.set_default_navigation_timeout(self.timeout)
+        # 设置全局等待超时
+        page.set_default_timeout(self.timeout)
+        # 设置请求头
+        if headers is not None:
+            page.set_extra_http_headers(headers=headers)
+        else:
+            page.set_extra_http_headers(headers={'user-agent': self.user_agent})
+
+        # 打开静态资源拦截器
+        page.route(re.compile(r"\.(png|jpg|jpeg|css|ttf)$"), self._route_interceptor)
+        # 打开弹窗拦截器
+        page.on("dialog", self._on_dialog)
+        # 打开页面错误监听
+        page.on("pageerror", self._on_pageerror)
+
+        # page.set_viewport_size({"width": 360, "height": 540})
+        # 加入页面列表
+        self.pages.append(page)
+        return page
+
+    def fetCodeByWebView(self, url, headers=None):
+        """
+        利用webview请求得到渲染完成后的源码
+        @param url: 待获取源码的url
+        @return:
+        """
+        page = self._get_page(headers)
+        response = {'content': '', 'headers': {'location': url}}
+        try:
+            page.goto(url)
+        except Exception as e:
+            self.log(f'发生了错误:{e}')
+        else:
+            page.wait_for_load_state('load')
+            response['content'] = page.content()
+            response['headers']['location'] = page.url
+
+        self.close_page(page)
+        return response
+
+    def snifferMediaUrl(self, playUrl, mode=0, custom_regex=None, timeout=None):
+        """
+        输入播放地址，返回嗅探到的真实视频链接
+        @param playUrl: 播放网页地址
+        @param mode: 模式:0 嗅探到一个就返回 1:在10秒内嗅探所有的返回列表
+        @param custom_regex: 自定义嗅探正则
+        @param timeout: 超时
+        @return:
+        """
+        if custom_regex is None:
+            custom_regex = self.custom_regex
         realUrl = ''
+        realHeaders = {}
+        realUrls = []
         headUrls = []
+        t1 = time()
+        page = self._get_page()
+        if timeout is None:
+            timeout = self.timeout
 
-        def on_request(request):
-            global realUrl
+        def _on_request(request):
+            nonlocal realUrl, realHeaders, realUrls
+            if realUrl and mode == 0:
+                return True
             url = request.url
             method = request.method
             headers = request.headers
             resource_type = request.resource_type
-            print('on_request:', url, ' method:', method, ' resource_type:', resource_type)
-            if re.search(urlRegex, url, re.M | re.I):
+            self.log('on_request:', url, ' method:', method, ' resource_type:', resource_type)
+            if custom_regex and re.search(custom_regex, url, re.M | re.I):
+                realUrl = url
+                realHeaders = {}
+                if headers.get('referer'):
+                    realHeaders['referer'] = headers['referer']
+                if headers.get('user-agent'):
+                    realHeaders['user-agent'] = headers['user-agent']
+                realUrls.append({
+                    'url': realUrl,
+                    'headers': realHeaders
+                })
+                self.log('on_request通过custom_regex嗅探到真实地址:', realUrl)
+                if mode == 0:
+                    page.remove_listener("request", _on_request)
+                return True
+
+            if re.search(self.urlRegex, url, re.M | re.I):
                 if url.find('url=http') < 0 and url.find('v=http') < 0 and url.find('.css') < 0 and url.find(
                         '.html') < 0:
                     realUrl = url
-                    print('on_request已嗅探到真实地址:', realUrl)
+                    realHeaders = {}
+                    if headers.get('referer'):
+                        realHeaders['referer'] = headers['referer']
+                    if headers.get('user-agent'):
+                        realHeaders['user-agent'] = headers['user-agent']
+                    realUrls.append({
+                        'url': realUrl,
+                        'headers': realHeaders
+                    })
+                    self.log('on_request通过默认正则已嗅探到真实地址:', realUrl)
+                    if mode == 0:
+                        page.remove_listener("request", _on_request)
                     return True
             elif str(method).lower() == 'get' and str(url).startswith('http') and url != playUrl:
                 parsed_url = urlparse(url)
                 path = parsed_url.path
                 filename = str(path.split('/')[-1])
                 # 链接不含.并且正则匹配不在不head列表  或者 链接有.但是.后面没内容，也算空后缀
-                if (filename and '.' not in filename and not re.search(urlNoHead, url, re.M | re.I)) or (
+                if (filename and '.' not in filename and not re.search(self.urlNoHead, url, re.M | re.I)) or (
                         '.' in filename and len(filename) > 1 and not filename.split('.')[1]):
                     # 如果链接没有进行过head请求。防止多次嗅探的时候重复去head请求
-                    print('准备发起head请求:', url, headers)
                     if url not in headUrls:
                         try:
-                            print('head url:',url,'headers:',headers)
-                            # r = requests.head(url=url, headers=headers, timeout=head_timeout)
-                            r = requests.head(url=url, timeout=head_timeout)
-                            print('head r:',r)
+                            r = self.requests.head(url=url, timeout=self.head_timeout)
                             rheaders = r.headers
-                            print('rheaders:',rheaders)
                             if rheaders.get('content-type') and rheaders[
                                 'content-type'] == 'application/octet-stream' and '.m3u8' in rheaders[
                                 'content-disposition']:
                                 realUrl = url
-                                print('on_request嗅探到真实地址:',realUrl)
+                                realHeaders = {}
+                                if headers.get('referer'):
+                                    realHeaders['referer'] = headers['referer']
+                                if headers.get('user-agent'):
+                                    realHeaders['user-agent'] = headers['user-agent']
+                                realUrls.append({
+                                    'url': realUrl,
+                                    'headers': realHeaders
+                                })
+                                self.log('on_request通过head请求嗅探到真实地址:', realUrl)
+                                if mode == 0:
+                                    page.remove_listener("request", _on_request)
 
                                 return True
                         except Exception as e:
@@ -109,126 +303,94 @@ with sync_playwright() as p:
 
                         headUrls.append(url)
 
-        def on_pageerror(exc):
-            print('on_pageerror:',exc)
-
-        def on_dialog(dialog):
-            print('on_dialog:',on_dialog)
-            dialog.accept()
-
-        def handle_media(route):
-            global realUrl
-            print('handle_media已嗅探到真实地址::',route.request.url)
-            realUrl = route.request.url
-
-        def handler():
-            print('视频准备就绪')
-
-        def handler1():
-            print('获取到定位器')
-
-        # page.add_locator_handler(page.get_by_text("视频已准备就绪"), handler)
-        # page.add_locator_handler(page.locator("video#video"), handler1)
-
-        # page.route(re.compile(r"\.(m3u8)"), handle_media)
-        page.on('request',on_request)
-        page.on("pageerror", on_pageerror)
-
-
-        def _router(route):
-            excluded_resource_types = ["stylesheet", "image","font"]
-            if route.request.resource_type in excluded_resource_types:
-                print('禁止加载资源:', excluded_resource_types, route.request.url, route.request.resource_type)
-                route.abort()
-            else:
-                route.continue_()
-
-        # page.route("**/*.{png,jpg,jpeg}", lambda route: route.abort())
-        page.route(re.compile(r"\.(png|jpg|jpeg|css|ttf)$"), _router)
-        # page.route(re.compile(r"\.(png|jpg|jpeg)$"), lambda route: route.continue_())
-        # page.route(re.compile(r"\.(css)$"), lambda route: route.abort())
-
-        page.set_viewport_size({"width": 360, "height": 540})
-        page.on("dialog", on_dialog)
-        page.set_extra_http_headers(headers={"user-agent":"Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1"})
-        playUrl='https://jx.jsonplayer.com/player/?url=https://m.iqiyi.com/v_1pj3ayb1n70.html'
-        playUrl = 'https://jx.yangtu.top/?url=https://m.iqiyi.com/v_1pj3ayb1n70.html'
-        page.goto(playUrl)
-        # print(page.content())
+        page.on('request', _on_request)
         cost = 0
         num = 0
-        # page.locator('#video').wait_for()
-        # page.wait_for_selector('video')
-        def _get_media(request):
-            global realUrl
-            url = request.url
-            method = request.method
-            headers = request.headers
-            resource_type = request.resource_type
-            print('_get_media_url:',url,' method:',method,' resource_type:',resource_type)
-            if re.search(urlRegex, url, re.M | re.I):
-                if url.find('url=http') < 0 and url.find('v=http') < 0 and url.find('.css') < 0 and url.find(
-                        '.html') < 0:
-                    realUrl = url
-                    print('_get_media已嗅探到真实地址:', realUrl)
-                    return True
-            elif str(method).lower() == 'get' and str(url).startswith('http') and url != playUrl:
-                parsed_url = urlparse(url)
-                path = parsed_url.path
-                filename = str(path.split('/')[-1])
-                # 链接不含.并且正则匹配不在不head列表  或者 链接有.但是.后面没内容，也算空后缀
-                if (filename and '.' not in filename and not re.search(urlNoHead, url, re.M | re.I)) or (
-                        '.' in filename and len(filename) > 1 and not filename.split('.')[1]):
-                    # 如果链接没有进行过head请求。防止多次嗅探的时候重复去head请求
-                    print('准备发起head请求:',url,headers)
-                    if url not in headUrls:
-                        try:
-                            r = requests.head(url=url, headers=headers, timeout=head_timeout)
-                            rheaders = r.headers
-                            if rheaders.get('Content-Type') and rheaders[
-                                'Content-Type'] == 'application/octet-stream' and '.m3u8' in rheaders[
-                                'Content-Disposition']:
-                                realUrl = url
+        try:
+            page.goto(playUrl)
+        except Exception as e:
+            self.log('嗅探发生错误:', e)
+            return {'url': realUrl, 'headers': {}, 'from': playUrl, 'cost': cost, 'code': 404,
+                    'msg': '嗅探失败'}
 
-                                return True
-                        except Exception as e:
-                            print(f'head请求访问: {url} 发生了错误:{e}')
-
-                        headUrls.append(url)
-
-            return False
-
-        # with page.expect_request(
-        #         lambda request: _get_media(request)) as second:
-        #     print('expect_request已嗅探到真实地址:',second.value.url)
-        #     realUrl = second.value.url
-        #     # page.get_by_text("trigger request").click()
-        # second_request = second.value
-        # print(second_request)
-
-
-        # page.wait_for_selector('video')
-        # videoUrl = page.get_attribute('video', 'src')
-        # print('videoUrl:', videoUrl)
-
-
-
-        while cost < timeout and not realUrl:
-            num+=1
-            print(f'第{num}次嗅探')
-            # sleep(round(delta / 1000, 2)) # 千万不能用sleep
-            page.wait_for_timeout(delta)
+        while cost < timeout and (not realUrl or mode == 1):
+            num += 1
+            # self.log(f'第{num}次嗅探')
+            page.wait_for_timeout(self.delta)
             t2 = time()
-            # cost = t2 - t1
             cost = round((t2 - t1) * 1000, 2)
-            print(cost)
 
-        # cost_str = str(round(cost * 1000, 2)) + 'ms'
         t2 = time()
         cost = round((t2 - t1) * 1000, 2)
-        print(f'共计耗时{cost}毫秒')
-        print('realUrl:',realUrl)
-        page.close()
-        print('成功关闭page')
-        browser.close()
-        print('成功关闭browser')
+        cost_str = f'{cost} ms'
+        self.log(f'共计耗时{cost}毫秒')
+        self.log('realUrl:', realUrl)
+        self.log('realHeaders:', realHeaders)
+        self.close_page(page)
+        if mode == 0 and realUrl:
+            return {'url': realUrl, 'headers': realHeaders, 'from': playUrl, 'cost': cost_str, 'code': 200,
+                    'msg': '超级嗅探解析成功'}
+        elif mode == 1 and realUrls:
+            return {'urls': realUrls, 'code': 200, 'from': playUrl, 'cost': cost_str, 'msg': '超级嗅探解析成功'}
+        else:
+            return {'url': realUrl, 'headers': realHeaders, 'from': playUrl, 'cost': cost_str, 'code': 404,
+                    'msg': '超级嗅探解析失败'}
+
+    def close(self):
+        """
+        用完记得关闭驱动器
+        @return:
+        """
+        self.main_page.close()
+        self.browser.close()
+        self.playwright.stop()
+
+
+def main_test():
+    t1 = time()
+    urls = [
+        'https://www.cs1369.com/play/2-1-94.html',
+        'https://v.qq.com/x/page/i3038urj2mt.html',
+        'http://www.mgtv.com/v/1/290346/f/3664551.html',
+        'https://jx.jsonplayer.com/player/?url=https://m.iqiyi.com/v_1pj3ayb1n70.html',
+    ]
+    _count = 0
+    browser = Sniffer(debug=True)
+    for url in urls:
+        _count += 1
+        ret = browser.snifferMediaUrl(url)
+        print(ret)
+
+    _count += 1
+    ret = browser.snifferMediaUrl('https://jx.yangtu.top/?url=https://m.iqiyi.com/v_1pj3ayb1n70.html',
+                                  custom_regex='http((?!http).){12,}?(download4|pcDownloadFile)')
+    print(ret)
+    _count += 1
+    ret = browser.fetCodeByWebView('https://www.freeok.pro/xplay/63170-8-12.html')
+    print(ret)
+
+    browser.close()
+    t2 = time()
+    print(f'嗅探{_count}个页面共计耗时:{round(t2 - t1, 2)}s')
+
+
+def demo_test():
+    t1 = time()
+    browser = Sniffer(debug=True)
+    ret = browser.fetCodeByWebView('https://www.ip.cn/api/index?ip&type=0')
+    print(ret)
+    browser.close()
+    t2 = time()
+    print(f'访问ip网站源码共计耗时:{round(t2 - t1, 2)}s')
+
+
+def demo_test_csdn():
+    browser = Sniffer(debug=True)
+    ret = browser.fetCodeByWebView('https://blog.csdn.net/qq_32394351')
+    print(ret)
+
+
+if __name__ == '__main__':
+    demo_test()
+    # demo_test_csdn()
+    # main_test()

@@ -31,7 +31,11 @@ from apps.system.curd.curd_dict_data import curd_dict_data
 from apps.vod.curd.curd_rules import curd_vod_rules
 from apps.vod.curd.curd_configs import curd_vod_configs
 from pathlib import Path
-from sniffer.sniffer import Sniffer, browser_drivers
+
+if settings.DEFAULT_SNIFFER == 'selenium':
+    from sniffer.sniffer import Sniffer, browser_drivers
+else:
+    from sniffer.snifferPro import Sniffer, browser_drivers
 
 try:
     from redis.asyncio import Redis as asyncRedis
@@ -448,18 +452,40 @@ def get_sniffer_url(*,
             return request.query_params.__dict__['_dict']
 
     url = getParams('url')
+    timeout = getParams('timeout') or 10000
+    active = getParams('active')
+    if active and not browser_drivers:
+        try:
+            if settings.DEFAULT_SNIFFER == 'selenium':
+                driver_path = Sniffer.get_driver_path(0)
+                browser = Sniffer(driver_path=driver_path)
+            else:
+                browser = Sniffer()
+            browser_drivers.append(browser)
+            return respVodJson(data='嗅探器激活成功')
+        except Exception as e:
+            return respVodJson(data=f'嗅探器激活失败:{e}')
+
     if not str(url).startswith('http'):
         return respErrorJson(error_code.ERROR_PARAMETER_ERROR.set_msg('传入的url不合法'))
 
     try:
+        timeout = int(timeout)
+    except:
+        timeout = 10000
+
+    try:
         if not browser_drivers:
-            driver_path = Sniffer.get_driver_path(0)
-            browser = Sniffer(driver_path=driver_path)
+            if settings.DEFAULT_SNIFFER == 'selenium':
+                driver_path = Sniffer.get_driver_path(0)
+                browser = Sniffer(driver_path=driver_path)
+            else:
+                browser = Sniffer()
             browser_drivers.append(browser)
         else:
             browser = browser_drivers[0]
 
-        ret = browser.snifferMediaUrl(url)
+        ret = browser.snifferMediaUrl(url, timeout=timeout)
         return respVodJson(data=ret)
     except Exception as e:
         return respErrorJson(error_code.ERROR_INTERNAL.set_msg(f'{e}'))

@@ -34,8 +34,8 @@ class Sniffer:
                  driver_path=None,
                  _type=0,
                  wait=5,
-                 head_timeout=0.2,
-                 timeout=10, user_agent=None, custom_regex=None):
+                 head_timeout=200,
+                 timeout=10000, user_agent=None, custom_regex=None):
         """
         初始化
         @param driver_path: 驱动器路径
@@ -166,12 +166,13 @@ class Sniffer:
         url = self.driver.current_url
         return {'content': content, 'headers': {'location': url}}
 
-    def snifferMediaUrl(self, playUrl, mode=0, custom_regex=None):
+    def snifferMediaUrl(self, playUrl, mode=0, custom_regex=None, timeout=None):
         """
         输入播放地址，返回嗅探到的真实视频链接
         @param playUrl: 播放网页地址
         @param mode: 模式:0 嗅探到一个就返回 1:在10秒内嗅探所有的返回列表
         @param custom_regex: 自定义嗅探正则
+        @param timeout: 超时
         @return:
         """
         if custom_regex is None:
@@ -181,6 +182,9 @@ class Sniffer:
         realHeaders = {}
         headUrls = []
         t1 = time()
+        if timeout is None:
+            timeout = self.timeout
+
         cost = 0
         # 必须这行代码，配置最后的设置about:blank防止串数据
         self.driver.execute_cdp_cmd('Network.enable', {})
@@ -193,7 +197,7 @@ class Sniffer:
 
         self.driver.get(playUrl)
 
-        while cost < self.timeout and (not realUrl or mode == 1):
+        while cost < timeout and (not realUrl or mode == 1):
             messages = []
             urls = []
             # 获取性能数据
@@ -217,7 +221,8 @@ class Sniffer:
                             # 如果链接没有进行过head请求。防止多次嗅探的时候重复去head请求
                             if url not in headUrls:
                                 try:
-                                    r = requests.head(url=url, headers=headers, timeout=self.head_timeout)
+                                    r = requests.head(url=url, headers=headers,
+                                                      timeout=round(self.head_timeout / 1000, 2))
                                     rheaders = r.headers
                                     if rheaders.get('Content-Type') and rheaders[
                                         'Content-Type'] == 'application/octet-stream' and '.m3u8' in rheaders[
@@ -233,7 +238,7 @@ class Sniffer:
                                         else:
                                             realUrls.append({
                                                 'url': realUrl,
-                                                'headers': headers,
+                                                'headers': realHeaders,
                                             })
                                 except Exception as e:
                                     print(f'head请求访问: {url} 发生了错误:{e}')
@@ -253,7 +258,7 @@ class Sniffer:
                         else:
                             realUrls.append({
                                 'url': realUrl,
-                                'headers': headers,
+                                'headers': realHeaders,
                             })
                     if re.search(self.urlRegex, url, re.M | re.I):
                         if url.find('url=http') < 0 and url.find('v=http') < 0 and url.find('.css') < 0 and url.find(
@@ -274,9 +279,9 @@ class Sniffer:
             # print(len(urls), urls)
             sleep(round(self.delta / 1000, 2))
             t2 = time()
-            cost = t2 - t1
+            cost = round((t2 - t1) * 1000, 2)
 
-        cost_str = str(round(cost * 1000, 2)) + 'ms'
+        cost_str = f'{cost} ms'
         self.driver.get('about:blank')
 
         # self.driver.close()
