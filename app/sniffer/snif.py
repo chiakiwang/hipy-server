@@ -14,7 +14,7 @@ from playwright.sync_api import sync_playwright
 
 # 储存驱动器列表,给接口缓存用
 browser_drivers = []
-
+# 全部毫秒为单位不需要转换
 class SnifferPro:
     # 正则嗅探匹配表达式
     urlRegex: str = 'http((?!http).){12,}?\\.(m3u8|mp4|flv|avi|mkv|rm|wmv|mpg|m4a|mp3)\\?.*|http((?!http).){12,}\\.(m3u8|mp4|flv|avi|mkv|rm|wmv|mpg|m4a|mp3)|http((?!http).)*?video/tos*'
