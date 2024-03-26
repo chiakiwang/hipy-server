@@ -8,7 +8,11 @@ import os.path
 from urllib.parse import urlparse
 from time import time
 import re
-from playwright.sync_api import sync_playwright
+
+try:
+    from playwright.sync_api import sync_playwright
+except ImportError:
+    sync_playwright = None
 
 _description = r"""
 pip install playwright
