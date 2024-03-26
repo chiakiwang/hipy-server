@@ -1,10 +1,11 @@
 ### hipy-server 后端项目
 
-##### 技术栈:  python|fastapi|redis|sqlachemy|postgresql|mysql|sqlite
+##### 技术栈:  python|fastapi|redis|sqlachemy|postgresql|mysql|sqlite|playwright
 
 [套装传送门:hipy-ui](https://github.com/hjdhnx/hipy-ui/)  
 [巨人的肩膀](https://github.com/JohnDoe1996/fastAPI-vue)  
-[手机端搭建教程下载](https://wwi.lanzoup.com/iODLy1rykpjc)
+[手机端搭建教程下载](https://wwi.lanzoup.com/iODLy1rykpjc)  
+[推荐PC端使用zyplayer新版](https://github.com/Hiram-Wong/ZyPlayer/releases)  
 
 # <center> hipy-server </center>
 
@@ -14,6 +15,7 @@
 [ws,jinja](https://www.jianshu.com/p/ca9b257a1a44)  
 [cachetools文档](https://cachetools.readthedocs.io/en/stable/#cachetools.Cache)  
 [alembic参考文档](https://zhuanlan.zhihu.com/p/306898869?utm_id=0)
+[playwright参考文档](https://playwright.dev/python/docs/api/class-playwright)
 
 ```shell
 alembic init alembic
