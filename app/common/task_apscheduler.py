@@ -18,6 +18,7 @@ from core.logger import logger
 from apps.monitor.models.job import Job
 from apps.monitor.curd.curd_job_log import curd_job_log
 from numpy import safe_eval
+from tasks.active_sniffer import active_sniffer_after_run
 
 
 def job_listener(Event):
@@ -43,6 +44,9 @@ def job_listener(Event):
                         Event.scheduled_run_time, Event.retval)
             obj_in = {'job_name': job.name, 'run_time': Event.scheduled_run_time, 'run_status': 1,
                       'run_info': f'{Event.retval}'}
+            if Event.retval and ('激活成功' in Event.retval or '传入的url不合法' in Event.retval):
+                del_job(obj_in['job_name'])
+                logger.info('---嗅探器已激活---')
         else:
             logger.error("jobname=%s|jobtrigger=%s|errcode=%s|exception=[%s]|traceback=[%s]|scheduled_time=%s",
                          job.name,
@@ -72,6 +76,9 @@ def job_listener(Event):
 def scheduler_register():
     scheduler.init_scheduler()  # noqa 去掉不合理提示
     scheduler.add_listener(job_listener, EVENT_JOB_ERROR | EVENT_JOB_MISSED | EVENT_JOB_EXECUTED)
+    # add_task(active_sniffer_after_run, id='active_sniffer_after_run', name='active_sniffer_after_run', seconds=5)
+    scheduler.add_job(active_sniffer_after_run, 'interval', id=str('active_sniffer_after_run'),
+                      name='active_sniffer_after_run', seconds=5)
     JobInit().init_jobs_pause()  # noqa
 
 
@@ -109,13 +116,13 @@ def cron_pattern(expression):
     return args
 
 
-def add_task(func=None, args=None, kwargs=None, id=None, name=None, next_run_time=None):
+def add_task(func=None, args=None, kwargs=None, id=None, name=None, next_run_time=None, seconds=1):
     """
     1秒后执行一次后台任务
     """
     if not next_run_time:
         # next_run_time = datetime.now() + timedelta(seconds=settings.JOB_DELTA)
-        next_run_time = datetime.now() + timedelta(seconds=1)
+        next_run_time = datetime.now() + timedelta(seconds=seconds)
     return scheduler.add_job(func, 'date', id=str(id), args=args, kwargs=kwargs, name=name,
                              next_run_time=next_run_time)
 
