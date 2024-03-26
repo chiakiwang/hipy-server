@@ -35,8 +35,8 @@ class Sniffer:
                  driver_path=None,
                  _type=0,
                  wait=5,
-                 head_timeout=0.2,
-                 timeout=10, user_agent=None, custom_regex=None):
+                 head_timeout=200,
+                 timeout=10000, user_agent=None, custom_regex=None):
         """
         初始化
         @param driver_path: 驱动器路径
@@ -169,7 +169,7 @@ class Sniffer:
         url = self.driver.current_url
         return {'content': content, 'headers': {'location': url}}
 
-    def snifferMediaUrl(self, playUrl, mode=0, custom_regex=None):
+    def snifferMediaUrl(self, playUrl, mode=0, custom_regex=None, timeout=None):
         """
         输入播放地址，返回嗅探到的真实视频链接
         @param playUrl: 播放网页地址
@@ -184,6 +184,8 @@ class Sniffer:
         realHeaders = {}
         headUrls = []
         t1 = time()
+        if timeout is None:
+            timeout = self.timeout
         cost = 0
         # 必须这行代码，配置最后的设置about:blank防止串数据
         # self.driver.execute_cdp_cmd('Network.enable', {})
@@ -220,7 +222,8 @@ class Sniffer:
                             # 如果链接没有进行过head请求。防止多次嗅探的时候重复去head请求
                             if url not in headUrls:
                                 try:
-                                    r = requests.head(url=url, headers=headers, timeout=self.head_timeout)
+                                    r = requests.head(url=url, headers=headers,
+                                                      timeout=round(self.head_timeout / 1000, 2))
                                     rheaders = r.headers
                                     if rheaders.get('Content-Type') and rheaders[
                                         'Content-Type'] == 'application/octet-stream' and '.m3u8' in rheaders[
@@ -277,7 +280,7 @@ class Sniffer:
             # print(len(urls), urls)
             sleep(round(self.delta / 1000, 2))
             t2 = time()
-            cost = t2 - t1
+            cost = round((t2 - t1) * 1000, 2)
 
         cost_str = str(round(cost * 1000, 2)) + 'ms'
         self.driver.get('about:blank')

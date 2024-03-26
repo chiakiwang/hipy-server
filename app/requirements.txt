@@ -44,3 +44,4 @@ quickjs
 selenium
 webdriver-manager
 cloudscraper
+playwright

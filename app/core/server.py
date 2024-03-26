@@ -19,7 +19,11 @@ from db.cache import registerRedis
 from common.task_apscheduler import scheduler_register, scheduler  # 固化数据库,scheduler.init_scheduler() 初始化
 from utils.notes import set_start_time
 from utils.server_info import get_server_info, get_host_ip
-from sniffer.sniffer import Sniffer, browser_drivers
+
+if settings.DEFAULT_SNIFFER == 'selenium':
+    from sniffer.sniffer import Sniffer, browser_drivers
+else:
+    from sniffer.snifferPro import Sniffer, browser_drivers
 
 
 class InitializeApp(object):
@@ -88,13 +92,17 @@ class InitializeApp(object):
             scheduler_register()
 
             try:
-                driver_path = Sniffer.get_driver_path(0)
-                logger.info(f'获取到driver_path:{driver_path}')
-                browser = Sniffer(driver_path=driver_path)
+                if settings.DEFAULT_SNIFFER == 'selenium':
+                    driver_path = Sniffer.get_driver_path(0)
+                    logger.info(f'获取到driver_path:{driver_path}')
+                    browser = Sniffer(driver_path=driver_path)
+                else:
+                    browser = Sniffer()
                 browser_drivers.append(browser)
             except Exception as e:
                 logger.info(f'初始化加载browser_drivers发生错误:{e}')
-
+                logger.info(
+                    f'如果出现 It looks like you are using Playwright Sync API inside the asyncio loop. 可以忽略此错误，但是需要手动访问 http://localhost:5707/sniffer?url=https://v.qq.com/x/page/i3038urj2mt.html 进行激活')
             logger.info(f'服务器参数:{get_server_info()}')
             logger.info(f'本地地址: http://localhost:{settings.PORT}')
             logger.info(f'局域网地址: http://{get_host_ip()}:{settings.PORT}')

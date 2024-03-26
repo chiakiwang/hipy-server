@@ -138,6 +138,7 @@ class Settings(BaseSettings):
     IP_AGENTS = [""]
     # pip依赖代理
     PIP_PROXY = "https://mirrors.cloud.tencent.com/pypi/simple"
+    DEFAULT_SNIFFER = 'playwright'  # playwright 和 selenium 二选一
 
     # PIP_PROXY = "https://pypi.douban.com/simple/"
 

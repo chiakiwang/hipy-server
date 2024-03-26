@@ -11,7 +11,12 @@ from t4.base.htmlParser import jsoup
 from utils.vod_tool import fetch, req, 重定向, toast, image
 from urllib.parse import urljoin
 from utils.local_cache import local
-from sniffer.sniffer import browser_drivers
+from core.config import settings
+
+if settings.DEFAULT_SNIFFER == 'selenium':
+    from sniffer.sniffer import browser_drivers
+else:
+    from sniffer.snifferPro import browser_drivers
 
 
 def initContext(ctx, url, prefix_code, env, getParams, getCryptoJS):
@@ -38,15 +43,16 @@ def initContext(ctx, url, prefix_code, env, getParams, getCryptoJS):
         if ctx.get('_debug'):
             print(*args)
 
-    def snifferMediaUrl(url):
+    def snifferMediaUrl(*args):
         if browser_drivers:
-            return toJsObJect(browser_drivers[0].snifferMediaUrl(url))
+            return toJsObJect(browser_drivers[0].snifferMediaUrl(*args))
         else:
             return None
 
-    def fetCodeByWebView(url):
+    def fetCodeByWebView(url, headers):
         if browser_drivers:
-            return toJsObJect(browser_drivers[0].fetCodeByWebView(url))
+            headers = toJsObJect(headers)
+            return toJsObJect(browser_drivers[0].fetCodeByWebView(url, headers))
         else:
             return None
 
