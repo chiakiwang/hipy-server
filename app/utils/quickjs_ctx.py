@@ -5,7 +5,7 @@
 # Author's Blog: https://blog.csdn.net/qq_32394351
 # Date  : 2024/2/6
 import ujson
-
+import requests
 # from core.logger import logger
 from t4.base.htmlParser import jsoup
 from utils.vod_tool import fetch, req, 重定向, toast, image
@@ -15,8 +15,12 @@ from core.config import settings
 
 if settings.DEFAULT_SNIFFER == 'selenium':
     from sniffer.sniffer import browser_drivers
+
+    _sniffer_type = 0
 else:
     from sniffer.snifferPro import browser_drivers
+
+    _sniffer_type = 1
 
 
 def initContext(ctx, url, prefix_code, env, getParams, getCryptoJS):
@@ -45,7 +49,21 @@ def initContext(ctx, url, prefix_code, env, getParams, getCryptoJS):
 
     def snifferMediaUrl(*args):
         if browser_drivers:
-            return toJsObJect(browser_drivers[0].snifferMediaUrl(*args))
+            if _sniffer_type == 0:
+                return toJsObJect(browser_drivers[0].snifferMediaUrl(*args))
+            else:
+                # params = {
+                #     'url': args[0] if len(args) > 0 else '',
+                #     'mode': args[1] if len(args) > 1 else 0,
+                #     'custom_regex': args[2] if len(args) > 2 else None,
+                #     'timeout': args[3] if len(args) > 3 else None,
+                # }
+                # r = requests.get(f'http://localhost:{settings.PORT}/sniffer', params=params)
+                # ret = r.json()
+                # if not ret.get('url'):
+                #     ret['url'] = ''
+                # return toJsObJect(ret)
+                return toJsObJect(browser_drivers[0].snifferMediaUrl(*args))
         else:
             return None
 
