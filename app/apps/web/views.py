@@ -133,7 +133,10 @@ async def hipy_configs(*,
                        mode: int = Query(..., title="模式 0:t4 1:t3"),
                        ):
     t1 = time()
-    host = str(request.base_url).rstrip('/')
+    if settings.API_DOMAIN and settings.API_DOMAIN.startswith('http') and '127.0.0.1' not in settings.API_DOMAIN:
+        host = settings.API_DOMAIN.rstrip('/')
+    else:
+        host = str(request.base_url).rstrip('/')
     groups = {}
     group_dict = curd_dict_data.getByType(db, _type='vod_rule_group')
     group_details = group_dict.get('details')
@@ -371,7 +374,7 @@ async def t4_files(*,
     def getParams(key=None, value=''):
         return request.query_params.get(key) or value
 
-    host = str(request.base_url)
+    host = str(request.base_url).rstrip('/')
     # logger.info(f'host:{host}')
     resp = get_file_path(db, group, filename)
     if isinstance(resp, int):

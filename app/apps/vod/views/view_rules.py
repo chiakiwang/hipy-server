@@ -90,9 +90,9 @@ async def getRecordRawLink(*,
                            _id: int = Query(..., title="源id"),
                            ):
     if settings.API_DOMAIN and settings.API_DOMAIN.startswith('http') and '127.0.0.1' not in settings.API_DOMAIN:
-        host = settings.API_DOMAIN.rstrip('/') + '/'
+        host = settings.API_DOMAIN.rstrip('/')
     else:
-        host = str(request.base_url)
+        host = str(request.base_url).rstrip('/')
     rule_data = curd.get(db, _id=_id, to_dict=False)
     groups = {}
     group_dict = curd_dict_data.getByType(db, _type='vod_rule_group')
@@ -106,7 +106,7 @@ async def getRecordRawLink(*,
                 group = key
                 break
 
-        file_url = f'{host}files/{group}/{rule_data.name}{rule_data.file_type}'
+        file_url = f'{host}/files/{group}/{rule_data.name}{rule_data.file_type}'
         editable = rule_data.file_type in ['.py', '.json', '.js', '.txt', '.m3u', '.m3u8', '.conf']
         return respSuccessJson({'url': file_url, 'editable': editable})
     else:

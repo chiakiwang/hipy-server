@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-# File  : snifferPro.py
+# File  : snifferProOld.py
 # Author: DaShenHan&道长-----先苦后甜，任凭晚风拂柳颜------
 # Date  : 2024/3/26
 # desc 利用playwright实现的简易播放地址嗅探器
@@ -32,6 +32,7 @@ class Sniffer:
     urlRegex: str = 'http((?!http).){12,}?\\.(m3u8|mp4|flv|avi|mkv|rm|wmv|mpg|m4a|mp3)\\?.*|http((?!http).){12,}\\.(m3u8|mp4|flv|avi|mkv|rm|wmv|mpg|m4a|mp3)|http((?!http).)*?video/tos*'
     urlNoHead: str = 'http((?!http).){12,}?(ac=dm&url=)'
     # 每次嗅探间隔毫秒
+    delta: int = 50
     playwright = None
     browser = None
     main_page = None
@@ -216,38 +217,36 @@ class Sniffer:
         """
         if custom_regex is None:
             custom_regex = self.custom_regex
-
-        realUrls = []  # 真实链接列表，用于mode=1场景
-        headUrls = []  # 已经head请求过的链接
+        realUrl = ''
+        realHeaders = {}
+        realUrls = []
+        headUrls = []
         t1 = time()
         page = self._get_page()
         if timeout is None:
             timeout = self.timeout
 
         def _on_request(request):
-            nonlocal realUrls, headUrls
+            nonlocal realUrl, realHeaders, realUrls
+            if realUrl and mode == 0:
+                return True
             url = request.url
             method = request.method
             headers = request.headers
             resource_type = request.resource_type
             self.log('on_request:', url, ' method:', method, ' resource_type:', resource_type)
             if custom_regex and re.search(custom_regex, url, re.M | re.I):
-                _headers = {}
+                realUrl = url
+                realHeaders = {}
                 if headers.get('referer'):
-                    _headers['referer'] = headers['referer']
+                    realHeaders['referer'] = headers['referer']
                 if headers.get('user-agent'):
-                    _headers['user-agent'] = headers['user-agent']
+                    realHeaders['user-agent'] = headers['user-agent']
                 realUrls.append({
-                    'url': url,
-                    'headers': _headers
+                    'url': realUrl,
+                    'headers': realHeaders
                 })
-                page.evaluate("""([url, _headers,realUrls]) => {
-                window.realUrl = url
-                window.realHeaders = _headers
-                window.realUrls = realUrls
-                }
-                """, [url, _headers, realUrls])
-                self.log('on_request通过custom_regex嗅探到真实地址:', url)
+                self.log('on_request通过custom_regex嗅探到真实地址:', realUrl)
                 if mode == 0:
                     page.remove_listener("request", _on_request)
                 return True
@@ -255,22 +254,17 @@ class Sniffer:
             if re.search(self.urlRegex, url, re.M | re.I):
                 if url.find('url=http') < 0 and url.find('v=http') < 0 and url.find('.css') < 0 and url.find(
                         '.html') < 0:
-                    _headers = {}
+                    realUrl = url
+                    realHeaders = {}
                     if headers.get('referer'):
-                        _headers['referer'] = headers['referer']
+                        realHeaders['referer'] = headers['referer']
                     if headers.get('user-agent'):
-                        _headers['user-agent'] = headers['user-agent']
+                        realHeaders['user-agent'] = headers['user-agent']
                     realUrls.append({
-                        'url': url,
-                        'headers': _headers
+                        'url': realUrl,
+                        'headers': realHeaders
                     })
-                    page.evaluate("""([url, _headers,realUrls]) => {
-                    window.realUrl = url
-                    window.realHeaders = _headers
-                    window.realUrls = realUrls
-                    }
-                    """, [url, _headers, realUrls])
-                    self.log('on_request通过默认正则已嗅探到真实地址:', url)
+                    self.log('on_request通过默认正则已嗅探到真实地址:', realUrl)
                     if mode == 0:
                         page.remove_listener("request", _on_request)
                     return True
@@ -280,8 +274,7 @@ class Sniffer:
                 filename = str(path.split('/')[-1])
                 # 链接不含.并且正则匹配不在不head列表  或者 链接有.但是.后面没内容，也算空后缀
                 if (filename and '.' not in filename and not re.search(self.urlNoHead, url, re.M | re.I)) or (
-                        '.' in filename and len(filename) > 1 and not filename.split('.')[1]) and resource_type not in [
-                    'script']:
+                        '.' in filename and len(filename) > 1 and not filename.split('.')[1]):
                     # 如果链接没有进行过head请求。防止多次嗅探的时候重复去head请求
                     if url not in headUrls:
                         try:
@@ -290,22 +283,17 @@ class Sniffer:
                             if rheaders.get('content-type') and rheaders[
                                 'content-type'] == 'application/octet-stream' and '.m3u8' in rheaders[
                                 'content-disposition']:
-                                _headers = {}
+                                realUrl = url
+                                realHeaders = {}
                                 if headers.get('referer'):
-                                    _headers['referer'] = headers['referer']
+                                    realHeaders['referer'] = headers['referer']
                                 if headers.get('user-agent'):
-                                    _headers['user-agent'] = headers['user-agent']
+                                    realHeaders['user-agent'] = headers['user-agent']
                                 realUrls.append({
-                                    'url': url,
-                                    'headers': _headers
+                                    'url': realUrl,
+                                    'headers': realHeaders
                                 })
-                                page.evaluate("""([url, _headers,realUrls]) => {
-                                window.realUrl = url
-                                window.realHeaders = _headers
-                                window.realUrls = realUrls
-                                }
-                                """, [url, _headers, realUrls])
-                                self.log('on_request通过head请求嗅探到真实地址:', url)
+                                self.log('on_request通过head请求嗅探到真实地址:', realUrl)
                                 if mode == 0:
                                     page.remove_listener("request", _on_request)
 
@@ -316,41 +304,26 @@ class Sniffer:
                         headUrls.append(url)
 
         page.on('request', _on_request)
-        page.set_default_timeout(timeout)
-        page.evaluate("""
-        window.realUrl = ''
-        window.realHeaders = {}
-        window.realUrls = []
-        """)
+        cost = 0
+        num = 0
         try:
             page.goto(playUrl)
         except Exception as e:
             self.log('嗅探发生错误:', e)
+            return {'url': realUrl, 'headers': {}, 'from': playUrl, 'cost': cost, 'code': 404,
+                    'msg': '嗅探失败'}
+
+        while cost < timeout and (not realUrl or mode == 1):
+            num += 1
+            # self.log(f'第{num}次嗅探')
+            page.wait_for_timeout(self.delta)
             t2 = time()
             cost = round((t2 - t1) * 1000, 2)
-            return {'url': '', 'headers': {}, 'from': playUrl, 'cost': cost, 'code': 404,
-                    'msg': f'嗅探失败:{e}'}
-
-        is_timeout = False
-        if mode == 0:
-            try:
-                page.wait_for_function("() => window.realUrl")
-            except:
-                is_timeout = True
-        elif mode == 1:
-            try:
-                page.wait_for_timeout(timeout)
-            except:
-                is_timeout = True
-
-        realUrl = page.evaluate('window.realUrl')
-        realHeaders = page.evaluate('window.realHeaders')
-        realUrls = page.evaluate('window.realUrls')
 
         t2 = time()
         cost = round((t2 - t1) * 1000, 2)
         cost_str = f'{cost} ms'
-        self.log(f'共计耗时{cost}毫秒|{"已超时" if is_timeout else "未超时"}')
+        self.log(f'共计耗时{cost}毫秒')
         self.log('realUrl:', realUrl)
         self.log('realHeaders:', realHeaders)
         self.close_page(page)
@@ -376,11 +349,10 @@ class Sniffer:
 def main_test():
     t1 = time()
     urls = [
-        # 'https://www.cs1369.com/play/2-1-94.html',
+        'https://www.cs1369.com/play/2-1-94.html',
         'https://v.qq.com/x/page/i3038urj2mt.html',
         'http://www.mgtv.com/v/1/290346/f/3664551.html',
         'https://jx.jsonplayer.com/player/?url=https://m.iqiyi.com/v_1pj3ayb1n70.html',
-        'https://jx.yangtu.top/?url=https://m.iqiyi.com/v_1pj3ayb1n70.html',
     ]
     _count = 0
     browser = Sniffer(debug=True)
@@ -389,13 +361,13 @@ def main_test():
         ret = browser.snifferMediaUrl(url)
         print(ret)
 
-    # _count += 1
-    # ret = browser.snifferMediaUrl('https://jx.yangtu.top/?url=https://m.iqiyi.com/v_1pj3ayb1n70.html',
-    #                               custom_regex='http((?!http).){12,}?(download4|pcDownloadFile)')
-    # print(ret)
-    # _count += 1
-    # ret = browser.fetCodeByWebView('https://www.freeok.pro/xplay/63170-8-12.html')
-    # print(ret)
+    _count += 1
+    ret = browser.snifferMediaUrl('https://jx.yangtu.top/?url=https://m.iqiyi.com/v_1pj3ayb1n70.html',
+                                  custom_regex='http((?!http).){12,}?(download4|pcDownloadFile)')
+    print(ret)
+    _count += 1
+    ret = browser.fetCodeByWebView('https://www.freeok.pro/xplay/63170-8-12.html')
+    print(ret)
 
     browser.close()
     t2 = time()

@@ -63,7 +63,7 @@ def vod_generate(*, api: str = "", request: Request,
     # 拿到query参数的字典
     params_dict = request.query_params.__dict__['_dict']
     # 拿到网页host地址
-    host = str(request.base_url)
+    host = str(request.base_url).rstrip('/')
     # 拿到完整的链接
     whole_url = str(request.url)
     # 拼接字符串得到t4_api本地代理接口地址
