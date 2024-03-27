@@ -89,7 +89,10 @@ async def getRecordRawLink(*,
                            request: Request,
                            _id: int = Query(..., title="源id"),
                            ):
-    host = str(request.base_url)
+    if settings.API_DOMAIN and settings.API_DOMAIN.startswith('http') and '127.0.0.1' not in settings.API_DOMAIN:
+        host = settings.API_DOMAIN.rstrip('/') + '/'
+    else:
+        host = str(request.base_url)
     rule_data = curd.get(db, _id=_id, to_dict=False)
     groups = {}
     group_dict = curd_dict_data.getByType(db, _type='vod_rule_group')
