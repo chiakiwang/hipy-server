@@ -451,9 +451,15 @@ def get_sniffer_url(*,
         else:
             return request.query_params.__dict__['_dict']
 
-    url = getParams('url')
-    timeout = getParams('timeout') or 10000
-    active = getParams('active')
+    try:
+        url = getParams('url')
+        timeout = int(getParams('timeout') or 10000)
+        custom_regex = getParams('custom_regex') or None
+        mode = int(getParams('mode') or 0)
+        active = getParams('active')
+    except Exception as e:
+        return respErrorJson(error_code.ERROR_PARAMETER_ERROR.set_msg(f'参数校验错误:{e}'))
+
     if active and not browser_drivers:
         try:
             if settings.DEFAULT_SNIFFER == 'selenium':
@@ -470,11 +476,6 @@ def get_sniffer_url(*,
         return respErrorJson(error_code.ERROR_PARAMETER_ERROR.set_msg('传入的url不合法'))
 
     try:
-        timeout = int(timeout)
-    except:
-        timeout = 10000
-
-    try:
         if not browser_drivers:
             if settings.DEFAULT_SNIFFER == 'selenium':
                 driver_path = Sniffer.get_driver_path(0)
@@ -485,7 +486,7 @@ def get_sniffer_url(*,
         else:
             browser = browser_drivers[0]
 
-        ret = browser.snifferMediaUrl(url, timeout=timeout)
+        ret = browser.snifferMediaUrl(url, mode=mode, timeout=timeout, custom_regex=custom_regex)
         return respVodJson(data=ret)
     except Exception as e:
         return respErrorJson(error_code.ERROR_INTERNAL.set_msg(f'{e}'))

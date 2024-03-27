@@ -6,6 +6,7 @@
 # 激活嗅探器引导任务 程序启动10秒后执行
 
 from core.logger import logger
+from core.config import settings
 from datetime import datetime
 import requests
 
@@ -26,7 +27,7 @@ def active_sniffer_after_run(*args, **kwargs):
     now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     logger.info(f"active_sniffer.py执行一次定时任务 {now} ......")
     try:
-        r = requests.get('http://localhost:5707/sniffer?active=1', timeout=2)
+        r = requests.get(f'http://localhost:{settings.PORT}/sniffer?active=1', timeout=2)
         msg += r.text
     except Exception as e:
         msg += f'激活嗅探器发生错误:{e}'
