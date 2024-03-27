@@ -105,7 +105,7 @@ def respParseJson(data: Union[list, dict, str] = None, msg: str = '', code: int 
         headers.update({
             'referer': 'https://www.bilibili.com/'
         })
-    content.update(headers)
+    content.update({'headers': headers})
     content.update(extra)
     return MyJSONResponse(
         status_code=code,
