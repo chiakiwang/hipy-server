@@ -7,6 +7,7 @@ function lazy() {
         // console.log(custom_regex)
         // console.log(web_url)
         let result = snifferMediaUrl(web_url, 0, custom_regex)
+        // console.log(JSON.stringify(result));
         realUrl = result.url;
         return realUrl
     } catch (e) {

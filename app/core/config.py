@@ -138,7 +138,8 @@ class Settings(BaseSettings):
     IP_AGENTS = [""]
     # pip依赖代理
     PIP_PROXY = "https://mirrors.cloud.tencent.com/pypi/simple"
-    DEFAULT_SNIFFER = 'playwright'  # playwright 和 selenium 二选一
+    DEFAULT_SNIFFER = 'selenium'  # selenium,hipy-sniffer,playwright 三选一
+    SNIFFER_URL = 'http://127.0.0.1:5708'  # hipy-sniffer的主页
 
     # PIP_PROXY = "https://pypi.douban.com/simple/"
 

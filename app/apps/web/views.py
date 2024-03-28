@@ -32,10 +32,19 @@ from apps.vod.curd.curd_rules import curd_vod_rules
 from apps.vod.curd.curd_configs import curd_vod_configs
 from pathlib import Path
 
+import requests
+
 if settings.DEFAULT_SNIFFER == 'selenium':
     from sniffer.sniffer import Sniffer, browser_drivers
-else:
+
+    _sniffer_type = 0
+elif settings.DEFAULT_SNIFFER == 'playwright':
     from sniffer.snifferPro import Sniffer, browser_drivers
+
+    _sniffer_type = 1
+else:
+    _sniffer_type = 2
+    browser_drivers = []
 
 try:
     from redis.asyncio import Redis as asyncRedis
@@ -465,13 +474,15 @@ def get_sniffer_url(*,
 
     if active and not browser_drivers:
         try:
-            if settings.DEFAULT_SNIFFER == 'selenium':
+            if _sniffer_type == 0:
                 driver_path = Sniffer.get_driver_path(0)
                 browser = Sniffer(driver_path=driver_path)
-            else:
+            elif _sniffer_type == 1:
                 browser = Sniffer()
+            else:
+                browser = settings.SNIFFER_URL
             browser_drivers.append(browser)
-            return respVodJson(data='嗅探器激活成功')
+            return respVodJson(data=f'嗅探器激活成功,当前使用的嗅探器为:{browser}')
         except Exception as e:
             return respVodJson(data=f'嗅探器激活失败:{e}')
 
@@ -480,16 +491,29 @@ def get_sniffer_url(*,
 
     try:
         if not browser_drivers:
-            if settings.DEFAULT_SNIFFER == 'selenium':
+            if _sniffer_type == 0:
                 driver_path = Sniffer.get_driver_path(0)
                 browser = Sniffer(driver_path=driver_path)
-            else:
+            elif _sniffer_type == 1:
                 browser = Sniffer()
+            else:
+                browser = settings.SNIFFER_URL
             browser_drivers.append(browser)
         else:
             browser = browser_drivers[0]
 
-        ret = browser.snifferMediaUrl(url, mode=mode, timeout=timeout, custom_regex=custom_regex)
+        if _sniffer_type == 2:
+            params = {
+                'url': url,
+                'mode': mode,
+                'custom_regex': custom_regex,
+                'timeout': timeout,
+            }
+            r = requests.get(settings.SNIFFER_URL.rstrip('/') + '/sniffer', params=params)
+            ret = r.json()
+        else:
+            ret = browser.snifferMediaUrl(url, mode=mode, timeout=timeout, custom_regex=custom_regex)
+
         return respVodJson(data=ret)
     except Exception as e:
         return respErrorJson(error_code.ERROR_INTERNAL.set_msg(f'{e}'))

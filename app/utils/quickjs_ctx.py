@@ -12,15 +12,19 @@ from utils.vod_tool import fetch, req, 重定向, toast, image
 from urllib.parse import urljoin
 from utils.local_cache import local
 from core.config import settings
+from time import time
 
 if settings.DEFAULT_SNIFFER == 'selenium':
     from sniffer.sniffer import browser_drivers
 
     _sniffer_type = 0
-else:
+elif settings.DEFAULT_SNIFFER == 'playwright':
     from sniffer.snifferPro import browser_drivers
 
     _sniffer_type = 1
+else:
+    _sniffer_type = 2
+    browser_drivers = []
 
 
 def initContext(ctx, url, prefix_code, env, getParams, getCryptoJS):
@@ -48,29 +52,38 @@ def initContext(ctx, url, prefix_code, env, getParams, getCryptoJS):
             print(*args)
 
     def snifferMediaUrl(*args):
-        if browser_drivers:
+        if _sniffer_type != 2 and browser_drivers:
             if _sniffer_type == 0:
                 return toJsObJect(browser_drivers[0].snifferMediaUrl(*args))
             else:
-                # params = {
-                #     'url': args[0] if len(args) > 0 else '',
-                #     'mode': args[1] if len(args) > 1 else 0,
-                #     'custom_regex': args[2] if len(args) > 2 else None,
-                #     'timeout': args[3] if len(args) > 3 else None,
-                # }
-                # r = requests.get(f'http://localhost:{settings.PORT}/sniffer', params=params)
-                # ret = r.json()
-                # if not ret.get('url'):
-                #     ret['url'] = ''
-                # return toJsObJect(ret)
                 return toJsObJect(browser_drivers[0].snifferMediaUrl(*args))
+        elif _sniffer_type == 2:
+            params = {
+                'url': args[0] if len(args) > 0 else '',
+                'mode': args[1] if len(args) > 1 else 0,
+                'custom_regex': args[2] if len(args) > 2 else None,
+                'timeout': args[3] if len(args) > 3 else None,
+            }
+            r = requests.get(settings.SNIFFER_URL.rstrip('/') + '/sniffer', params=params)
+            ret = r.json()
+            if not ret.get('url'):
+                ret['url'] = ''
+            return toJsObJect(ret)
         else:
-            return None
+            return toJsObJect({})
 
     def fetCodeByWebView(url, headers):
         if browser_drivers:
             headers = toJsObJect(headers)
             return toJsObJect(browser_drivers[0].fetCodeByWebView(url, headers))
+        elif _sniffer_type == 2:
+            params = {
+                'url': url,
+                'headers': headers,
+            }
+            r = requests.get(settings.SNIFFER_URL.rstrip('/') + '/fetCodeByWebView', params=params)
+            ret = r.json()
+            return toJsObJect(ret)
         else:
             return None
 
