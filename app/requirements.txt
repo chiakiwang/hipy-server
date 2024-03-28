@@ -41,7 +41,7 @@ pyquery
 jsonpath
 jpype1
 quickjs
-selenium
+selenium>=4.18.1
 webdriver-manager
 cloudscraper
 playwright
