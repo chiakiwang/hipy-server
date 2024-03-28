@@ -8,10 +8,6 @@ import asyncio
 import re
 from playwright.async_api import async_playwright, Playwright
 from time import time
-from fastapi import FastAPI
-
-# 2.实例化
-app = FastAPI()
 
 urlRegex: str = 'http((?!http).){12,}?\\.(m3u8|mp4|flv|avi|mkv|rm|wmv|mpg|m4a|mp3)\\?.*|http((?!http).){12,}\\.(m3u8|mp4|flv|avi|mkv|rm|wmv|mpg|m4a|mp3)|http((?!http).)*?video/tos*'
 
@@ -67,34 +63,6 @@ async def main():
     return response
 
 
-resp = asyncio.run(main())
-print('resp', resp)
-
-# 3.定义
-# @app.get("/sniffer")
-# async def root():
-#     # response = asyncio.run(main())
-#     # print('resp', response)
-#     # response = await asyncio.run(main())
-#     # async with async_playwright() as playwright:
-#     #     response = await run(playwright)
-#     loop = asyncio.get_running_loop()
-#     response = loop.create_task(main())
-#     return response
-#
-#
-# @app.get("/screenshot")
-# async def get_screenshot():
-#     async with async_playwright() as p:
-#         browser = await p.chromium.launch()
-#         page = await browser.new_page()
-#         await page.goto("https://www.baidu.com")
-#         screenshot = await page.screenshot()
-#         await browser.close()
-#         return screenshot
-#
-#
-# if __name__ == '__main__':
-#     import uvicorn
-#
-#     uvicorn.run("snifferAsync:app", host="0.0.0.0", port=8080, reload=True)
+if __name__ == '__main__':
+    resp = asyncio.run(main())
+    print('resp', resp)
