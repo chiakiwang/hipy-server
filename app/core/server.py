@@ -22,8 +22,15 @@ from utils.server_info import get_server_info, get_host_ip
 
 if settings.DEFAULT_SNIFFER == 'selenium':
     from sniffer.sniffer import Sniffer, browser_drivers
-else:
+
+    _sniffer_type = 0
+elif settings.DEFAULT_SNIFFER == 'playwright':
     from sniffer.snifferPro import Sniffer, browser_drivers
+
+    _sniffer_type = 1
+else:
+    _sniffer_type = 2
+    browser_drivers = []
 
 
 class InitializeApp(object):
@@ -92,12 +99,14 @@ class InitializeApp(object):
             scheduler_register()
 
             try:
-                if settings.DEFAULT_SNIFFER == 'selenium':
+                if _sniffer_type == 0:
                     driver_path = Sniffer.get_driver_path(0)
                     logger.info(f'获取到driver_path:{driver_path}')
                     browser = Sniffer(driver_path=driver_path)
-                else:
+                elif _sniffer_type == 1:
                     browser = Sniffer()
+                else:
+                    browser = settings.SNIFFER_URL
                 browser_drivers.append(browser)
             except Exception as e:
                 logger.info(f'初始化加载browser_drivers发生错误:{e}')
@@ -115,10 +124,11 @@ class InitializeApp(object):
             """
             # await mysql.close_mysql()
             scheduler.shutdown()
-            for browser in browser_drivers:
-                try:
-                    browser.close()
-                    logger.info(f'停用browser:{browser}执行成功')
-                except Exception as e:
-                    logger.info(f'停用browser:{browser}发生了错误:{e}')
-            logger.info(f'hipy-server服务已停止')
+            if _sniffer_type != 2:
+                for browser in browser_drivers:
+                    try:
+                        browser.close()
+                        logger.info(f'停用browser:{browser}执行成功')
+                    except Exception as e:
+                        logger.info(f'停用browser:{browser}发生了错误:{e}')
+                logger.info(f'hipy-server服务已停止')
