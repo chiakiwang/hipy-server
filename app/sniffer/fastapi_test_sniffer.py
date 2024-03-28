@@ -4,7 +4,7 @@
 # Author: DaShenHan&道长-----先苦后甜，任凭晚风拂柳颜------
 # Date  : 2024/3/28
 
-from .snifferAsync import main, async_playwright, asyncio
+from snifferAsync import main, async_playwright, asyncio
 from fastapi import FastAPI
 
 # 2.实例化
