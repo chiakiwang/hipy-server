@@ -10,7 +10,7 @@ prometheus-client==0.15.0
 pydantic==1.10.2
 PyMySQL==1.0.2
 python-dotenv==0.21.0
-requests==2.22.0
+requests==2.31.0
 SQLAlchemy==1.4.43
 starlette==0.20.4
 python-jose==3.3.0
