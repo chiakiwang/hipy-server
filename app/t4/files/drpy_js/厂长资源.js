@@ -152,10 +152,12 @@ var rule = {
     let json = JSON.parse(hhtml);
     let html = json.body;
     let setCk = Object.keys(json).find(it=>it.toLowerCase()==='set-cookie');
-    cookie = setCk?json[setCk].split(';')[0]:cookie;
+    cookie = setCk ? json[setCk] : cookie;
+    // 3个set-Cookie
     if (Array.isArray(cookie)) {
         cookie = cookie.join(';');
     }
+    cookie = cookie.split(';')[0];
     log('set-cookie:'+cookie);
     let code='';
     if(/erphp-search-captcha/.test(html)){
