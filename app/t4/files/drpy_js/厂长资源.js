@@ -169,9 +169,9 @@ var rule = {
         }
         let key = jsp.pdfh(html,'.erphp-search-captcha&&input&&name');
         let body = key+'='+code;
-        post(url,{body:body,headers:{Cookie:cookie}});
+        post(input,{body:body,headers:{Cookie:cookie}});
         setItem(RULE_CK,cookie);
-        html = getHtml(url);
+        html = getHtml(input);
     }
     // log(html);
     VODS = [];
@@ -179,9 +179,9 @@ var rule = {
     log(lis.length);
     lis.forEach(function(it){
         VODS.push({
-            vod_id: pd(it,'a&&href'),
+            vod_id: pd(it,'a&&href',input),
 			vod_name: pdfh(it,'h3.dytit&&Text'),
-			vod_pic: pd(it,'img.lazy&&data-original'),
+			vod_pic: pd(it,'img.lazy&&data-original',input),
 			vod_remarks: pdfh(html,'.jidi&&Text')
         });
     
