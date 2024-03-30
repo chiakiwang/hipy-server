@@ -145,7 +145,7 @@ async def hipy_configs(*,
     t1 = time()
 #检测是否内网ip，如果是内网环境，不使用api_domain
     private_ip=re.compile('^(127\\.0\\.0\\.1)|(localhost)|(10\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3})|(172\\.((1[6-9])|(2\\d)|(3[01]))\\.\\d{1,3}\\.\\d{1,3})|(192\\.168\\.\\d{1,3}\\.\\d{1,3})$')
-    if settings.API_DOMAIN and settings.API_DOMAIN.startswith('http') and not private_ip.search(str(request.base_url)):
+    if settings.API_DOMAIN and settings.API_DOMAIN.startswith('http') and '127.0.0.1' not in settings.API_DOMAIN and not private_ip.search(str(request.base_url)):
         host = settings.API_DOMAIN.rstrip('/')
     else:
         host = str(request.base_url).rstrip('/')
