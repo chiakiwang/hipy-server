@@ -7,6 +7,8 @@
 [手机端搭建教程下载](https://wwi.lanzoup.com/iODLy1rykpjc)  
 [推荐PC端使用zyplayer新版](https://github.com/Hiram-Wong/ZyPlayer/releases)  
 [并发测试](https://runnergo.apipost.cn/)  
+[android box推荐](https://wwi.lanzoup.com/ieYp81tdrj1g)  
+[PC Player推荐](https://github.com/Hiram-Wong/ZyPlayer/releases)  
 
 # <center> hipy-server </center>
 
