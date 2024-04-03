@@ -8,6 +8,15 @@
 from core.config import settings
 from core import server
 
+try:
+    import pyjion
+
+    pyjion.enable()
+    print(f'pyjion即时编译功能已启用')
+except ImportError as e:
+    pass
+    # print(f'pyjion即时编译启用失败:{e}')
+
 app = server.InitializeApp()
 
 if __name__ == '__main__':
