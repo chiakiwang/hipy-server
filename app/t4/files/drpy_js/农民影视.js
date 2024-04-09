@@ -49,7 +49,8 @@ var rule={
 	let v7js = pdfa(html,'body&&script').find((it)=>{
 		return pdfh(it,'body&&Html').includes('jsjiami.com');
 	});
-	v7js = pdfh(v7js,'body&&Text').split('*/')[1];
+	// v7js = pdfh(v7js,'script&&Html').split('*/')[1];
+	v7js = pdfh(v7js,'script&&Text') || pdfh(v7js,'script&&Html');
 	// log(v7js);
 	// function playlist(obj){log(obj)};
 	var window={location:{href:""},onload:function(){}};function URL(href){return{searchParams:{get:function(){return""}}}}var elements={WANG:{src:""}};var document={getElementById:function(id){return elements[id]}};
