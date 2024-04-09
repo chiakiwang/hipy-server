@@ -31,7 +31,48 @@ var rule={
     class_name:'电影&连续剧&综艺&动漫&短剧',//静态分类名称拼接
     class_url:'1&2&3&4&26',//静态分类标识拼接
 	play_parse: true,
-	lazy:'',
+	lazy:`
+	pdfh = jsp.pdfh;
+	pdfa = jsp.pdfa;
+	// log(input);
+	let html=request(input);
+	//log(html);
+	let mac_url = html.match(/mac_url='(.*?)';/)[1];
+	let index = parseInt(input.match(/num-(\\d+)/)[1])-1;
+	let playUrls = mac_url.split('#');
+	let playUrl = playUrls[index].split('$')[1];
+	// log('index:'+index);
+	// log(mac_url);
+	log(playUrl);
+	html = request('https://api.cnmcom.com/webcloud/nmm.php');
+	//log(html);
+	let v7js = pdfa(html,'body&&script').find((it)=>{
+		return pdfh(it,'body&&Html').includes('jsjiami.com');
+	});
+	v7js = pdfh(v7js,'body&&Text').split('*/')[1];
+	// log(v7js);
+	// function playlist(obj){log(obj)};
+	var window={location:{href:""},onload:function(){}};function URL(href){return{searchParams:{get:function(){return""}}}}var elements={WANG:{src:""}};var document={getElementById:function(id){return elements[id]}};
+	eval(v7js+'rule.playlist=playlist;');
+	// log(typeof(rule.playlist));
+	let urls = [];
+	let lines = pdfa(html, "body&&li").map(x => {
+		let textContent = pdfh(x, "body&&Text");
+		log(textContent);
+		rule.playlist({
+			textContent: textContent
+		});
+		urls.push(elements.WANG.src)
+	});
+	log(urls);
+	playUrl = urls[0]+playUrl;
+	log(playUrl);
+	html = request(playUrl);
+	// log(html);
+	let realUrl = html.match(/video src="(.*?)"/)[1];
+	// log(realUrl);
+	input = {parse:0,url:realUrl};
+	`,
 	limit:6,
 	推荐:'.globalPicList .resize_list;*;img&&data-src;*;*',
 	一级:'.globalPicList li;.sTit&&Text;img&&src;.sBottom--em&&Text;a&&href',
