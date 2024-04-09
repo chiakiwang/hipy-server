@@ -293,3 +293,5 @@ if __name__ == '__main__':
     print(b)
     b = jsp.pdfh(a, 'Html')
     print(b)
+    c = jsp.pdfa(a, 'script')
+    print(c)
