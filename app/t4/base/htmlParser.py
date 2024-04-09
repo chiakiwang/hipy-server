@@ -4,12 +4,15 @@
 # Author: DaShenHan&道长-----先苦后甜，任凭晚风拂柳颜------
 # Date  : 2022/8/25
 # upDate  : 2022/11/17 支持 -- 剔除元素 多个剔除
+# upDate  : 2024/04/09 取html返回的文本自动解除转义，防止script里取Html的内容被转义无法执行
 
 import ujson
 from pyquery import PyQuery as pq
 from urllib.parse import urljoin
 import re
 from jsonpath import jsonpath
+# 处理html转义和反转义问题
+from html import escape, unescape
 
 PARSE_CACHE = True  # 解析缓存
 NOADD_INDEX = ':eq|:lt|:gt|:first|:last|^body$|^#'  # 不自动加eq下标索引
@@ -164,10 +167,9 @@ class jsoup:
         else:
             doc = pq(html)
         if parse == 'body&&Text' or parse == 'Text':
-            text = doc.text()
-            return text
+            return doc.text()
         elif parse == 'body&&Html' or parse == 'Html':
-            return doc.html()
+            return unescape(doc.html())
 
         option = None
         if self.contains(parse, '&&'):
@@ -188,7 +190,7 @@ class jsoup:
             if option == 'Text':
                 ret = ret.text()
             elif option == 'Html':
-                ret = ret.html()
+                ret = unescape(ret.html())
             else:
                 ret = ret.attr(option) or ''
                 if self.contains(option.lower(), 'style') and self.contains(ret, 'url('):
@@ -272,4 +274,16 @@ class jsoup:
 
 
 if __name__ == '__main__':
-    pass
+    import requests
+
+    r = requests.get('https://api.cnmcom.com/webcloud/nmm.php', headers={
+        'user-agent': 'Mozilla/5.0 (Linux; Android 11; M2007J3SC Build/RKQ1.200826.002; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/77.0.3865.120 MQQBrowser/6.2 TBS/045714 Mobile Safari/537.36'})
+    html = r.text
+    # print(html)
+    jsp = jsoup()
+    v7js1 = jsp.pdfh(html, 'script:eq(-1)&&Html').split('*/')[1].strip()
+    v7js2 = jsp.pdfh(html, 'script:eq(-1)&&Text').split('*/')[1].strip()
+    print(v7js1)
+    print(len(v7js1), '-----', len(v7js2))
+    print(v7js2)
+    print(str(v7js1) == str(v7js2))
