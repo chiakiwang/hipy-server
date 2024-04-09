@@ -36,15 +36,24 @@ var rule={
 	pdfa = jsp.pdfa;
 	// log(input);
 	let html=request(input);
-	//log(html);
+	// log(html);
 	let mac_url = html.match(/mac_url='(.*?)';/)[1];
+	let mac_from = html.match(/mac_from='(.*?)'/)[1];
+	log(mac_from);
 	let index = parseInt(input.match(/num-(\\d+)/)[1])-1;
 	let playUrls = mac_url.split('#');
 	let playUrl = playUrls[index].split('$')[1];
 	// log('index:'+index);
 	// log(mac_url);
 	log(playUrl);
-	html = request('https://api.cnmcom.com/webcloud/nmm.php');
+	let jx_js_url = 'https://m.nmddd.com/player/'+mac_from+'.js';
+	html = request(jx_js_url);
+	// log(html);
+	let jx_php_url = html.match(/src="(.*?)'/)[1];
+	// log(jx_php_url);
+	if(mac_from=='one'){
+	// html = request('https://api.cnmcom.com/webcloud/nmm.php');
+	html = request(jx_php_url);
 	//log(html);
 	let v7js = pdfa(html,'body&&script').find((it)=>{
 		return pdfh(it,'body&&Html').includes('jsjiami.com');
@@ -67,12 +76,22 @@ var rule={
 	});
 	log(urls);
 	playUrl = urls[0]+playUrl;
+	}else{
+	playUrl = jx_php_url+playUrl;
+	}
 	log(playUrl);
 	html = request(playUrl);
 	// log(html);
-	let realUrl = html.match(/video src="(.*?)"/)[1];
+	let realUrl; 
+	if(mac_from=='one'){
+	realUrl = html.match(/video src="(.*?)"/)[1];
+	}else{
+	realUrl = html.match(/url='(.*?)'/)[1];
+	}
 	// log(realUrl);
-	input = {parse:0,url:realUrl};
+	if(realUrl){
+		input = {parse:0,url:realUrl};
+	}
 	`,
 	limit:6,
 	推荐:'.globalPicList .resize_list;*;img&&data-src;*;*',
