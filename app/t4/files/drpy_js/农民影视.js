@@ -53,7 +53,7 @@ var rule={
 	// log(v7js);
 	// function playlist(obj){log(obj)};
 	var window={location:{href:""},onload:function(){}};function URL(href){return{searchParams:{get:function(){return""}}}}var elements={WANG:{src:""}};var document={getElementById:function(id){return elements[id]}};
-	eval(v7js+'rule.playlist=playlist;');
+	eval(v7js+'\\nrule.playlist=playlist;');
 	// log(typeof(rule.playlist));
 	let urls = [];
 	let lines = pdfa(html, "body&&li").map(x => {
