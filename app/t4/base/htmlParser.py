@@ -287,3 +287,9 @@ if __name__ == '__main__':
     print(len(v7js1), '-----', len(v7js2))
     print(v7js2)
     print(str(v7js1) == str(v7js2))
+    jsp = jsoup()
+    a = '<script> if(a>2){log(333)}</script>'
+    b = jsp.pdfh(a, 'body&&Html')
+    print(b)
+    b = jsp.pdfh(a, 'Html')
+    print(b)
