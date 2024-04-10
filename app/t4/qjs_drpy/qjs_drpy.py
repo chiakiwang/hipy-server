@@ -165,7 +165,7 @@ if __name__ == '__main__':
         code = f.read()
     drpy.init(code)
     drpy.setDebug(1)
-    # print(drpy.homeContent())
+    print(drpy.homeContent())
     print(drpy.homeVideoContent())
     # f = quickjs.Function(
     #     "adder", """

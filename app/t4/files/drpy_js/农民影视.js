@@ -33,6 +33,11 @@ var rule={
     class_name:'电影&连续剧&综艺&动漫&短剧',//静态分类名称拼接
     class_url:'1&2&3&4&26',//静态分类标识拼接
 	play_parse: true,
+	lazy2 : `
+	// let location = JSON.parse(request('https://www.wzget.cn/02w9z',{withHeaders:true,redirect:0})).location;
+	let location = JSON.parse(request('https://www.wzget.cn/02w9z',{withHeaders:true,redirect:null})).location;
+	//let location = request('https://www.wzget.cn/02w9z',{withHeaders:true,redirect:0});
+	log(location);`,
 	lazy:`
 	pdfh = jsp.pdfh;
 	pdfa = jsp.pdfa;
