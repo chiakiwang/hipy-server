@@ -12,7 +12,7 @@ import os
 import re
 
 
-def main(task_id):
+def main(task_id, mytv_count=300, tv_count=3000):
     print(f'=========task_id:{task_id}')
     proxy = 'https://ghproxy.liuzhicong.com/'
     files = getGitContents('ssili126/tv', '', '')
@@ -51,24 +51,24 @@ def main(task_id):
     mytv_path = Path(mytv_path).as_posix()
     # print(tv_path)
     items = content.split('\n')
-    if len(items) > 5000 and 'CCTV' in content and '卫视' in content:
+    if len(items) > tv_count and 'CCTV' in content and '卫视' in content:
         with open(tv_path, 'w+', encoding='utf-8') as f:
             f.write(content)
             write_status = '本次成功写入本地文件tv.txt'
     else:
-        write_status = '本次未写入本地文件tv.txt[内容行数不够5000或不含cctv或卫视]'
+        write_status = f'本次未写入本地文件tv.txt[内容行数{len(items)}不够{tv_count}或不含cctv或卫视]'
 
     result = f'爬取直播文件行数:{len(items)}'
     if len(error) > 0:
         result += f',未能获取{",".join(error)}等文件内容。'
 
     items = my_content.split('\n')
-    if len(items) > 500 and 'CCTV' in content and '卫视' in content:
+    if len(items) > mytv_count and 'CCTV' in content and '卫视' in content:
         with open(mytv_path, 'w+', encoding='utf-8') as f:
             f.write(my_content)
             write_status2 = ' 本次成功写入本地文件mytv.txt'
     else:
-        write_status2 = ' 本次未写入本地文件mytv.txt[内容行数不够500或不含cctv或卫视]'
+        write_status2 = f' 本次未写入本地文件mytv.txt[内容行数{len(items)}不够{mytv_count}或不含cctv或卫视]'
 
     result += write_status
     result += write_status2

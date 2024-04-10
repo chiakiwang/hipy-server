@@ -3,7 +3,9 @@ var rule={
 	title:'农民影视',
 	//host:'https://www.nmddd.com',
 	host:'https://www.nmdvd.com/',
-	hostJs:'print(HOST);let html=request(HOST,{headers:{"User-Agent":MOBILE_UA}});let src = jsp.pdfh(html,"body&&a:eq(1)&&href");print(src);HOST=src',
+	hostJs:`print(HOST);let html=request(HOST,{headers:{"User-Agent":MOBILE_UA}});
+	let src = jsp.pdfh(html,"body&&a:eq(1)&&href")||jsp.pdfh(html,"body&&a:eq(1)&&Text");
+	if(!src.startsWith('http')){src='https://'+src};print("抓到主页:"+src);HOST=src`,
 	url:'/vod-list-id-fyfilter.html',
 	// /vod-list-id-2-pg-1-order--by-time-class-0-year-2023-letter--area--lang-.html
 	filterable:1,//是否启用分类筛选,
@@ -31,7 +33,75 @@ var rule={
     class_name:'电影&连续剧&综艺&动漫&短剧',//静态分类名称拼接
     class_url:'1&2&3&4&26',//静态分类标识拼接
 	play_parse: true,
-	lazy:'',
+	lazy2 : `
+	// let location = JSON.parse(request('https://www.wzget.cn/02w9z',{withHeaders:true,redirect:0})).location;
+	let location = JSON.parse(request('https://www.wzget.cn/02w9z',{withHeaders:true,redirect:null})).location;
+	//let location = request('https://www.wzget.cn/02w9z',{withHeaders:true,redirect:0});
+	log(location);`,
+	lazy:`
+	pdfh = jsp.pdfh;
+	pdfa = jsp.pdfa;
+	// log(input);
+	let html=request(input);
+	// log(html);
+	let mac_url = html.match(/mac_url='(.*?)';/)[1];
+	let mac_from = html.match(/mac_from='(.*?)'/)[1];
+	log(mac_from);
+	let index = parseInt(input.match(/num-(\\d+)/)[1])-1;
+	let playUrls = mac_url.split('#');
+	let playUrl = playUrls[index].split('$')[1];
+	// log('index:'+index);
+	// log(mac_url);
+	log(playUrl);
+	let jx_js_url = 'https://m.nmddd.com/player/'+mac_from+'.js';
+	html = request(jx_js_url);
+	// log(html);
+	let jx_php_url = html.match(/src="(.*?)'/)[1];
+	// log(jx_php_url);
+	if(mac_from=='one'){
+	// html = request('https://api.cnmcom.com/webcloud/nmm.php');
+	html = request(jx_php_url);
+	//log(html);
+	let v7js = pdfa(html,'body&&script').find((it)=>{
+		return pdfh(it,'body&&Html').includes('jsjiami.com');
+	});
+	// v7js = pdfh(v7js,'script&&Html').split('*/')[1];
+	v7js = pdfh(v7js,'script&&Text') || pdfh(v7js,'script&&Html');
+	v7js = v7js.replace(/debugger/g,'console.log("debugger")');
+	log(v7js);
+	// function playlist(obj){log(obj)};
+	var window={location:{href:""},onload:function(){}};function URL(href){return{searchParams:{get:function(){return""}}}}var elements={WANG:{src:""}};var document={getElementById:function(id){return elements[id]}};
+	function setInterval(){}
+	eval(v7js+'\\nrule.playlist=playlist;');
+	log(typeof(rule.playlist));
+	let urls = [];
+	let lines = pdfa(html, "body&&li").map(x => {
+		let textContent = pdfh(x, "body&&Text");
+		log(textContent);
+		rule.playlist({
+			textContent: textContent
+		});
+		urls.push(elements.WANG.src)
+	});
+	log(urls);
+	playUrl = urls[0]+playUrl;
+	}else{
+	playUrl = jx_php_url+playUrl;
+	}
+	log(playUrl);
+	html = request(playUrl);
+	// log(html);
+	let realUrl; 
+	if(mac_from=='one'){
+	realUrl = html.match(/video src="(.*?)"/)[1];
+	}else{
+	realUrl = html.match(/url='(.*?)'/)[1];
+	}
+	// log(realUrl);
+	if(realUrl){
+		input = {parse:0,url:realUrl};
+	}
+	`,
 	limit:6,
 	推荐:'.globalPicList .resize_list;*;img&&data-src;*;*',
 	一级:'.globalPicList li;.sTit&&Text;img&&src;.sBottom--em&&Text;a&&href',

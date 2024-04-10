@@ -160,11 +160,13 @@ if __name__ == '__main__':
     # drpy.init('https://ghproxy.liuzhicong.com/https://github.com/hjdhnx/dr_py/raw/main/js/农民影视.js')
     # drpy.init('https://ghproxy.liuzhicong.com/https://github.com/hjdhnx/dr_py/raw/main/js/996影视.js')
     # drpy.init('https://ghproxy.liuzhicong.com/https://github.com/hjdhnx/dr_py/raw/main/js/奇珍异兽.js')
-    with open('../files/drpy_js/freeok.js', encoding='utf-8') as f:
+    # with open('../files/drpy_js/freeok.js', encoding='utf-8') as f:
+    with open('../files/drpy_js/农民影视.js', encoding='utf-8') as f:
         code = f.read()
     drpy.init(code)
     drpy.setDebug(1)
     print(drpy.homeContent())
+    print(drpy.homeVideoContent())
     # f = quickjs.Function(
     #     "adder", """
     #             function adder(x, y) {

@@ -53,6 +53,7 @@ def base_request(_url, _object, _js_type=0, cloudfare=False):
     headers = _object.get('headers') or {}
     encoding = _object.get('encoding') or 'utf-8'
     buffer = _object.get('buffer') or 1
+    redirect = False if _object.get('redirect') == 0 or _object.get('redirect') == False else True
 
     # 修复pythonmonkey没有自动把 JSObjectProxy 转为python的dict导致的后续错误
     data = dict(data)
@@ -65,12 +66,14 @@ def base_request(_url, _object, _js_type=0, cloudfare=False):
     r_headers = {}
     if method == 'get':
         try:
-            r = s.get(_url, headers=headers, params=data, timeout=timeout, verify=True if cloudfare else False)
+            r = s.get(_url, allow_redirects=redirect, headers=headers, params=data, timeout=timeout,
+                      verify=True if cloudfare else False)
             # r.encoding = r.apparent_encoding
             r.encoding = encoding
             r_text = r.text
             r_content = r.content
             r_headers = dict(r.headers)
+            r_headers = {str(key).lower(): value for key, value in r_headers.items()}
         except Exception as e:
             error = f'base_request {method} 发生了错误:{e}'
             r_headers['error'] = error
@@ -88,12 +91,14 @@ def base_request(_url, _object, _js_type=0, cloudfare=False):
 
         if _request:
             try:
-                r = _request(_url, headers=headers, data=data, timeout=timeout, verify=True if cloudfare else False)
+                r = _request(_url, allow_redirects=redirect, headers=headers, data=data, timeout=timeout,
+                             verify=True if cloudfare else False)
                 # r.encoding = r.apparent_encoding
                 r.encoding = encoding
                 r_text = r.text
                 r_content = r.content
                 r_headers = dict(r.headers)
+                r_headers = {str(key).lower(): value for key, value in r_headers.items()}
             except Exception as e:
                 error = f'base_request {method} 发生了错误:{e}'
                 r_headers['error'] = error
@@ -103,14 +108,14 @@ def base_request(_url, _object, _js_type=0, cloudfare=False):
         return base_request(_url, _object, _js_type, cloudfare=True)
     if buffer == 2:
         r_text = base64.b64encode(r_content).decode("utf8")
-    empty_result = {'content': '', 'body': '', 'headers': {}}
+    empty_result = {'content': '', 'headers': {}}
     if withHeaders and _js_type == 0:
-        result = {'body': r_text, 'headers': r_headers} if r_text else empty_result
+        result = {'body': r_text or '', 'headers': r_headers or {}}
         return ujson.dumps(result)
     elif not withHeaders and _js_type == 0:
         return r_text if r_text else ''
     elif _js_type == 1:
-        result = {'content': r_text, 'headers': r_headers} if r_text else empty_result
+        result = {'content': r_text or '', 'headers': r_headers or {}}
         return result
     else:
         return empty_result
