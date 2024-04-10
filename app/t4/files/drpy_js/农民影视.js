@@ -1,4 +1,10 @@
 // 发布页 https://www.nmdvd.com/
+/**
+ * 环境变量设置方法1: DR-PY 后台管理界面
+    * CMS后台管理 > 设置中心 > 环境变量 > {"nmjx_url":"XXXXXXX"} > 保存
+ * 环境变量设置方法2: 手动替换
+    * 底下代码 "$nmjx_url" 比如 "http://localhost:5708/nm?all=&url="
+ */
 var rule={
 	title:'农民影视',
 	//host:'https://www.nmddd.com',
@@ -33,12 +39,47 @@ var rule={
     class_name:'电影&连续剧&综艺&动漫&短剧',//静态分类名称拼接
     class_url:'1&2&3&4&26',//静态分类标识拼接
 	play_parse: true,
+	lazy:`
+	pdfh = jsp.pdfh;
+	pdfa = jsp.pdfa;
+	let html=request(input);
+	let mac_url = html.match(/mac_url='(.*?)';/)[1];
+	let mac_from = html.match(/mac_from='(.*?)'/)[1];
+	log(mac_from);
+	let index = parseInt(input.match(/num-(\\d+)/)[1])-1;
+	let playUrls = mac_url.split('#');
+	let playUrl = playUrls[index].split('$')[1];
+	log(playUrl);
+	let jx_js_url = 'https://m.nmddd.com/player/'+mac_from+'.js';
+	html = request(jx_js_url);
+	let jx_php_url = html.match(/src="(.*?)'/)[1];
+	if(mac_from=='one'){
+	html = request("$nmjx_url"+jx_php_url);
+	let urls = JSON.parse(html).data;
+	log(urls);
+	playUrl = urls[0]+playUrl;
+	}else{
+	playUrl = jx_php_url+playUrl;
+	}
+	log(playUrl);
+	html = request(playUrl);
+	let realUrl; 
+	if(mac_from=='one'){
+	realUrl = html.match(/video src="(.*?)"/)[1];
+	}else{
+	realUrl = html.match(/url='(.*?)'/)[1];
+	}
+	// log(realUrl);
+	if(realUrl){
+		input = {parse:0,url:realUrl};
+	}
+	`,
 	lazy2 : `
 	// let location = JSON.parse(request('https://www.wzget.cn/02w9z',{withHeaders:true,redirect:0})).location;
 	let location = JSON.parse(request('https://www.wzget.cn/02w9z',{withHeaders:true,redirect:null})).location;
 	//let location = request('https://www.wzget.cn/02w9z',{withHeaders:true,redirect:0});
 	log(location);`,
-	lazy:`
+	lazy_old:`
 	pdfh = jsp.pdfh;
 	pdfa = jsp.pdfa;
 	// log(input);
@@ -102,6 +143,7 @@ var rule={
 		input = {parse:0,url:realUrl};
 	}
 	`,
+
 	limit:6,
 	推荐:'.globalPicList .resize_list;*;img&&data-src;*;*',
 	一级:'.globalPicList li;.sTit&&Text;img&&src;.sBottom--em&&Text;a&&href',

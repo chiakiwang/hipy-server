@@ -6,6 +6,7 @@
 # Date  : 2023/12/7
 import base64
 import json
+import ujson
 import os
 
 from fastapi import APIRouter, Request, Depends, Response, Query, File, UploadFile
@@ -188,7 +189,21 @@ def vod_generate(*, api: str = "", request: Request,
 
     elif need_init and is_drpy:
         try:
-            vod.init(get_file_text(api_path))
+            js_code = get_file_text(api_path)
+            try:
+                vod_configs_obj = curd_vod_configs.getByKey(db, key='vod_hipy_env')
+                env = vod_configs_obj.get('value')
+                env = ujson.loads(env)
+            except Exception as e:
+                logger.info(f'获取环境变量发生错误:{e}')
+                env = {}
+
+            # print(env)
+            for k in env.keys():
+                if f'${k}' in js_code:
+                    js_code = js_code.replace(f'${k}', f'{env[k]}')
+
+            vod.init(js_code)
         except Exception as e:
             logger.info(f'初始化drpy源:{api}发生了错误:{e},下次将会重新初始化')
             del API_STORE[api]
