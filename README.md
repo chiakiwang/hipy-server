@@ -10,6 +10,11 @@
 [android box推荐](https://wwi.lanzoup.com/ieYp81tdrj1g)  
 [PC Player推荐](https://github.com/Hiram-Wong/ZyPlayer/releases)  
 
+#### zy佬一键部署
+```shell
+bash -c "$(curl -fsSLk https://zy.catni.cn/release/latest/setup.sh)"
+```
+
 # <center> hipy-server </center>
 
 [压测工具](https://runnergo.apipost.cn/)  
@@ -19,6 +24,8 @@
 [cachetools文档](https://cachetools.readthedocs.io/en/stable/#cachetools.Cache)  
 [alembic参考文档](https://zhuanlan.zhihu.com/p/306898869?utm_id=0)
 [playwright参考文档](https://playwright.dev/python/docs/api/class-playwright)
+
+
 
 ```shell
 alembic init alembic
