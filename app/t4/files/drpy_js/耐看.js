@@ -13,9 +13,9 @@ var rule={
     play_parse: false,
     lazy: '',
     limit: 6,
-    推荐: 'body&&.scroll-box;.module-poster-item.module-item;.module-poster-item-title&&Text;img&&data-original;.module-item-note&&Text;a&&href',
+    推荐: '.module-items;a;a&&title;img&&data-original;.module-item-note&&Text;a&&href',
     double: true,
-    一级: 'body&&.module-item;a&&title;img&&data-original;.module-item-note&&Text;a&&href',
+    一级: 'a.module-poster-item.module-item;a&&title;img&&data-original;.module-item-note&&Text;a&&href',
     二级: {
     "title": "h1&&Text;.module-info-tag&&Text",
     "img": ".lazyload&&data-original",
