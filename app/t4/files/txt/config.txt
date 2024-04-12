@@ -362,6 +362,11 @@
 			"name":"proxy"
 		},
 		{
+		"name":"农民点击嗅探",
+		"hosts":["api.cnmcom.com"],
+		"script":["document.querySelector('.line').click()"]
+		},
+		{
 			"hosts":[
 				"magnet"
 			],

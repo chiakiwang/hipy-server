@@ -31,7 +31,7 @@ from apps.system.curd.curd_dict_data import curd_dict_data
 from apps.vod.curd.curd_rules import curd_vod_rules
 from apps.vod.curd.curd_configs import curd_vod_configs
 from pathlib import Path
-
+import ast
 import requests
 import re
 
@@ -143,9 +143,11 @@ async def hipy_configs(*,
                        mode: int = Query(..., title="模式 0:t4 1:t3"),
                        ):
     t1 = time()
-#检测是否内网ip，如果是内网环境，不使用api_domain
-    private_ip=re.compile('^(127\\.0\\.0\\.1)|(localhost)|(10\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3})|(172\\.((1[6-9])|(2\\d)|(3[01]))\\.\\d{1,3}\\.\\d{1,3})|(192\\.168\\.\\d{1,3}\\.\\d{1,3})$')
-    if settings.API_DOMAIN and settings.API_DOMAIN.startswith('http') and '127.0.0.1' not in settings.API_DOMAIN and not private_ip.search(str(request.base_url)):
+    # 检测是否内网ip，如果是内网环境，不使用api_domain
+    private_ip = re.compile(
+        '^(127\\.0\\.0\\.1)|(localhost)|(10\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3})|(172\\.((1[6-9])|(2\\d)|(3[01]))\\.\\d{1,3}\\.\\d{1,3})|(192\\.168\\.\\d{1,3}\\.\\d{1,3})$')
+    if settings.API_DOMAIN and settings.API_DOMAIN.startswith(
+            'http') and '127.0.0.1' not in settings.API_DOMAIN and not private_ip.search(str(request.base_url)):
         host = settings.API_DOMAIN.rstrip('/')
     else:
         host = str(request.base_url).rstrip('/')
@@ -301,8 +303,9 @@ async def hipy_configs(*,
                 file_content = f.read()
             render_text = render_template_string(file_content, **context)
             # 单引号替换双引号
-            render_text = render_text.replace("'", '"')
-            render_dict = ujson.loads(render_text)
+            # render_text = render_text.replace("'", '"')
+            # render_dict = ujson.loads(render_text)
+            render_dict = ast.literal_eval(render_text)
             if custom_content and custom_dict:
                 merge_config(render_dict, custom_dict)
                 render_dict['cost_time'] = get_interval(t1)
