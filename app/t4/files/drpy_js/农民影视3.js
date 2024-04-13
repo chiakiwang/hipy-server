@@ -36,6 +36,7 @@ var rule={
 	lazy:`
 	pdfh = jsp.pdfh;
 	pdfa = jsp.pdfa;
+	let referer = 'https://m.emsdn.cn/';
 	let html=request(input);
 	let mac_url = html.match(/mac_url='(.*?)';/)[1];
 	let mac_from = html.match(/mac_from='(.*?)'/)[1];
@@ -48,7 +49,11 @@ var rule={
 	html = request(jx_js_url);
 	let jx_php_url = html.match(/src="(.*?)'/)[1];
 	if(mac_from=='one'){
-		input = {parse:1,url:jx_php_url+playUrl};
+		input = {
+			parse:1,
+			url:jx_php_url+playUrl,
+			header: JSON.stringify({'referer': referer}),
+		};
 	}else{
 		playUrl = jx_php_url+playUrl;
 		html = request(playUrl);

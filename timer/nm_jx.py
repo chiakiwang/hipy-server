@@ -74,7 +74,10 @@ async def demo_test_nm():
         # 在这里，async_func已被调用并已完成
         pass
     page = await browser.browser.new_page()
+    await page.set_extra_http_headers(headers={'referer': 'https://m.emsdn.cn/'})
     await page.goto('https://api.cnmcom.com/webcloud/nmm.php?url=')  #
+    html = await page.content()
+    # print(html)
     lis = await page.locator('li').count()
     print('共计线路路:', lis)
     lis = await page.locator('li').all()
@@ -101,12 +104,20 @@ async def demo_test_nm():
         "from": "https://api.cnmcom.com/webcloud/nmm.php?url=",
         "update": time_str,
     }
-    old_urls = get_content_dict().get('data')
-    if old_urls != urls:
+    old_data = get_content_dict()
+    old_urls = old_data.get('data')
+    if old_urls != urls and len(urls) > 0:
         print('检测到农民影视解析地址发生变化,开始写入剪切板')
         # 如果剪切板里存的解析接口数据跟爬出来的接口数据不一致就更新剪切板内容
         c_data = json.dumps(c_data, ensure_ascii=False)
         update_content(c_data)
+    elif len(urls) == 0:
+        print('本次没有成功嗅探到农民解析，记录失败时间到剪切板')
+        old_data['error_update'] = time_str
+        c_data = json.dumps(old_data, ensure_ascii=False)
+        update_content(c_data)
+    elif old_urls == urls:
+        print('本次成功嗅探到农民解析并与剪切板内容一致，无需进行任何操作')
 
 
 if __name__ == '__main__':

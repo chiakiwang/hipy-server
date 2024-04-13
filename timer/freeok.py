@@ -22,7 +22,7 @@ async def main():
     @return:
     """
     t1 = time()
-    async with Sniffer(debug=True, headless=True) as browser:
+    async with Sniffer(debug=True, headless=False,use_chrome=False) as browser:
         # 在这里，async_func已被调用并已完成
         pass
     page = await browser.browser.new_page()
