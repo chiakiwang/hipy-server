@@ -39,7 +39,8 @@ var rule={
 	let html=request(input);
 	let mac_url = html.match(/mac_url='(.*?)';/)[1];
 	let mac_from = html.match(/mac_from='(.*?)'/)[1];
-	log(mac_from);
+	log('flag:'+flag+' mac_from:'+mac_from);
+	let is_sniffer = /^线路/.test(flag) || /one|zhou/.test(mac_from);
 	let index = parseInt(input.match(/num-(\\d+)/)[1])-1;
 	let playUrls = mac_url.split('#');
 	let playUrl = playUrls[index].split('$')[1];
@@ -47,7 +48,7 @@ var rule={
 	let jx_js_url = 'https://m.nmddd.com/player/'+mac_from+'.js';
 	html = request(jx_js_url);
 	let jx_php_url = html.match(/src="(.*?)'/)[1];
-	if(mac_from=='one'){
+	if(is_sniffer){
 	html = request("https://igdux.top/~nmjx");
 	let urls = JSON.parse(html).data;
 	log(urls);
@@ -55,15 +56,17 @@ var rule={
 	}else{
 	playUrl = jx_php_url+playUrl;
 	}
-	log(playUrl);
-	html = request(playUrl);
+	log('解析播放地址:'+playUrl);
+html = req(playUrl,{headers:{
+'User-Agent':MOBILE_UA
+}}).content;
 	let realUrl; 
-	if(mac_from=='one'){
+	if(is_sniffer){
 	realUrl = html.match(/video src="(.*?)"/)[1];
 	}else{
 	realUrl = html.match(/url='(.*?)'/)[1];
 	}
-	// log(realUrl);
+	log('真实直链:'+realUrl);
 	if(realUrl){
 		input = {parse:0,url:realUrl};
 	}
