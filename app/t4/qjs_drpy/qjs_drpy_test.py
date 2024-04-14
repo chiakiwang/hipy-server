@@ -16,15 +16,17 @@ if __name__ == '__main__':
     # drpy.init('https://ghproxy.liuzhicong.com/https://github.com/hjdhnx/dr_py/raw/main/js/奇珍异兽.js')
     # with open('../files/drpy_js/freeok.js', encoding='utf-8') as f:
     # with open('../files/drpy_js/农民影视.js', encoding='utf-8') as f:
-    with open('../files/drpy_js/农民影视新.js', encoding='utf-8') as f:
+    # with open('../files/drpy_js/农民影视新.js', encoding='utf-8') as f:
+    with open('../files/drpy_js/小蚂蚁资源.js', encoding='utf-8') as f:
         # with open('../files/drpy_js/耐看.js', encoding='utf-8') as f:
         code = f.read()
     drpy.init(code)
     drpy.setDebug(1)
     # print(drpy.homeContent())
     # print(drpy.homeVideoContent())
-    # print(drpy.categoryContent('2', 1, False, {}))
-    # print(drpy.detailContent('https://m.emsdn.cn/vod-detail-id-38818.html'))
+    # print(drpy.categoryContent('13', 1, False, {}))
+    # print(drpy.detailContent('13$57059'))
+    print(drpy.playerContent("NBY", "NBY-45436c2c032eb5bb3efa57b8a46a5d6b", []))
     # f = quickjs.Function(
     #     "adder", """
     #             function adder(x, y) {
@@ -38,4 +40,4 @@ if __name__ == '__main__':
     # print(drpy.detailContent("https://nkvod.com/detail/185851.html"))
     # print(drpy.playerContent("索尼", "https://www.cs1369.com/play/790-1-1.html", []))
     # print(drpy.playerContent("量子资源", "https://nkvod.com/play/185851-2-1.html", []))
-    print(drpy.searchContent("斗罗大陆", False, 1))
+    # print(drpy.searchContent("斗罗大陆", False, 1))
