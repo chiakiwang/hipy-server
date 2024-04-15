@@ -51,7 +51,7 @@ var rule={
 	let playUrls = mac_url.split('#');
 	let playUrl = playUrls[index].split('$')[1];
 	log(playUrl);
-	let jx_js_url = 'https://m.nmddd.com/player/'+mac_from+'.js';
+	let jx_js_url = 'https://m.nmddd.com/nmplayer/'+mac_from+'.js';
 	html = request(jx_js_url);
 	let jx_php_url = html.match(/src="(.*?)'/)[1];
 	if(is_sniffer){

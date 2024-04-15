@@ -15,24 +15,27 @@ if __name__ == '__main__':
     # drpy.init('https://ghproxy.liuzhicong.com/https://github.com/hjdhnx/dr_py/raw/main/js/996影视.js')
     # drpy.init('https://ghproxy.liuzhicong.com/https://github.com/hjdhnx/dr_py/raw/main/js/奇珍异兽.js')
     # with open('../files/drpy_js/freeok.js', encoding='utf-8') as f:
-    # with open('../files/drpy_js/农民影视.js', encoding='utf-8') as f:
+    with open('../files/drpy_js/农民影视.js', encoding='utf-8') as f:
     # with open('../files/drpy_js/农民影视新.js', encoding='utf-8') as f:
     # with open('../files/drpy_js/小蚂蚁资源2.js', encoding='utf-8') as f:
     # with open('../files/drpy_js/爱看机器人.js', encoding='utf-8') as f:
-    with open('../files/drpy_js/腾云驾雾.js', encoding='utf-8') as f:
+    # with open('../files/drpy_js/腾云驾雾.js', encoding='utf-8') as f:
     # with open('../files/drpy_js/非凡资源.js', encoding='utf-8') as f:
     # with open('../files/drpy_js/量子资源.js', encoding='utf-8') as f:
         # with open('../files/drpy_js/耐看.js', encoding='utf-8') as f:
         code = f.read()
+    code = code.replace('$nmjx_url','http://127.0.0.1:5708/nm?all=&url=')
     drpy.init(code)
     drpy.setDebug(1)
     # print(drpy.homeContent())
     # print(drpy.homeVideoContent())
     # print(drpy.categoryContent('movie', 1, False, {}))
     # print(drpy.detailContent('https://v.ikanbot.com/play/846474'))
+    # print(drpy.detailContent('https://m.emsdn.cn/vod-detail-id-38817.html'))
     # print(drpy.categoryContent('13', 1, False, {}))
     # print(drpy.detailContent('17146'))
     # print(drpy.playerContent("NBY", "NBY-45436c2c032eb5bb3efa57b8a46a5d6b", []))
+    print(drpy.playerContent("线路①", "https://m.emsdn.cn/vod-play-id-38817-src-1-num-1.html", []))
     # print(drpy.playerContent("feifan", "https://svipsvip.ffzy-online5.com/20240411/25858_b99d1783/index.m3u8", []))
     # f = quickjs.Function(
     #     "adder", """
@@ -47,4 +50,4 @@ if __name__ == '__main__':
     # print(drpy.detailContent("https://nkvod.com/detail/185851.html"))
     # print(drpy.playerContent("索尼", "https://www.cs1369.com/play/790-1-1.html", []))
     # print(drpy.playerContent("量子资源", "https://nkvod.com/play/185851-2-1.html", []))
-    print(drpy.searchContent("斗罗大陆", False, 1))
+    # print(drpy.searchContent("斗罗大陆", False, 1))
