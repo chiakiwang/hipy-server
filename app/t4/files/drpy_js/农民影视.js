@@ -51,7 +51,24 @@ var rule={
 	let playUrls = mac_url.split('#');
 	let playUrl = playUrls[index].split('$')[1];
 	log(playUrl);
-	let jx_js_url = 'https://m.nmddd.com/nmplayer/'+mac_from+'.js';
+	let scripts = html.match(/script src="(.*?)"/g);
+	// log(scripts);
+	let js_url = ''
+	for(let i=0;i<scripts.length;i++){
+		let script = scripts[i].match(/src="(.*?)"/)[1];
+		if(!script.startsWith('http')&&!script.includes('config')){
+		js_url = urljoin(input,script);
+		break;
+		}
+		// log(script);	
+	}
+	log('js_url:'+js_url);
+	html = request(js_url);
+	let jx_path = html.match(/SitePath\\+"(.*?)"/)[1];
+	jx_path=urljoin(HOST,jx_path);
+	log('jx_path:'+jx_path);
+	let jx_js_url = jx_path+mac_from+'.js';
+	// let jx_js_url = 'https://m.nmddd.com/nmplayer/'+mac_from+'.js';
 	html = request(jx_js_url);
 	let jx_php_url = html.match(/src="(.*?)'/)[1];
 	if(is_sniffer){
