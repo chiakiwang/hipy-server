@@ -15,9 +15,13 @@ var rule = {
     multi:1,
     searchable:2,
     play_parse:true,
+    parse_url:'http://103.233.255.142:1133/?url=',
     lazy:`js:
-    input='http://103.233.255.142:1133/?url='+input;
-    log(input);
+    if(/m3u8|mp4/.test(input)){
+        input = {parse:0,url:input}
+    }else{
+        input= rule.parse_url+input; 
+    }
     `,
      推荐:'*',
     一级:'json:list;vod_name;vod_pic;vod_remarks;vod_id;vod_play_from',

@@ -296,6 +296,47 @@ function getMubans() {
                 "lists": ".anthology-list-box:eq(#id) li"
             },
             搜索: 'json:list;name;pic;;id',
+        },
+        采集1: {
+            title: '',
+            host: '',
+            homeTid: '13',
+            homeUrl: '/api.php/provide/vod/?ac=detail&t={{rule.homeTid}}',
+            detailUrl: '/api.php/provide/vod/?ac=detail&ids=fyid',
+            searchUrl: '/api.php/provide/vod/?wd=**&pg=fypage',
+            url: '/api.php/provide/vod/?ac=detail&pg=fypage&t=fyclass',
+            headers: {'User-Agent': 'MOBILE_UA'},
+            timeout: 5000,
+            // class_name: '电影&电视剧&综艺&动漫',
+            // class_url: '1&2&3&4',
+            // class_parse:'js:let html=request(input);input=JSON.parse(html).class;',
+            class_parse: 'json:class;',
+            limit: 20,
+            multi: 1,
+            searchable: 2,
+            play_parse: true,
+            parse_url: '',
+            lazy: `js:
+            if(/\\.(m3u8|mp4)/.test(input)){
+                input = {parse:0,url:input}
+            }else{
+                if(rule.parse_url.startsWith('json:')){
+                    let purl = rule.parse_url.replace('json:','')+input;
+                    let html = request(purl);
+                    input = {parse:0,url:JSON.parse(html).url}
+                }else{
+                    input= rule.parse_url+input; 
+                }
+            }
+            `,
+            推荐: '*',
+            一级: 'json:list;vod_name;vod_pic;vod_remarks;vod_id;vod_play_from',
+            二级: `js:
+            let html=request(input);
+            html=JSON.parse(html);
+            let data=html.list;
+            VOD=data[0];`,
+            搜索: '*',
         }
     };
     return JSON.parse(JSON.stringify(mubanDict));
