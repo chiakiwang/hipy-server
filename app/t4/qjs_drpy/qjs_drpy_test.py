@@ -17,19 +17,19 @@ if __name__ == '__main__':
     # with open('../files/drpy_js/freeok.js', encoding='utf-8') as f:
     # with open('../files/drpy_js/农民影视.js', encoding='utf-8') as f:
     # with open('../files/drpy_js/农民影视新.js', encoding='utf-8') as f:
-    # with open('../files/drpy_js/小蚂蚁资源2.js', encoding='utf-8') as f:
-    with open('../files/drpy_js/非凡资源.js', encoding='utf-8') as f:
+    with open('../files/drpy_js/小蚂蚁资源2.js', encoding='utf-8') as f:
+    # with open('../files/drpy_js/非凡资源.js', encoding='utf-8') as f:
     # with open('../files/drpy_js/量子资源.js', encoding='utf-8') as f:
         # with open('../files/drpy_js/耐看.js', encoding='utf-8') as f:
         code = f.read()
     drpy.init(code)
     drpy.setDebug(1)
-    # print(drpy.homeContent())
+    print(drpy.homeContent())
     # print(drpy.homeVideoContent())
     # print(drpy.categoryContent('13', 1, False, {}))
     # print(drpy.detailContent('17146'))
     # print(drpy.playerContent("NBY", "NBY-45436c2c032eb5bb3efa57b8a46a5d6b", []))
-    print(drpy.playerContent("feifan", "https://svipsvip.ffzy-online5.com/20240411/25858_b99d1783/index.m3u8", []))
+    # print(drpy.playerContent("feifan", "https://svipsvip.ffzy-online5.com/20240411/25858_b99d1783/index.m3u8", []))
     # f = quickjs.Function(
     #     "adder", """
     #             function adder(x, y) {
