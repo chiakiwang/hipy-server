@@ -17,15 +17,18 @@ if __name__ == '__main__':
     # with open('../files/drpy_js/freeok.js', encoding='utf-8') as f:
     # with open('../files/drpy_js/农民影视.js', encoding='utf-8') as f:
     # with open('../files/drpy_js/农民影视新.js', encoding='utf-8') as f:
-    with open('../files/drpy_js/小蚂蚁资源2.js', encoding='utf-8') as f:
+    # with open('../files/drpy_js/小蚂蚁资源2.js', encoding='utf-8') as f:
+    with open('../files/drpy_js/爱看机器人.js', encoding='utf-8') as f:
     # with open('../files/drpy_js/非凡资源.js', encoding='utf-8') as f:
     # with open('../files/drpy_js/量子资源.js', encoding='utf-8') as f:
         # with open('../files/drpy_js/耐看.js', encoding='utf-8') as f:
         code = f.read()
     drpy.init(code)
     drpy.setDebug(1)
-    print(drpy.homeContent())
+    # print(drpy.homeContent())
     # print(drpy.homeVideoContent())
+    # print(drpy.categoryContent('movie', 1, False, {}))
+    print(drpy.detailContent('https://v.ikanbot.com/play/846474'))
     # print(drpy.categoryContent('13', 1, False, {}))
     # print(drpy.detailContent('17146'))
     # print(drpy.playerContent("NBY", "NBY-45436c2c032eb5bb3efa57b8a46a5d6b", []))
