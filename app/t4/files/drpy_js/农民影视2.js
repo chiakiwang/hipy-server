@@ -49,6 +49,7 @@ var rule={
 		"lists":".numList:eq(#id) li"
 	},
 	搜索:'.ulPicTxt.clearfix li;*;img&&data-src;.sDes:eq(1)&&Text;*',
+	tab_rename:{'默认':'线路①','播放':'线路①'},
 
 	// //是否启用辅助嗅探: 1,0
 	// sniffer:1,
