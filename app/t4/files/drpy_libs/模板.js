@@ -294,7 +294,9 @@ function getMubans() {
             class_parse: 'json:class;',
             limit: 20,
             multi: 1,
-            searchable: 2,
+            searchable: 2,//是否启用全局搜索,
+            quickSearch: 1,//是否启用快速搜索,
+            filterable: 0,//是否启用分类筛选,
             play_parse: true,
             parse_url: '',
             lazy: `js:

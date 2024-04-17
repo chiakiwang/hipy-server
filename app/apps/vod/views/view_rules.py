@@ -89,9 +89,11 @@ async def getRecordRawLink(*,
                            request: Request,
                            _id: int = Query(..., title="源id"),
                            ):
-#检测是否内网ip，如果是内网环境，不使用api_domain
-    private_ip=re.compile('^(127\\.0\\.0\\.1)|(localhost)|(10\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3})|(172\\.((1[6-9])|(2\\d)|(3[01]))\\.\\d{1,3}\\.\\d{1,3})|(192\\.168\\.\\d{1,3}\\.\\d{1,3})$')
-    if settings.API_DOMAIN and settings.API_DOMAIN.startswith('http') and '127.0.0.1' not in settings.API_DOMAIN and not private_ip.search(str(request.base_url)):
+    # 检测是否内网ip，如果是内网环境，不使用api_domain
+    private_ip = re.compile(
+        '^(127\\.0\\.0\\.1)|(localhost)|(10\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3})|(172\\.((1[6-9])|(2\\d)|(3[01]))\\.\\d{1,3}\\.\\d{1,3})|(192\\.168\\.\\d{1,3}\\.\\d{1,3})$')
+    if settings.API_DOMAIN and settings.API_DOMAIN.startswith(
+            'http') and '127.0.0.1' not in settings.API_DOMAIN and not private_ip.search(str(request.base_url)):
         host = settings.API_DOMAIN.rstrip('/')
     else:
         host = str(request.base_url).rstrip('/')
@@ -191,7 +193,7 @@ def update_file_info(file_info, group_label, extension, fpath, prefix_js_code, e
             js_code = f.read()
         try:
             # js代码里用到了muban变量才加入预置代码
-            if 'muban' in js_code:
+            if 'muban' in js_code or '模板' in js_code:
                 js_code = prefix_js_code + js_code + endfix_js_code
             ctx.eval(js_code)
             rule_json = ctx.get('rule').json()
