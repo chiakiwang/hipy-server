@@ -7,6 +7,7 @@
  */
 var rule={
 	title:'农民影视',
+	tab_rename:{'默认':'线路①','播放':'线路①','滴滴':'线路①'},
 	//host:'https://www.nmddd.com',
 	host:'https://www.nmdvd.com/',
 	hostJs:`print(HOST);let html=request(HOST,{headers:{"User-Agent":MOBILE_UA}});
@@ -126,7 +127,6 @@ var rule={
 		"lists":".numList:eq(#id) li"
 	},
 	搜索:'.ulPicTxt.clearfix li;*;img&&data-src;.sDes:eq(1)&&Text;*',
-	tab_rename:{'默认':'线路①','播放':'线路①'},
 
 	// //是否启用辅助嗅探: 1,0
 	// sniffer:1,
