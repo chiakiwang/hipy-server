@@ -1,6 +1,7 @@
 import cheerio from 'assets://js/lib/cheerio.min.js';
 import 'assets://js/lib/crypto-js.js';
 import './jsencrypt.js';
+// import JSEncrypt from './jsencrypt.js'; // 会导致壳子崩溃的
 import 模板 from './模板.js'
 import {gbkTool} from './gbk.js'
 
