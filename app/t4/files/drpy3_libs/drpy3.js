@@ -20,8 +20,17 @@ function init_test(){
     // let text = '[{"vod_name":"兔小贝原创儿歌","vod_pic":"https://resource-cdn.tuxiaobei.com/video-album/FnQ8ieJHgsbgCKWXNBg4uoOmKgG5.jpg","vod_remarks":"共229首","vod_content":"","vod_id":"/subject/17@@兔小贝原创儿歌@@https://resource-cdn.tuxiaobei.com/video-album/FnQ8ieJHgsbgCKWXNBg4uoOmKgG5.jpg"},{"vod_name":"英文儿歌","vod_pic":"https://resource-cdn.tuxiaobei.com/video-album/Fqjpx2H_-QaYNAYn2MekRuDpeyUv.jpg","vod_remarks":"共10首","vod_content":"","vod_id":"/subject/23@@英文儿歌@@https://resource-cdn.tuxiaobei.com/video-album/Fqjpx2H_-QaYNAYn2MekRuDpeyUv.jpg"}]';
     // let str = RSA.encode(text, publicKey);
     // console.log("加密数据：" + str);
-    // let uncrypted = RSA.decode(str, privateKey)
+    // let str1 = 'Wa2c/868VOm0PgpGG2s2aMrDbGOlJRdZXlSGswjFgywd3nZNB7ND8kVMdNB/OsNFoQXJXSJMvPaE73BH7rs8fz54JGdYQK+qTgfQRqQZvomCjbzseSR4bm4NOrtIOOslL3WqxlzOuU0M1P1eERmkLEVU2WSyc3RGtJro3b3MOWYCNdKMoZdncfOHJndkl4wm9V3GGc3uH98hs6OxLvBWgXoW9jZQ3n0vR2FtS2KYrPGuSuKGkxlt9Kw5TD6nri142NOimz05WK55Xe04YUQ1VZd51t0wzJGXolWgfzIQaK2zzhk5Zjlm+IQJxXqEWiJ2+O6TJ+lIttvsDSaUflcDXQ==';
+    // let str2 = 'R86mW9DzBw05pxBSh9ECh1stXxINmnudgZBbzU/cz1EcFgrEgdk0Zk4ruAiJZB2fP5c7d3gMmN8+Dv19IfARWSzw85xCEjUhpdcMJ0jn6ZE5H+muadND9LzjeVisojqwYxot3YVdKof7HMhPFN8QR0jfzqhjmnGFTlY1jMXzJK0MSOLNRLDar480CdKNb/cxALC8+xKIlhM9E4B31t8J4rNMUWSCAr49lbZ3jx3PxieBpTQUdDJz96AttR93Pc+c51wrxh0Ch/Mt4Rs09HGMXwIpNV+CxsGwSGRQUlyJo2k3d0WqsVzpz6S8A4VGEMTRLGI3IjEt+eWt7wM3nAXarg==';
+    // let str3 = 'D4eOsRqua+jYA5+ZOR9PLI2PExKjKfArQfv9/wGeG50bQSjWypShJPY6RQfO+rghyf0juzHIUSxqH91OxinhCFkONaF2Vod2QVyphyn9eh73dAcEFKIFFKGXoPCjbMWrr3p4d+hgVrHzrFeGqkRq8JFOvG2L5XDxVfWbV8KmUA0DKuz6QwWg7P4kesy+C7BbLALy5W/wfZchD3gnsBvx/pjFoe11VfAify9isLxg9a15jj52xr6lzQ9kge9C2JcV8yq85bFKaUpJWgobzz+BSIv3lVMU6vgcldmOrhkyiETpFGFGGF00DphGCEoK6uAyyNDh7+Jn8P17zf/DW1wV3A==';
+    // let uncrypted = RSA.decode(str, privateKey);
     // log('解密数据:'+uncrypted);
+    // uncrypted = RSA.decode(str1, privateKey);
+    // log('解密数据1:'+uncrypted);
+    // uncrypted = RSA.decode(str2, privateKey);
+    // log('解密数据2:'+uncrypted);
+    // uncrypted = RSA.decode(str3, privateKey);
+    // log('解密数据3:'+uncrypted);
 }
 
 /**
