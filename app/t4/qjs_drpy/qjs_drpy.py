@@ -45,6 +45,8 @@ class Drpy:
             _qjs_module_gbk = f.read()
         with open(_('qjs_module_crypto.js'), encoding='utf-8') as f:
             _qjs_module_crypto = f.read()
+        with open(_('qjs_module_jsencrypt.js'), encoding='utf-8') as f:
+            _qjs_module_jsencrypt = f.read()
         with open(_('qjs_module_drpy2.js'), encoding='utf-8') as f:
             _qjs_module_drpy2 = f.read() + f'\nglobalThis.{self.key} = ' + '{ init, home, homeVod, category, detail, ' \
                                                                            'play, search, proxy, sniffer, isVideo};'
@@ -55,6 +57,7 @@ class Drpy:
         ctx.module(_qjs_module_cheerio)
         ctx.module(_qjs_module_gbk)
         ctx.module(_qjs_module_crypto)
+        ctx.module(_qjs_module_jsencrypt)
         ctx.module(_qjs_module_drpy2)
         return ctx
 
