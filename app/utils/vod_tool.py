@@ -115,6 +115,7 @@ def base_request(_url, _object, _js_type=0, cloudfare=False):
     elif not withHeaders and _js_type == 0:
         return r_text if r_text else ''
     elif _js_type == 1:
+        # print(r_text)
         result = {'content': r_text or '', 'headers': r_headers or {}}
         return result
     else:

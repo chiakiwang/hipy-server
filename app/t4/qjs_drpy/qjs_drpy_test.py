@@ -21,7 +21,8 @@ if __name__ == '__main__':
     # with open('../files/drpy_js/小蚂蚁资源2.js', encoding='utf-8') as f:
     # with open('../files/drpy_js/爱看机器人.js', encoding='utf-8') as f:
     # with open('../files/drpy_js/腾云驾雾.js', encoding='utf-8') as f:
-    with open('../files/drpy_js/非凡资源.js', encoding='utf-8') as f:
+    # with open('../files/drpy_js/非凡资源.js', encoding='utf-8') as f:
+    with open('../files/drpy_js/白嫖影视.js', encoding='utf-8') as f:
     # with open('../files/drpy_js/量子资源.js', encoding='utf-8') as f:
         # with open('../files/drpy_js/耐看.js', encoding='utf-8') as f:
         code = f.read()
@@ -30,12 +31,14 @@ if __name__ == '__main__':
     drpy.setDebug(1)
     # print(drpy.homeContent())
     # print(drpy.homeVideoContent())
-    # print(drpy.categoryContent('movie', 1, False, {}))
+    # print(drpy.categoryContent('2', 1, False, {}))
     # print(drpy.detailContent('https://v.ikanbot.com/play/846474'))
+    # print(drpy.detailContent('https://www.baipiaoys.com:9092/detail/2067.html'))
     # print(drpy.detailContent('https://m.emsdn.cn/vod-detail-id-38817.html'))
     # print(drpy.categoryContent('13', 1, False, {}))
     # print(drpy.detailContent('17146'))
     # print(drpy.playerContent("NBY", "NBY-45436c2c032eb5bb3efa57b8a46a5d6b", []))
+    # print(drpy.playerContent("白嫖播放器", "https://www.baipiaoys.com:9092/play/2067-1-1.html", []))
     # print(drpy.playerContent("线路①", "https://m.emsdn.cn/vod-play-id-38817-src-1-num-1.html", []))
     # print(drpy.playerContent("feifan", "https://svipsvip.ffzy-online5.com/20240411/25858_b99d1783/index.m3u8", []))
     # f = quickjs.Function(
@@ -51,4 +54,4 @@ if __name__ == '__main__':
     # print(drpy.detailContent("https://nkvod.com/detail/185851.html"))
     # print(drpy.playerContent("索尼", "https://www.cs1369.com/play/790-1-1.html", []))
     # print(drpy.playerContent("量子资源", "https://nkvod.com/play/185851-2-1.html", []))
-    # print(drpy.searchContent("斗罗大陆", False, 1))
+    print(drpy.searchContent("斗罗大陆", False, 1))
