@@ -9,6 +9,6 @@ var rule = {
 	url: '/show/id/fyclass/page/fypage.html',
     searchUrl:'/search/page/fypage/wd/**.html',
 	filterable: 0,//是否启用分类筛选,
-	tab_exclude:'影片评论|国剧周榜单|国剧月榜单',
+	tab_exclude:'影片|评论|榜单',
 	lazy: ``,
 }
