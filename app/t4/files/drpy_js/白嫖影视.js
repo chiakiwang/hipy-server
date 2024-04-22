@@ -10,6 +10,6 @@ var rule = {
     searchUrl:'/search/page/fypage/wd/**.html',
 	filterable: 0,//是否启用分类筛选,
 	tab_exclude:'影片|评论|榜单',
-    // 搜索: muban.首图2.搜索2,
+    搜索: muban.首图2.搜索2,
 	lazy: ``,
 }
