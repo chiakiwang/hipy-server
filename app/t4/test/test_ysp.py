@@ -123,7 +123,9 @@ def generateGuid():
     修正后的 generateGuid 函数，根据安卓代码逻辑生成 guid
     @return:
     """
-    timestamp = base_convert(round(time()), 36)
+    tm = round(time())
+    timestamp = base_convert(tm, 36)
+    print('tm:',tm,timestamp)
     randomPart = generateRandomString(11)
     guid = f"{timestamp}_{randomPart.rjust(11, '0')}"
     return guid
@@ -160,7 +162,8 @@ def hex2bin(hex_string):
     """
     if len(hex_string) % 2 != 0:
         hex_string = '0' + hex_string  # 如果字符串长度不是偶数，则补一个0
-    return binascii.unhexlify(hex_string).decode('ASCII', errors='ignore')
+    # return binascii.unhexlify(hex_string).decode('ASCII', errors='ignore')
+    return binascii.unhexlify(hex_string)
 
 
 def bin2hex(bin_string):
@@ -205,11 +208,14 @@ def openssl_encrypt(data, key, iv):
     # 使用AES-128-CBC加密模式
     cipher = AES.new(key, AES.MODE_CBC, iv)
     # 对数据进行填充
-    data = data.ljust((len(data) + AES.block_size) & ~AES.block_size)
+    # data = data.ljust((len(data) + AES.block_size) & ~AES.block_size)
     # data = pad(data,16)
+    # data = pad(data.encode(),(len(data) + AES.block_size) & ~AES.block_size)
+    data = pad(data.encode(),AES.block_size)
     print('d: ', data)
     # 加密数据
-    encrypted_data = cipher.encrypt(pad(data.encode('utf-8'), 16))
+    # encrypted_data = cipher.encrypt(pad(data.encode('utf-8'), 16))
+    encrypted_data = cipher.encrypt(data)
     # 将加密后的数据转换为Base64编码
     print(encrypted_data)
     return base64.b64encode(encrypted_data).decode('utf-8')
@@ -235,15 +241,17 @@ def getM3u8Url(name):
     salt = '0f$IVHi9Qno?G'
     platform = '5910204'
     key = hex2bin("48e5918a74ae21c972b90cce8af6c8be")
-    key = r"Håt®!Ér¹\fÎöÈ¾"
-    print(key)
+    # key = r"Håt®!Ér¹\fÎöÈ¾"
+    # key = pad(key.encode(),16)
+    print(len(key),key)
     iv = hex2bin("9a7e7d23610266b1d9fbf98581384d92")
-    iv = r"~}#a\u0002f±Ùûù8M"
-    print(iv)
+    # iv = r"~}#a\u0002f±Ùûù8M"
+    # iv = pad(iv.encode(),16)
+    print(len(iv),iv)
     ts = round(time())
     el = f"|{cnlid}|{ts}|mg3c3b04ba|V1.0.0|{guid}|{platform}|https://www.yangshipin.cn|mozilla/5.0 (windows nt ||Mozilla|Netscape|Win32|"
     print('el:', el)
-    el = '|2022576803|1713867132|mg3c3b04ba|V1.0.0|sce4cc_U7oKJILre0I|5910204|https://www.yangshipin.cn|mozilla/5.0 (windows nt ||Mozilla|Netscape|Win32|'
+    # el = '|2022576803|1713867132|mg3c3b04ba|V1.0.0|sce4cc_U7oKJILre0I|5910204|https://www.yangshipin.cn|mozilla/5.0 (windows nt ||Mozilla|Netscape|Win32|'
     xl = 0
     for i in range(len(el)):
         xl = (xl << 5) - xl + ord(el[i])
@@ -281,12 +289,29 @@ def getM3u8Url(name):
     print('sign:', sign)
     params["signature"] = sign
     print(params)
+    auth = {
+        'pid':'600001859',
+        'guid':guid,
+        'appid':'ysp_pc',
+        'rand_str':generateRandomString(10),
+        'signature':sign,
+    }
+    headers = {
+        "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",
+        "Referer": "https://www.yangshipin.cn/",
+        "Cookie": f"guid={guid}; versionName=99.99.99; versionCode=999999; vplatform=109; platformVersion=Chrome; deviceModel=121; updateProtocol=1; seqId=1; request-id={generateRequestId()}",
+        "Yspappid": "519748109",
+        # "Yspplayertoken": "lETcrxekIG4kk0lPyPscYQbFFTTKxsiHowu5xK4AWh5okO4IVtIjX1gPibEQRsBFfx6tjqxlMe90MAwBga3nzs3xibUV0ykQePYPy7PC8FI",
+    }
+    r = requests.post(url='https://player-api.yangshipin.cn/v1/player/auth',data=auth,headers=headers)
+    print(r,r.text)
     bstrURL = "https://player-api.yangshipin.cn/v1/player/get_live_info"
     headers = {
         "Content-Type": "application/json",
         "Referer": "https://www.yangshipin.cn/",
         "Cookie": f"guid={guid}; versionName=99.99.99; versionCode=999999; vplatform=109; platformVersion=Chrome; deviceModel=121; updateProtocol=1; seqId=1; request-id={generateRequestId()}",
         "Yspappid": "519748109",
+        "Yspplayertoken": "lETcrxekIG4kk0lPyPscYQbFFTTKxsiHowu5xK4AWh5okO4IVtIjX1gPibEQRsBFfx6tjqxlMe90MAwBga3nzs3xibUV0ykQePYPy7PC8FI",
     }
     print(headers)
     data = params
@@ -300,9 +325,9 @@ def main():
     print(time())
     print(generateRequestId())
     print(generateGuid())
-    print(hex2bin("48656c6c6f20576f726c6421"))
+    # print(hex2bin("48656c6c6f20576f726c6421"))
     # print(hexStringTobytes("48656c6c6f20576f726c6421"))
-    print(hex2bin("48e5918a74ae21c972b90cce8af6c8be"))
+    # print(hex2bin("48e5918a74ae21c972b90cce8af6c8be"))
     # print(hex2bin("9a7e7d23610266b1d9fbf98581384d92"))
     # print(bin2hex("Hello World!"))
     print(getM3u8Url("cctv1"))
