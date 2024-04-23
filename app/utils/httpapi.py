@@ -9,6 +9,7 @@ import re
 from network.request import Request
 from t4.base.htmlParser import jsoup
 import ujson
+from urllib.parse import urljoin
 
 GIT_HOST = "api.github.com"
 GIT_URL = "https://" + GIT_HOST
@@ -79,6 +80,25 @@ def getHotSuggest(s_from, size):
         return getHotSuggest1(size=size)
     else:
         return getHotSuggest2(size=size)
+
+
+def getYspContent(ysp_url):
+    headers = {
+        'Referer': 'https://www.yangshipin.cn/',
+        'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36',
+    }
+    request = Request(method="get", url=ysp_url, headers=headers, agent=False, follow_redirects=True, timeout=5)
+    r = request.request()
+    html = r.text
+    m3u8_list = html.split('\n')
+    new_m3u8_list = []
+    for m3u8_str in m3u8_list:
+        if (not m3u8_str.startswith('#')) and m3u8_str.endswith('.ts'):
+            new_m3u8_list.append(urljoin(ysp_url, m3u8_str))
+        else:
+            new_m3u8_list.append(m3u8_str)
+    m3u8_text = '\n'.join(new_m3u8_list)
+    return m3u8_text
 
 
 def getGitContents(repo, path, token):

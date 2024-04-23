@@ -20,7 +20,7 @@ from core.logger import logger
 from utils.web import htmler, render_template_string, remove_comments, parseJson
 from utils.cmd import update_db
 from utils.vod_tool import base64ToImage, get_interval
-from utils.httpapi import get_location_by_ip, getHotSuggest
+from utils.httpapi import get_location_by_ip, getHotSuggest, getYspContent
 from utils.quickjs_ctx import initContext
 from network.request import Request
 from common.resp import respSuccessJson, respErrorJson, respParseJson, respVodJson, abort
@@ -456,6 +456,43 @@ async def get_hot_search(*, request: Req, ):
     size = getParams('size')
     data = getHotSuggest(s_from, size)
     return respSuccessJson(data=data)
+
+
+@router.get('/ysp/{name}', summary="央视频接口")
+async def get_ysp_lives(*,
+                        name: str = Query(..., title="直播名称"),
+                        request: Req, ):
+    """
+    代理对应名称的央视频
+    @param name:
+    @param request:
+    @return:
+    """
+    _map = {
+        'cctv4k': '2022575202',
+        'cctv1': '2022576803',
+        'cctv2': '2022576702',
+        'cctv3': '2022576501',  # vip
+        'cctv4': '2022576603',
+        'cctv5': '2022576403',
+        'cctv5+': '2022576303',
+        'cctv6': '2022574301',  # vip
+        'cctv7': '2022576202',
+        'cctv8': '2022576101',  # vip
+        'cctv9': '2022576002',
+        'cctv10': '2022573002',
+    }
+    _name = name.lower().replace('.m3u8', '')
+    _map_id = _map.get(_name)
+    if _map_id:
+        ysp_url = f'https://hlslive-tx-cdn.ysp.cctv.cn/9841964D259FEEA2033EBD728C5C601CA23790AF04607BED439A1AE83F4E57129AF43BE039A7DB01D24679A241D6A94B098C01B29932660F67467751F51D3A1B27A9BA2B067EF53BF2CB25D82EF4169A213522DB17A98C5FAFAEA1CDFC762E372A6588F298DD95D8EAF44354D5985AF1/{_map_id}.m3u8'
+        # print(ysp_url)
+        m3u8_text = getYspContent(ysp_url)
+        media_type = 'application/vnd.apple.mpegurl'
+        # return Response(status_code=302, media_type=media_type, content=None, headers={'location': ysp_url})
+        return Response(status_code=200, media_type=media_type, content=m3u8_text)
+    else:
+        return respErrorJson(error_code.ERROR_PARAMETER_ERROR.set_msg(f'参数【name】不正确'))
 
 
 @router.get('/sniffer', summary='嗅探器-根据传入的url嗅探页面上的真实视频地址')
