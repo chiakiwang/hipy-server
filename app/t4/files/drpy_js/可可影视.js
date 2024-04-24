@@ -9,14 +9,14 @@ var rule = {
   headers: {
     'User-Agent': 'MOBILE_UA',
   },
-  class_parse: '.swiper-slide.nav-swiper-slide a:gt(1):lt(8);a&&Text;a&&href;/(\\w+).html',
-  cate_exclude:'今日更新|专题列表|排行榜',
+  class_parse: '#nav-swiper&&.nav-swiper-slide;a&&Text;a&&href;/(\\w+).html',
+  cate_exclude:'Netflix|今日更新|专题列表|排行榜',
   play_parse: true,
   lazy: '',
   limit: 20,
   推荐: '.section-box:eq(2)&&.module-box-inner&&.module-item;*;*;*;*',
   double: false,
-  一级: '.module-box-inner&&.module-item;.v-item-title:eq(-1)&&Text;img&&src;.v-item-bottom&&span&&Text;a&&href',
+  一级: '.module-box-inner&&.module-item;.v-item-title:eq(-1)&&Text;img&&data-original;.v-item-bottom&&span&&Text;a&&href',
   二级: {
     title: '.detail-title&&Text;.detail-tags&&a&&Text',
     img: '.detail-pic&&img&&src',
@@ -25,5 +25,6 @@ var rule = {
     tabs: '.source-item-label',
     lists: '.episode-list:eq(#id) a',
   },
-  搜索: '.search-result-list&&a;.title&&Text;.lazyload&&src;.search-result-item-header&&Text;a&&href;.desc&&Text',
+  搜索: '.search-result-list&&a;.title&&Text;*;.search-result-item-header&&Text;a&&href;.desc&&Text',
+  图片替换:'https://keke5.app=>https://vres.a357899.cn',
 }
