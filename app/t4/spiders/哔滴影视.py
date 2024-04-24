@@ -60,7 +60,7 @@ gParam = {
 
 class Spider(BaseSpider):  # 元类 默认的元类 type
 
-    api: str = 'https://www.bdys03.com/api/v1'
+    api: str = 'https://www.yjys.me/api/v1'
 
     javar = None
 
@@ -411,18 +411,18 @@ class Spider(BaseSpider):  # 元类 默认的元类 type
             return [403, 'text/plain', '403 forbidden. url is required']
 
         name = params.get('name') or 'm3u8'
-        burl = 'https://www.bdys03.com'
-        new_url = url.replace("www.bde4.cc", "www.bdys03.com")
+        burl = 'https://www.yjys.me'
+        new_url = url.replace("www.bde4.cc", "www.yjys.me")
         self.log(f'原始url:{url},替换域名后url:{new_url}')
         headers = {
-            "User-Agent": "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3947.100 Safari/537.36",
+            "User-Agent": "BDPlayer",
             "Referer": burl,
             "Origin": burl,
         }
         r = self.fetch(new_url, headers=headers)
         pdata = self.process_data(r.content).decode('utf-8')
-        # pdata = re.sub(r'(.*?ts)', r'https://www.bdys03.com/\1', pdata)
-        pdata = self.replaceAll(pdata, r'(.*?ts)', r'https://www.bdys03.com/\1')
+        # pdata = re.sub(r'(.*?ts)', r'https://www.yjys.me/\1', pdata)
+        pdata = self.replaceAll(pdata, r'(.*?ts)', r'https://vod.bdys.me/\1')
         content = pdata.strip()
 
         media_type = 'text/plain' if 'txt' in name else 'video/MP2T'
@@ -474,7 +474,7 @@ if __name__ == '__main__':
     # print(spider.categoryContent('0', 1, False, None))
     # print(spider.detailContent([24420]))
     print(spider.searchContent('斗罗大陆'))
-    # print(spider.playerContent('至尊线路', 'vip://https://www.bdys03.com/api/v1/playurl/174296?type=1', None))
+    # print(spider.playerContent('至尊线路', 'vip://https://www.yjys.me/api/v1/playurl/174296?type=1', None))
     # print(spider.playerContent('需要解析',
     #                            'https://www.bde4.cc/10E79044B82A84F70BE1308FFA5232E4DC3D0CA9EC2BF6B1D4EF56B2CE5B67CF238965CCAE17F859665B7E166720986D.m3u8',
     #                            None))
