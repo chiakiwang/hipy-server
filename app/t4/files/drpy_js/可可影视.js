@@ -20,9 +20,9 @@ var rule = {
   double: false,
   一级: '.module-box-inner&&.module-item;.v-item-title:eq(-1)&&Text;img&&data-original;.v-item-bottom&&span&&Text;a&&href',
   二级: {
-    title: '.detail-title&&Text;.detail-tags&&a&&Text',
-    img: '.detail-pic&&img&&src',
-    desc: '.detail-info-row:eq(3)&&.detail-info-row-main&&Text;.detail-info-row:eq(2)&&.detail-info-row-main&&Text;.detail-info-row:eq(1)&&.detail-info-row-main&&Text;.detail-info-row:eq(0)&&Text',
+    title: '.detail-title&&Text;.detail-tags&&a:eq(-2)&&Text',
+    img: '.detail-pic&&img&&data-original',
+    desc: '.detail-info-row-main:eq(-2)&&Text;.detail-tags&&a&&Text;.detail-tags&&a:eq(1)&&Text;.detail-info-row-main:eq(1)&&Text;.detail-info-row-main&&Text',
     content: '.detail-desc&&Text',
     tabs: '.source-item-label',
     lists: '.episode-list:eq(#id) a',
