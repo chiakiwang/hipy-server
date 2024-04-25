@@ -18,13 +18,13 @@ function fixAdM3u8(m3u8_text, m3u8_url, ad_remove) {
         return m3u8_text
     }
     if (ad_remove.startsWith('reg:')) {
-        ad_remove = ad_remove.substr(4)
+        ad_remove = ad_remove.slice(4)
     } else if (ad_remove.startsWith('js:')) {
-        ad_remove = ad_remove.substr(3)
+        ad_remove = ad_remove.slice(3)
     }
-    let m3u8_start = m3u8_text.substr(0, m3u8_text.indexOf('#EXTINF')).trim();
-    let m3u8_body = m3u8_text.substr(m3u8_text.indexOf('#EXTINF'), m3u8_text.indexOf('#EXT-X-ENDLIST')).trim();
-    let m3u8_end = m3u8_text.substr(m3u8_text.indexOf('#EXT-X-ENDLIST')).trim();
+    let m3u8_start = m3u8_text.slice(0, m3u8_text.indexOf('#EXTINF')).trim();
+    let m3u8_body = m3u8_text.slice(m3u8_text.indexOf('#EXTINF'), m3u8_text.indexOf('#EXT-X-ENDLIST')).trim();
+    let m3u8_end = m3u8_text.slice(m3u8_text.indexOf('#EXT-X-ENDLIST')).trim();
     let murls = [];
     let m3_body_list = m3u8_body.split('\n');
     let m3_len = m3_body_list.length;
