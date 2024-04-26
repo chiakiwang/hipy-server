@@ -16,6 +16,7 @@ function init_test(){
     // print(模板);
     // print(typeof(模板.getMubans));
     console.log("当前版本号:"+VERSION);
+    console.log('本地代理地址:'+getProxyUrl());
     console.log(RKEY);
     console.log(JSON.stringify(rule));
     console.log("init_test_end");

@@ -53,6 +53,7 @@ class Drpy:
 
         ctx = initContext(Context(), url='', prefix_code='true', env={'debug': self.debug}, getParams=lambda: {},
                           getCryptoJS=lambda: 'true')
+        ctx.add_callable('getProxy', lambda is_public: self.getProxyUrl(is_public))
         ctx.module(_qjs_module_muban)
         ctx.module(_qjs_module_cheerio)
         ctx.module(_qjs_module_gbk)
@@ -141,9 +142,10 @@ class Drpy:
         """
         # return 'reg:/video/adjump.*?ts'
 
-    def getProxyUrl(self):
+    def getProxyUrl(self, is_public=True):
         """
         获取本地代理地址
+        @param is_public: 是否外网
         @return:
         """
         return self.t4_js_api
