@@ -8,7 +8,7 @@
 [推荐PC端使用zyplayer新版](https://github.com/Hiram-Wong/ZyPlayer/releases)  
 [并发测试](https://runnergo.apipost.cn/)  
 [android box推荐下载](https://wwi.lanzoup.com/igYqY1wazxmj)  
-[PC Player推荐下载](https://wwi.lanzoup.com/ik50X1waztad)  
+[PC Player推荐下载](https://wwi.lanzoup.com/iOqcp1wmsjmf)  
 
 #### zy佬一键部署
 ```shell
