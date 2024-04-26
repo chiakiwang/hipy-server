@@ -244,11 +244,7 @@ def vod_generate(*, api: str = "", request: Request,
                 return respErrorJson(error_code.ERROR_INTERNAL.set_msg(error_msg))
 
         try:
-            if is_drpy:
-                back_resp_list = vod.proxy(params_dict)
-            else:
-                back_resp_list = vod.localProxy(params_dict)
-
+            back_resp_list = vod.localProxy(params_dict)
             status_code = back_resp_list[0]
             media_type = back_resp_list[1]
             content = back_resp_list[2]

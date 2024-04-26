@@ -127,6 +127,17 @@ class Drpy:
     def playerContent(self, flag, id, vipFlags=None):
         return self.setDict(self.call('play', flag, id, vipFlags))
 
+    def localProxy(self, params):
+        return self.toDict(self.call('proxy', params))
+
+    def getProxyUrl(self, is_public=True):
+        """
+        获取本地代理地址
+        @param is_public: 是否外网
+        @return:
+        """
+        return self.t4_js_api
+
     def isVideo(self):
         """
         返回是否为视频的匹配字符串
@@ -142,20 +153,9 @@ class Drpy:
         """
         # return 'reg:/video/adjump.*?ts'
 
-    def getProxyUrl(self, is_public=True):
-        """
-        获取本地代理地址
-        @param is_public: 是否外网
-        @return:
-        """
-        return self.t4_js_api
-
     @staticmethod
     def fixAdM3u8(*args):
         return fixAdM3u8(*args)
-
-    def localProxy(self, params):
-        return self.toDict(self.call('proxy', params))
 
 
 if __name__ == '__main__':
