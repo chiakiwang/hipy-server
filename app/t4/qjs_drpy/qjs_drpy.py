@@ -136,7 +136,8 @@ class Drpy:
         @param is_public: 是否外网
         @return:
         """
-        return self.t4_js_api
+        proxy_url = f'http://127.0.0.1:5707/api/v1/vod/{self._api}?pwd=dzyyds&proxy=true&do=js' if is_public else ''
+        return self.t4_js_api or proxy_url
 
     def isVideo(self):
         """
