@@ -15,6 +15,20 @@ GIT_HOST = "api.github.com"
 GIT_URL = "https://" + GIT_HOST
 
 
+def get_my_ip():
+    my_ip = ''
+    try:
+        ip_check_url = 'https://httpbin.org/ip'
+        request = Request(method="GET", url=ip_check_url, agent=False, follow_redirects=True, timeout=0.5)
+        r = request.request()
+        resp = r.json()
+        return resp.get('origin') or my_ip
+    except Exception as e:
+        print(f'查询ip归属地发生错误:{e}')
+
+    return my_ip
+
+
 def get_location_by_ip(ipaddr):
     login_location = ''
     try:
