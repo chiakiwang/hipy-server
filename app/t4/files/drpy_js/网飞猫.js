@@ -30,7 +30,7 @@ var rule = {
   },
   搜索: '.search-result-list&&a;.title&&Text;*;.search-result-item-header&&Text;a&&href;.desc&&Text',
   图片替换:'https://www.ncat1.app=>https://vres.a357899.cn',
-  filter:'H4sIAAAAAAAAA+2Zz08bRxTH/5c9c7ANanFuPbRSpSqX9lCpiiIOrhQ1pYemVasIyWAbjCHYIMfEsQOkYDAJ/gFBjllj+5/ZmV3/F931m/dmjNqXbUMjVfEF8XnfmdnZ2bfzvrN+bEWtO989tn5I/G7dsdzzntjbsGasxYUfEyb/uvDwl8S44aIfFpn6KFUPwj5YSzMQvZt49P3DB7+p8N3Pv/niqy+/JVWsn8hURokKSCtV/QhqAKTl6k6/ihoAam72XI+pADW5XJDJktIUkJbKyZXnqAHQmLmW23+FYwKQdrItrnqoAdCYK2duaRvHBKB7qK3pfgpIW90ZlU9RA6Axs88cex3HBKB+W6sif4H9AEjLH3mHtNYApDU7wm6gBoCac33gNdtKU0BzaRw7gwOcC4DWNr3sHmljoDXbb7jra7hmAMazdYs9/WwDIC09dF/XUANAzVveFFVbaQqW7gUqpLGotsWmrdOYOEwai6OTUXkVF6HbEJW+CmGL0XFZdlsTLVRIP4C2vBpMjgEhWpbBlh/EZQGg5dytyeoZLicAXXv/VPdTQMuyca41BTTmm6daU0CzHbzVmgLSnrSFfYwagB6zbY7ZNvs53asR9VNA9769JzJdvHcAut7bS682xOsB6HQ5kBtD/2FQxiDTVYdpt78rS/RwiGnO6bzfQWTxjdNMLVpFH+VuB1sQG9uOaBdFBt8UzfQkakM376d6GR8GMV1l8Aau69i0EZkhuudMx+nhNqbATHWv1fDqSZ3qxKFSvdL32+PgAHSTF0daU2AkmtYUGMmrNQVG8mpNgZGgRj+AsIsgri6dXt9435HDLEIsEptTsfG/RnxWx2fNeEzHY2Y8quNRMx7R8QjFo5HxNA9Ji0bu+3/i1CBys0EkaBDRDeKTDaLxeOS+/0c3mL/ZYD5oMK8byMql3MVXIdA+jU8srNzaEXZeLyzx5MK6vWtRyN5cWFlNyhK+IzEz7KbwQetl9VppkcVtdy6Yxb0Zv9d/400UhfEmnMfgfAvnI1ivwNVuxgtxdZ3zO5w3CeoS3Z+CMF6I8yacpwnqGV1PQRj/4e94+hkpCOMDOe81SvVFdwXnAnDb/oPC1i37D84l/FvnwTkIznmw7uKdPonzGJw3mdbNad38eOvm7Aeqm7m6TC7L69cTpzgdCnX2586A3HcBZu9m6yRX77iaxpxHZWHPPaN6DhDKPzA1mzs3+3ngvUyiBkBaJSfLWFQUhPEdbi9vHMoAqN/BS1GhPQYAtc8WH/hpBRL8T5k5LPhrj7sdAB3U7AvRKODGD0C73Ysd+QxXWoGu5hv+GlI1H0MYh/CXDui2vhhwVfPd1fz9vhW8nxeYfjGYfjGYOh+Tp87n/+185m7L+bj2K9F/itkMQFp137Ft94RKMDHNrdnWvRWQlj4X+UPdW3Mov8R992f8Evdt3610xSHtTQA029yKW2niVAF0xf377/6cP+OcwdeJhZ9/WlSaApon99sM45c4fybLz51r2lABpr8lTKvItIp8xFXkk39eRXTYnMsouer9QZkHQJlerIomnlcU0KzKBf90g5kOQP1Oh14nh/0A6HprT9ziPl4PIExVYX/ZZs5V7OmWOYWzv2xzJ/tMRzRT+o0M4EMnjp8hS38CUp0s8TchAAA=',
+  filter:'H4sIAAAAAAAAA+2Zz08bRxTH/xefOdgGtTi3HlqpUpVLe6hURREHV4qa0kN/qFWEZLANxhBsEDFx7AIpGEyCf0CQY9bY/md2Ztf/RWf95r0ZR+3LtqGRqviC+LzvzOzs7Nt531k/isQid755FPku+VvkTsS76In9jchMZHHh+6TNvyw8/Dk5briowiJbH6XrQVhBZGkGoneTP3378MGvOnz3068+++Lzr0kV66cyndWiBtJKVRVBDYC0fN3tV1EDQM3LXZgxNaAml4syVdKaBtLSebnyDDUAGjPf8vovcEwA0k63xXUPNQAac+XcK23jmAB0D7U1008Daas7o/IZagA0Zu6p66zjmADUb2tVFC6xHwBphWP/iNYagLRmRzgN1ABQc28O/WZbaxpoLo0Td3CIcwEw2qaf2ydtDLRmBw1vfQ3XDMB6tt5uzzzbAEjLDL2XNdQAUPOXN0XV0ZqGpXuBCmksqm2x6Zg0Jg6TxuL4dFRexUXoNkSlr0PYYnRSlt3WRAsdMg+gLa8Hk2NAiJZlsKWCuCwAtJx7NVk9x+UEoGsfnJl+GmhZNi6MpoHGfPXEaBpotoPXRtNA2uO2cE5QAzBjtu0x23Y/t3s9on4a6N6390W2i/cOQNd7feXXhng9AJMuh3JjqB4GZQwyXXWY8fp7skQPh5jmnCmoDiKHb5xhatHaVSj3OtiC2Np2RHtXZPFNMUxPojb0CirVy/gwiOkqg1dwXdehjcgO0T1nO24PtzENdqr7rYZfT5lUJw6V6pW+ao+DA9BNXh4bTYOVaEbTYCWv0TRYyWs0DVaCWv0Awi6CuL5ye33rfUcOswjxaHxOx8b/WvFZE5+143ETj9vxmInH7HjUxKMUj0XH0zwiLRa9r/4kqEH0zQbRoEHUNEhMNoglEtH76o9pMP9mg/mgwbxpICtXcg9fhUD7ODGxsHJrRzgFs7DEkwvr9W5EMYdXMaNXU7KEL0ncDntpfNJmXf1WRuRw350LpnFvRvX6b8yJpjDmhDMZnHHhjARrFrjizZghrrBzhoczJ0FhovvTEMYMceaEMzVBQaPraQhjQNSWZ56RhjBGkDNfo3RfdFdwLgC3bUAoHLllA8LZhH9rPTgLwVkP1l681ShxJoMzJ9PCOS2cH3DhnH1PhTNfl6llefNy4hxnQqFO/9wpkPsywGzebKHkCh5X1JgTqSzue+dU0AFCGQimaHMnZ5UH/vMUagCkVfKyjFVFQxjj4fUK1rEMgPodPhcV2mQAUPtk8YFKK5Dgf8rMYVGtPW53AHRUcy5Fo4g7PwBtd7/vyKe40hpMOd9Qa0jlfAxhLMJfWqDb+mbAlc23l/N3+1rwbmZg+s1g+s1gan1snlqf/7n1mbst6+M5L0T/CaYzAGnVA9dxvFOqwcQ0t2bb9NZAWuZCFI5Mb8OhDBP36Z8xTNznfa/SFUe0OQHQbPMrXqWJUwUwJffvP/1zBo2zBl8mF378YVFrGmie3M8zjGHiDJosP3NvaEcFmP6cMC0j0zLyIZeRj/55GTFh+ymPUqv+H5R6AJTqu1XRxBOLBppVuajON5jqANTvbOh38tgPgK639tjbPcDrAYQpK+yv28zJij3fMudw9tdt7myf7Yhm2rySAbz3zFEpsvQnK+G0IDwhAAA=',
   一级f:`js:
     let urls = [
     'https://www.ncat1.app/show/1-----1-1.html',
@@ -56,8 +56,10 @@ var rule = {
         for (let li of lis) {
             let n = pdfh(li, 'a&&Text').trim();
             let v=n;
-            if(/全部|地区|综合|类型/.test(n)){
+            if(/全部|地区|类型/.test(n)){
                 v = '';
+            }else if(/综合/.test(n)){
+                v = '1';
             }else{
                 v = pdfh(li,'a&&href');
                 try {
