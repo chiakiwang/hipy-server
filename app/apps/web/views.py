@@ -415,6 +415,10 @@ async def t4_files(*,
         for k in env.keys():
             if f'${k}' in js_code:
                 js_code = js_code.replace(f'${k}', f'{env[k]}')
+        try:
+            js_code = render_template_string(js_code, host=host)
+        except Exception as e:
+            logger.info(f'js文件渲染host变量错误:{e}')
         return Response(js_code, media_type=media_type)
     else:
         return FileResponse(file_path, media_type=media_type)

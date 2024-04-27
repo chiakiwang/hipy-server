@@ -3,10 +3,22 @@
  * https://t.me/fongmi_offical/
  * https://github.com/FongMi/Release/tree/main/apk
  */
-
 var rule = {
 	title: '荐片',
-	host: 'http://api2.rinhome.com',
+	// host: 'http://api2.rinhome.com',
+	//host: 'https://oiuzy.haitu33.com',
+	host: 'https://dns.alidns.com/resolve?name=jpmobile.jianpiandns.com&type=TXT',
+	hostJs:`
+	print(HOST);
+	let html=request(HOST,{headers:{"User-Agent":MOBILE_UA}});
+	let json = dealJson(html);
+	let data = json.Answer[0].data.replace(/'|"/g,'').split(',');
+	HOST = data[0];
+	if(!HOST.startsWith('http')){
+		HOST = 'https://'+HOST;
+	}
+	// log(HOST);
+	`,
 	homeUrl: '/api/tag/hand?code=unknown601193cf375db73d&channel=wandoujia',//网站的首页链接,用于分类获取和推荐获取
 	// url:'/api/crumb/list?area=0&category_id=fyclass&page=fypage&type=0&limit=24&fyfilter',
 	url: '/api/crumb/list?page=fypage&type=0&limit=24&fyfilter',
