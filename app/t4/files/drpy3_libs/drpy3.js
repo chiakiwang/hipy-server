@@ -72,7 +72,7 @@ function pre(){
 
 let rule = {};
 let vercode = typeof(pdfl) ==='function'?'drpy3.1':'drpy3';
-const VERSION = vercode+' 3.9.50beta1 202400426';
+const VERSION = vercode+' 3.9.50beta3 202400428';
 /** 已知问题记录
  * 1.影魔的jinjia2引擎不支持 {{fl}}对象直接渲染 (有能力解决的话尽量解决下，支持对象直接渲染字符串转义,如果加了|safe就不转义)[影魔牛逼，最新的文件发现这问题已经解决了]
  * Array.prototype.append = Array.prototype.push; 这种js执行后有毛病,for in 循环列表会把属性给打印出来 (这个大毛病需要重点排除一下)
@@ -880,7 +880,23 @@ let LISTS = [];// 二级的自定义选集播放列表 如: LISTS=[['第1集$htt
 globalThis.encodeUrl = urlencode;
 globalThis.urlencode = urlencode;
 
-
+/**
+ * 获取链接的query请求转为js的object字典对象
+ * @param url
+ * @returns {{}}
+ */
+function getQuery(url) {
+    try {
+       let arr = url.split("?")[1].split("#")[0].split("&");
+        const resObj = {};
+        arr.forEach(item => { let [key, value = ''] = item.split("=")
+        resObj[key] = value })
+        return resObj
+    }catch (e) {
+        log('getQuery发生错误:'+e.message)
+        return {}
+    }
+}
 
 /**
  *  url拼接
@@ -2611,9 +2627,15 @@ function init(ext) {
             rule = ext;
         } else if (typeof ext == 'string') {
             if (ext.startsWith('http')) {
+                let query = getQuery(ext); // 获取链接传参
                 let js = request(ext,{'method':'GET'});
                 if (js){
                     eval(js.replace('var rule', 'rule'));
+                }
+                if(query.type==='url' && query.params){ // 指定type是链接并且传了params支持简写如 ./xx.json
+                    rule.params = urljoin(ext,query.params);
+                }else if(query.params){ // 没指定type直接视为字符串
+                    rule.params = query.params;
                 }
             } else {
                 eval(ext.replace('var rule', 'rule'));
