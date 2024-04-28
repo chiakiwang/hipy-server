@@ -202,6 +202,8 @@ def vod_generate(*, api: str = "", request: Request,
             for k in env.keys():
                 if f'${k}' in js_code:
                     js_code = js_code.replace(f'${k}', f'{env[k]}')
+            if extend:
+                js_code += '\n' + f'rule.params="{extend}";'
 
             vod.init(js_code)
         except Exception as e:

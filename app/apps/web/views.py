@@ -8,7 +8,7 @@
 
 from time import time
 import ujson
-
+from urllib.parse import urlparse, parse_qs, urljoin
 from fastapi import APIRouter, Depends, Query, WebSocket, Request as Req, HTTPException
 from starlette.responses import HTMLResponse, RedirectResponse, Response
 import os
@@ -284,9 +284,28 @@ async def hipy_configs(*,
         # 自定义额外sites,从用户附加里面去获取
         sites = []
 
+        def getQuery(api, query):
+            new_dict = {}
+            base_url = f'{host}/files/drpy_js/{api}'
+            try:
+                query = urlparse(query).query
+                parse_obj = parse_qs(query, keep_blank_values=True, strict_parsing=True)
+                for key, value in parse_obj.items():
+                    new_dict[key] = ''.join(value)
+                params = new_dict.get('params')
+                if new_dict.get('type') == 'url' and params:
+                    params = urljoin(base_url, params)
+                elif params:
+                    params = params
+                else:
+                    params = ''
+                return params
+            except:
+                return ''
+
         context = {'config': config, 'rules': rules, 'env': hipy_env,
                    'host': host, 'mode': mode, 'sites': sites,
-                   'jxs': jxs, 'alists': [],
+                   'jxs': jxs, 'alists': [], 'getQuery': getQuery,
                    }
         if custom_content:
             try:
