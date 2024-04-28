@@ -28,11 +28,11 @@ var rule={
     class_name:'电影&连续剧&综艺&动漫&短剧',//静态分类名称拼接
     class_url:'1&2&3&4&26',//静态分类标识拼接
 	play_parse: true,
-	lazy:`
+	lazy:`js:
 	input = {
 	parse:1,
 	url:input,
-	js:'document.querySelector(".line").click()'
+	js:'try{location.href = document.querySelector("#playleft").getElementsByTagName("iframe")[1].src;}catch(err) {}document.querySelector(".line").click()',
 	}
 	`,
 	limit:6,

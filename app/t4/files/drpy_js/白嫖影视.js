@@ -11,5 +11,10 @@ var rule = {
     searchUrl:'/search/page/fypage/wd/**.html',
 	filterable: 0,//是否启用分类筛选,
 	tab_exclude:'影片|评论|榜单',
-	lazy: ``,
+	lazy: `js:
+	let html=request(input);
+	let jscode=pdfh(html,'body&&script:eq(2)&&Text');
+	let jsurl=jscode.match(/"url":"(.*?)"/)[1];
+	input='https://www.baipiao-ys.cc:6062/player/analysis.php?v='+jsurl;
+	`,
 }
