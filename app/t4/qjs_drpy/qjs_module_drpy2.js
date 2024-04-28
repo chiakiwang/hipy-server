@@ -2511,7 +2511,10 @@ function playParse(playObj){
         lazy_play =  common_play;
     }else if(rule.play_parse&&rule.lazy&&typeof(rule.lazy)==='string'){
         try {
-            let lazy_code = rule.lazy.replace('js:','').trim();
+            let lazy_code = rule.lazy.trim();
+            if(lazy_code.startsWith('js:')){
+                lazy_code = lazy_code.replace('js:','').trim();
+            }
             print('开始执行js免嗅=>'+lazy_code);
             eval(lazy_code);
             lazy_play = typeof(input) === 'object'?input:{
