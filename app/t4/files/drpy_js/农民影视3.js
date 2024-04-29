@@ -32,7 +32,7 @@ var rule={
 	input = {
 	parse:1,
 	url:input,
-	js:'try{location.href = document.querySelector("#playleft").getElementsByTagName("iframe")[1].src;}catch(err) {}document.querySelector(".line").click()',
+	js:'try{location.href = document.querySelectorAll("iframe")[1].src;}catch(err) {}document.querySelector(".line").click()',
 	}
 	`,
 	limit:6,
