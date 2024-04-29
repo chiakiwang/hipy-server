@@ -435,7 +435,9 @@ async def t4_files(*,
             if f'${k}' in js_code:
                 js_code = js_code.replace(f'${k}', f'{env[k]}')
         try:
-            js_code = render_template_string(js_code, host=host)
+            # js_code = render_template_string(js_code, host=host) # 可能会受到filter的影响由于没有 fl 导致渲染失败
+            js_code = js_code.replace('{{host}}',host)
+            js_code = js_code.replace('{{ host }}',host)
         except Exception as e:
             logger.info(f'js文件渲染host变量错误:{e}')
         return Response(js_code, media_type=media_type)

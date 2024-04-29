@@ -117,7 +117,7 @@ var rule={
 		"img":".page-hd&&img&&src",
 		"desc":".desc_item:eq(3)&&Text;.desc_item:eq(4)--span&&Text;;.desc_item:eq(1)--span&&Text;.desc_item:eq(2)--span&&Text",
 		"content":".detail-con p&&Text",
-		"tabs":".hd li",
+		"tabs":".hd",
 		"lists":".numList:eq(#id) li"
 	},
 	搜索:'.ulPicTxt.clearfix li;*;img&&data-src;.sDes:eq(1)&&Text;*',
