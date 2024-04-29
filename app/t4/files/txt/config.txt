@@ -459,15 +459,6 @@
 		},
 		{
 			"hosts":[
-				"toutiaovod.com"
-			],
-			"name":"农民嗅探",
-			"regex":[
-				"video/tos/cn"
-			]
-		},
-		{
-			"hosts":[
 				"api.52wyb.com"
 			],
 			"name":"七新嗅探",
