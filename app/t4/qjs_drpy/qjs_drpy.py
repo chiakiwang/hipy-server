@@ -116,8 +116,8 @@ class Drpy:
     def homeVideoContent(self):
         return self.setDict(self.call('homeVod'))
 
-    def categoryContent(self, tid, pg, filter, extend):
-        return self.setDict(self.call('category', tid, pg, filter, extend))
+    def categoryContent(self, tid, pg, filterable, extend):
+        return self.setDict(self.call('category', tid, pg, filterable, extend))
 
     def detailContent(self, ids):
         if isinstance(ids, list):

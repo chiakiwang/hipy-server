@@ -310,6 +310,8 @@ def vod_generate(*, api: str = "", request: Request,
             # print(filters,type(filters))
             # print(fl,type(fl))
             logger.info(fl)
+            if filters:
+                filterable = True
             data = vod.categoryContent(t, pg, filterable, fl)
             return respVodJson(data)
         except Exception as e:
