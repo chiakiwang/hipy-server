@@ -1,3 +1,4 @@
+log(typeof(pdfl));
 var rule = {
   title: '玩偶哥哥',
   host: 'https://www.wogg.net/',
@@ -20,7 +21,21 @@ var rule = {
 	},
   class_parse: '.grid-box&&ul&&li;a&&Text;a&&href;.*/(.*?).html',
   play_parse: true,
-  lazy: '',
+  lazy: `
+  if (/(pan.quark.cn|www.aliyundrive.com|www.alipan.com)/.test(input)){
+let type="ali";
+if (input.includes("pan.quark.cn")){
+type="quark";
+} else if (input.includes("www.aliyundrive.com") || input.includes("www.alipan.com")){
+type="ali";
+}
+let confirm="";
+//let confirm="&confirm=0";
+input = getProxyUrl().replace('js',type)+'&type=push'+confirm+'&url='+encodeURIComponent(input);
+//input={parse:0,url:input}
+}
+  
+  `,
   limit: 6,
   推荐: '.module-list;.module-items&&.module-item;a&&title;img&&data-src;.module-item-text&&Text;a&&href',
   double: true,
@@ -31,7 +46,9 @@ var rule = {
     desc: '.video-info-items:eq(0)&&Text;.video-info-items:eq(1)&&Text;.video-info-items:eq(2)&&Text;.video-info-items:eq(3)&&Text',
     content: '.vod_content&&Text',
     tabs: '.module-tab-item',
-    lists: '.module-player-list:eq(#id)&&.scroll-content&&a',
+    lists: '.module-row-one:eq(#id)&&a.module-row-text',
+    list_text:'h4&&Text',
+    list_url:'a&&data-clipboard-text',
   },
   搜索: '.module-items .module-search-item;a&&title;img&&data-src;.video-serial&&Text;a&&href',
 }
