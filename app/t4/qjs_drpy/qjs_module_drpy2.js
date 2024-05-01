@@ -76,7 +76,7 @@ function pre(){
 
 let rule = {};
 let vercode = typeof(pdfl) ==='function'?'drpy2.1':'drpy2';
-const VERSION = vercode+' 3.9.50beta3 202400428';
+const VERSION = vercode+' 3.9.50beta4 202400501';
 /** 已知问题记录
  * 1.影魔的jinjia2引擎不支持 {{fl}}对象直接渲染 (有能力解决的话尽量解决下，支持对象直接渲染字符串转义,如果加了|safe就不转义)[影魔牛逼，最新的文件发现这问题已经解决了]
  * Array.prototype.append = Array.prototype.push; 这种js执行后有毛病,for in 循环列表会把属性给打印出来 (这个大毛病需要重点排除一下)
@@ -1824,6 +1824,8 @@ function categoryParse(cateObj) {
         }else{
             url = url.replace('fyfilter', rule.filter_url);
         }
+        // filter_url支持fyclass
+        url = url.replaceAll('fyclass', cateObj.tid);
         // console.log('filter:'+cateObj.filter);
         let fl = cateObj.filter?cateObj.extend:{};
         // 自动合并 不同分类对应的默认筛选
