@@ -7,8 +7,9 @@
 [手机端搭建教程下载](https://wwi.lanzoup.com/iODLy1rykpjc)  
 [推荐PC端使用zyplayer新版](https://github.com/Hiram-Wong/ZyPlayer/releases)  
 [并发测试](https://runnergo.apipost.cn/)  
-[android box推荐下载](https://wwi.lanzoup.com/igYqY1wazxmj)  
-[PC Player推荐下载](https://wwi.lanzoup.com/iOqcp1wmsjmf)  
+[android tv_box推荐下载](https://wwi.lanzoup.com/igYqY1wazxmj)  
+[android mobile_box推荐下载](https://wwi.lanzoup.com/iFZ8p1xfwggj)  
+[PC Player推荐下载](https://wwi.lanzoup.com/ir4y51xfwm9i)  
 
 #### zy佬一键部署
 ```shell
