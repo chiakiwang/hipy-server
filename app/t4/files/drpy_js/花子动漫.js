@@ -40,4 +40,5 @@ var rule = {
     lists: '.anthology-list-box:eq(#id) li',
   },
   搜索: 'json:list;name;pic;;id',
+  图片替换:'&amp;=>&'
 }
