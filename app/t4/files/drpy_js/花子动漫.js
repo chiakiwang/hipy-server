@@ -18,18 +18,26 @@ var rule = {
   play_parse: true,
   sniffer:1,
   is_video:'obj/tos-alisg-ve',
-  lazy:`js:
-	input = {
-	parse:1,
-	url:input,
-	//js:'try{let urls=Array.from(document.querySelectorAll("iframe")).filter(x=>x.src.includes("?url="));if(urls){location.href=urls[0].src}}catch{}document.querySelector("button").click()',
-	js:'try{location.href=document.querySelector("#playleft iframe").src}catch{}document.querySelector("button.swal-button--confirm").click()',
-	parse_extra:'&is_pc=1&custom_regex='+rule.is_video,
-	}
-	`,
+  lazy:$js.toString(()=>{
+    input = {
+        parse:1,
+        url:input,
+        //js:'try{let urls=Array.from(document.querySelectorAll("iframe")).filter(x=>x.src.includes("?url="));if(urls){location.href=urls[0].src}}catch{}document.querySelector("button").click()',
+        js:'try{location.href=document.querySelector("#playleft iframe").src}catch{}document.querySelector("button.swal-button--confirm").click()',
+        parse_extra:'&is_pc=1&custom_regex='+rule.is_video,
+    }
+  }),
   limit: 6,
   推荐: '.list-vod.flex .public-list-box;a&&title;.lazy&&data-original;.public-list-prb&&Text;a&&href',
-  一级: 'js:let body=input.split("#")[1];let t=Math.round(new Date/1e3).toString();let key=md5("DS"+t+"DCC147D11943AF75");let url=input.split("#")[0];body=body+"&time="+t+"&key="+key;print(body);fetch_params.body=body;let html=post(url,fetch_params);let data=JSON.parse(html);VODS=data.list.map(function(it){it.vod_pic=urljoin2(input.split("/i")[0],it.vod_pic);return it});',
+  一级: $js.toString(()=>{
+    let body=input.split("#")[1];
+    let t=Math.round(new Date/1e3).toString();
+    let key=md5("DS"+t+"DCC147D11943AF75");
+    let url=input.split("#")[0];
+    body=body+"&time="+t+"&key="+key;print(body);fetch_params.body=body;
+    let html=post(url,fetch_params);let data=JSON.parse(html);
+    VODS=data.list.map(function(it){it.vod_pic=urljoin2(input.split("/i")[0],it.vod_pic);return it});
+  }),
   二级: {
     title: '.slide-info-title&&Text;.slide-info:eq(3)--strong&&Text',
     img: '.detail-pic&&data-original',
