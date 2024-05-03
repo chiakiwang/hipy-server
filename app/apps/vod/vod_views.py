@@ -203,6 +203,11 @@ def vod_generate(*, api: str = "", request: Request,
                 if f'${k}' in js_code:
                     js_code = js_code.replace(f'${k}', f'{env[k]}')
             if extend:
+                if extend.startswith('http'):
+                    logger.info(f'初始化drpy源:{api}使用了ext:{extend}')
+                else:
+                    logger.info(f'初始化drpy源:{api}使用了ext字符串不是地址，可能会存在意料之外的问题')
+
                 js_code += '\n' + f'rule.params="{extend}";'
 
             vod.init(js_code)

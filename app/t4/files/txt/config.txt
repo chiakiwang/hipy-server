@@ -8,6 +8,7 @@
 "sites": [{% for rule in rules %}{% if rule.file_type ==".py" %}
 {
     "key":"{% if mode == 0 %}hipy_t4_{{ rule.name }}{% else %}hipy_t3_{{ rule.name }}{% endif %}",
+    "key":"hipy_py_{{ rule.name }}",
     "name":"{% if mode == 0 %}{{ rule.name }}(hipy_t4){% else %}{{ rule.name }}(hipy_t3){% endif %}",
     "type":{% if mode == 0 %}4{% else %}3{% endif %},
     "api":"{% if mode == 0 %}{{ host }}/api/v1/vod/{{ rule.name }}{% if config.vod_passwd %}?pwd={{config.vod_passwd}}{% endif %}{% else %}{{ host }}/files/hipy/{{ rule.name }}{{rule.file_type}}{% endif %}",
@@ -20,6 +21,7 @@
 {
     "key":"dr_{{ rule.name }}",
     "key":"{% if mode == 0 %}drpy_t4_{{ rule.name }}{% else %}drpy_t3_{{ rule.name }}{% endif %}",
+    "key":"hipy_js_{{ rule.name }}",
     "name":"{{ rule.name }}(drpy)",
     "name":"{% if mode == 0 %}{{ rule.name }}(drpy_t4){% else %}{{ rule.name }}(drpy_t3){% endif %}",
     "type":3,
