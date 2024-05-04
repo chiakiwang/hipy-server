@@ -1314,7 +1314,7 @@ function buildUrl(url,obj){
  * 远程依赖执行函数
  * @param url 远程js地址
  */
-function require(url){
+function $require(url){
     eval(request(url));
 }
 /**
