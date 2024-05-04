@@ -193,7 +193,7 @@ def update_file_info(file_info, group_label, extension, fpath, prefix_js_code, e
             js_code = f.read()
         try:
             # js代码里用到了muban变量才加入预置代码
-            if 'muban' in js_code or '模板' in js_code:
+            if 'muban' in js_code or '模板' in js_code or '$js.' in js_code:
                 js_code = prefix_js_code + js_code + endfix_js_code
             ctx.eval(js_code)
             rule_json = ctx.get('rule').json()
@@ -232,7 +232,15 @@ def get_prefix_end_js(group_label, group_value, files):
     if group_label == 'drpy_js' and len(files) > 0:
         with open(f'{group_value.replace("_js", "_libs")}/模板.js', encoding='utf-8') as f:
             before = f.read().split('export default')[0]
-        prefix_js_code = before + '\n' + 'var muban = JSON.parse(JSON.stringify(mubanDict));\n'
+        utils_js_code = r"""
+const $js = {
+    toString(func) {
+      let strfun = func.toString();
+      return strfun.replace(/^\(\)(\s+)?=>(\s+)?\{/, "js:").replace(/\}$/,'');
+    }
+};      
+        """.strip()
+        prefix_js_code = utils_js_code+'\n'+before + '\n' + 'var muban = JSON.parse(JSON.stringify(mubanDict));\n'
         endfix_js_code = '\n' + 'if(rule.模板){rule = Object.assign(muban[rule.模板],rule)}'
         return prefix_js_code, endfix_js_code
     else:
