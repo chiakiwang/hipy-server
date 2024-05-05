@@ -17,3 +17,4 @@
 **/.env
 **/.env.local
 **/.env.*.local
+/app/configs/.env.jiumu
