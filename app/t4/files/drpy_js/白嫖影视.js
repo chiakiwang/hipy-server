@@ -20,6 +20,13 @@ var rule = {
 	},
 	searchUrl:'/search/page/fypage/wd/**.html',
 	tab_exclude:'影片|评论|榜单',
+	lazy_demo:`
+var key = "11111";
+var encrypted = CryptoJS.RC4.encrypt("xxx", key);
+console.log(encrypted.toString());
+var decrypted = CryptoJS.RC4.decrypt(encrypted.toString(), key).toString(CryptoJS.enc.Utf8);
+console.log(decrypted.toString());
+	`,
 	lazy: `js:
 	let html=request(input);
 	let jscode=pdfh(html,'body&&script:eq(2)&&Text');

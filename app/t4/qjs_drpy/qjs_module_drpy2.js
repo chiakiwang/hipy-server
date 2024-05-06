@@ -76,7 +76,7 @@ function pre(){
 
 let rule = {};
 let vercode = typeof(pdfl) ==='function'?'drpy2.1':'drpy2';
-const VERSION = vercode+' 3.9.50beta6 202400504';
+const VERSION = vercode+' 3.9.50beta8 202400507';
 /** 已知问题记录
  * 1.影魔的jinjia2引擎不支持 {{fl}}对象直接渲染 (有能力解决的话尽量解决下，支持对象直接渲染字符串转义,如果加了|safe就不转义)[影魔牛逼，最新的文件发现这问题已经解决了]
  * Array.prototype.append = Array.prototype.push; 这种js执行后有毛病,for in 循环列表会把属性给打印出来 (这个大毛病需要重点排除一下)
@@ -898,16 +898,23 @@ globalThis.urlencode = urlencode;
  * @returns {{}}
  */
 function getQuery(url) {
-    try {
-       let arr = url.split("?")[1].split("#")[0].split("&");
-        const resObj = {};
-        arr.forEach(item => { let [key, value = ''] = item.split("=")
-        resObj[key] = value })
-        return resObj
-    }catch (e) {
-        log('getQuery发生错误:'+e.message)
-        return {}
+  try {
+    if(url.indexOf('?')>-1){
+      url = url.slice(url.indexOf('?')+1);
     }
+    let arr = url.split("#")[0].split("&");
+    const resObj = {};
+    arr.forEach(item => {
+      let arr1 = item.split("=");
+      let key = arr1[0];
+      let value = arr1.slice(1).join('=');
+      resObj[key] = value;
+    });
+    return resObj;
+  } catch (err) {
+    log('getQuery发生错误:'+e.message)
+    return {};
+  }
 }
 
 /**
