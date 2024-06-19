@@ -1,0 +1,30 @@
+	{	
+    "站名": "电影100",
+	// 详细界面 detail
+    "导演": "导演：&&</p>",
+    "主演": "演员：&&</p>",
+    "影片类型": "分类：&&<span class=\"text-muted\">",
+    "影片地区": "地区：&&<span class=\"text-muted\">",
+    "影片年代": "年份：&&<span class=\"text-muted\">",
+	//  大分类catId
+    "数组": "myui-vodlist__thumb&&</a>",
+    "图片": "data-original=\"&&\"",
+    "标题": "title=\"&&\"",
+    "链接": "href=\"&&\"",
+	//	搜索 search
+    "搜索url": "https://dianying100.xyz/index.php/new_search/search/wd/{wd}.html",// /index.php/new_search/search/wd/{wd}.html
+    "搜索数组": "myui-vodlist__thumb&&</a>",
+    "搜索标题": "title=\"&&\"",
+    "搜索副标题": "pic-text text-center\">&&</span>",
+    "搜索图片": "data-original=\"&&\"",
+    "搜索链接": "href=\"&&\"",
+	// 播放页 play
+    "线路数组": "data-toggle=&&</li>",
+    "线路标题": ">&&</a>",
+    "播放数组": "myui-content__list sort-list&&</ul>",
+    "播放标题": ">&&<",
+	"直接播放": "1",
+    "播放列表": "<a&&/a>",
+    "分类url": "https://dianying100.xyz/index.php/vod/show/area/{area}/by/{by}/class/{class}/id/{cateId}/page/{catePg}.html;;ak",
+    "分类": "电影$28#电视剧$24#动漫$26#综艺$31"
+    }
