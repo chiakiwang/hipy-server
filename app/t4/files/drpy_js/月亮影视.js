@@ -1,0 +1,35 @@
+var rule={
+  title: "💢omofuns",
+  host: "https://www.zqzdzj.com",
+  url: "/vodshow/fyclassfyfilter.html",
+  homeUrl:'/map.html',
+  searchable: 2,
+  quickSearch: 0,
+  filterable: 1,
+  filter_url:"{{fl.地区}}{{fl.类型}}/page/fypage{{fl.年份}}",
+  filter:"H4sIAAAAAAAAA+2Y3W7iVhDH7/cxfJ1VMNmv7KtUe4Eqrrrdi1210moVKQkhBZIGUiVsWQgkSggEBeJ8KA1mgZfxsc1b1PGMx8fjqLYr2isu+c1fZ8Zz7POfwxdFVd7+8EX5KftZeatY1yPR3FGWlA+Zn7Py718z73/JusIPDhb57izXfcTOD2VtCWmpa4wbSJd/fJ/59GkZGUmqDVHsMAkwT2IVrs1cPihB5knMXMnc/BaUIKNVSlfWuMdWAUa1bP8xq12wWoDRKp19MRyxVYBRLZuXVnWf1QKMEhU7oSdCJrXOOhiFWvfIKFH/3Jgcs0TAaJXymX3KEwGjVQp/GnqRrQLMT7RrF5o8kcsoUfu3UF+QeRLj+7E90IISZJ7E7p+LXbZHyCjR3rYo37BEwGiVacXpFFsFmF/LuVXZ5rW4jHZ6YzL7NmE7DYwStaf+S+8lAuZJZv2DUF+QUXebPaffrLvASLJRMderTAKMytV7YnzIygW29u5RBJ+zaGhiV/c/Z/od63M+68xq1LXMx2xmGRFVMdkT9XFAgYgacl4zH64CCkSkaF3wNRBR33euuQKR/95r5nASrBQQtfRr22xcBhSISHF7yLMgIsVW2Xl+UbgIiohSNZO/+EqIpDfJKvetYi34UET9mrRwTVrgyfP3YpAL5gIUeA2Gd8ZoLL0G3u84r0E6lX7hJficzXxcdoEUXeHRFTma5tG0HFV5VJWjKR5NSVF1lUUdIEXf8OgbOfqaR1/L0Vc8+kqOvuTRl3KU90qVe6XyXqlyr1TeK1Xulcp7pcq9UlPP06lUSILU16VSz9XVVd5YjzovzbulZ0p6bhNBtCHFmAjExr3IlZkEGEkG90LvMwmwBG5jd9dDRo3MHxrqhr7DhwaXJTDqOENDtPOJ7YZ5tM9rcRmdrrmxeNhkhgSMDvF20746YlYCLMEYJLR9sTVltQCjh640rUv+0MBoA7TfQ+aILMEA4x5vp6wWYAnGwxguHGcOjZ5m44yH/zBv/X92H23V0XY/D6uOHjuijTN6qDCrmigdi6OT4DJEJQs2RtXgEwFaWPDCgv+tBb+YlwVbub59ss4OIGDzPd6tw17IyJHRKvWxKNTZKsAS/Idg7nVDtzlkCawmxu3fPD4RdTZUICNJQw/f5oAluJ/G8TSn2cO78AY4TJa0b8MSh9EenU2M78ywkPlzRyu8R8DoOq3fiH6FXaeBUaJ6yazpLBEwf6evxfQr32mXPX20ouSJs/W/tb1oQ4o2xmjLWtjIwkbmbyMrc7ORRsvQdavDnYQwHXeDqa0V2HEHzB+b8+ZWi4/NLqMvar0YyoXM/yzz5sMDWwWY9NXNTlkiZP48ehpKhIwS1W/sIjvLkCXwG6cus8Auscj8i2PkH6/WQcu841YNzD+Mbo0hO52R+a27Fxq/twBLcIDbG7uiwSTIEjhFnMlC74kB6wuyxe3naStZ/Cm4sJJ5Wsmztb8BqGhoaygcAAA=",
+  class_name:"电影&电视剧&动漫&综艺",
+  class_url:"1&2&4&3",
+  
+// cate_exclude: "动漫资讯",
+    searchable:3,
+    quickSearch:0,
+  headers: { "User-Agent": "MOBILE_UA" },
+  timeout: 5000,
+   class_parse: ".nav-swiper&&.swiper-wrapper&&a;a&&Text;a&&href;(\d+?)",
+  play_parse: true,
+  推荐: 'ul.Line-color&&li;.a&&title;.eclazy&&data-original;.item-time&&Text;a&&href',
+    一级:'body&&.list-width:gt(2);.a&&title;.eclazy&&data-original;.list-remarks&&Text;a&&href',
+    二级: {
+        "title": ".full-box&&h2&&Text",
+        "img": ".eclazy&&data-original",
+        "desc": ".full-box&&li:eq(2)&&Text;.full-box&&li:eq(3)&&Text;.full-box&&li:eq(4)&&Text;;.full-box&&li:eq(6)&&Text;",
+        "content": ".full-box&&li:eq(-1)&&Text",
+        "tabs": ".nav-swiper&&a",
+        "lists": ".playlist-notfull:eq(#id) a",
+    },
+
+    searchUrl:'/phsch/page/fypage/wd/**.html',
+    detailUrl:'/index.php/vod/detail/id/fyid.html', //非必填,二级详情拼接链接
+    搜索:'body&&.module-card-item;.module-card-item-title&&Text;img&&data-original;.module-info-item-content&&Text;a&&href',
+}
