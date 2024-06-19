@@ -1,7 +1,7 @@
 var rule = {
     类型: '漫画',//影视|听书|漫画|小说
     title: '包子漫画',
-    host: 'https://godamh.com/',
+    host: 'https://baozimh.org/',
     url: 'fyclass/page/fypage',
     searchUrl: '/s/**?page=fypage',
     searchable: 2,
@@ -16,22 +16,19 @@ var rule = {
     timeout: 5000,
     class_name: '全部',
     class_url: '/manga',
-    class_parse: '.homenavtax&&a;a&&Text;a&&href;(/manga.*-.*)',
+    class_parse: '.homenavtax&&a;a&&Text;a&&href;org/(.*)',
     cate_exclude: '',
     play_parse: true,
     lazy: $js.toString(() => {
         log(input);
         let _id = input.split('@@')[0];
         let _url = input.split('@@')[1];
-        //let mid = _url.split('/').slice(-1)[0].split('-')[0];
-        let html1 = request(_url, {headers: {Referer: 'https://godamh.com/'}});
-        let mid = pdfh(html1, '#chapterContent&&data-ms');
-        let html = request(`https://api-get.mgsearcher.com/api/chapter/getinfo?m=${mid}&c=${_id}`, {headers: {Referer: 'https://godamh.com/'}});
+        let mid = _url.split('/').slice(-1)[0].split('-')[0];
+        let html = request(`https://api-get.mgsearcher.com/api/chapter/getinfo?m=${mid}&c=${_id}`, {headers: {Referer: 'https://m.baozimh.one/'}});
         let json = JSON.parse(html);
-        let re = '@Referer=https://godamh.com/';
-        let imgs = json.data.info.images.map(it => it.url + re);
+        let imgs = json.data.info.images.map(it => it.url);
         //log(imgs);
-        input = {url: 'pics://' + imgs.join('&&')};
+        input = {parse: 0, url: 'pics://' + imgs.join('&&')};
     }),
     double: true,
     推荐: '.cardlist;.pb-2;*;*;*;*',
@@ -50,12 +47,12 @@ var rule = {
         content: 'p.text-medium&&Text',
         tabs: 'h2.text-medium',
         lists: $js.toString(() => {
-            //log(input);
+            log(input);
             let data_id = pdfh(html, '#allchapters&&data-mid');
-            //log(data_id);
-            let html1 = request(`https://api-get.mgsearcher.com/api/manga/get?mid=${data_id}&mode=all`, {headers: {Referer: 'https://godamh.com/'}});
+            log(data_id);
+            let html1 = request(`https://api-get.mgsearcher.com/api/manga/get?mid=${data_id}&mode=all`, {headers: {Referer: 'https://m.baozimh.one/'}});
             let json = JSON.parse(html1);
-            //log(json);
+            log(json);
             let list1 = [];
             let url_prefix = input.replace('chapterlist', 'manga');
             json.data.chapters.forEach(it => {

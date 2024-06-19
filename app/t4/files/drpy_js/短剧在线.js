@@ -1,1 +1,26 @@
-H4sIAM/eX2YC/61VP2/TQBTf+RQngWI7xHZTqg4JgYUBMcBQmBCKLvZzfO3Z596dU0IVqVupBKgfoAiJpV2QGBhQF75MQ/gY3J2dxk5CYeCW+P37vd97995lhDniOQXUQ4e3kDqSSAodZM0+fZmenE/PLmaXP6yWMcVMSGWJpcxEx/fDHKe7uTcAIUuHnFNl90csFDE78KNxQLEQbnmicYaHoD68WCa0DBGAeRC/WAQa2W82Xfcf4vBAc90sVPs5CfZ2jL6DNgpdRKgEXriVKsOpn2EudJleikduAmnuEgmJaDQo6eJG4zm8lvo35hB1vaZve82HTjV/RvF4DiJ5DoWW4jfjDrqzKzzJdiQn6dC2HdR7UPbWuIBEGkc1/MnOs6eewbA57OeqjzZJs1w6XoJlENs+N2mA91X2nqFw33detl85NTTVdQWmMT31WTNFnCVzm/6+NpII2UYLacDHmUS9HrLallMhWl6oCs9TEAHOwFai0712mCCgAtZDbf4NaoAFbG89goCFBW4VeFEDG9rW9O3x7OR4evZ1+vGoY6G7qE5D51caj6QBzUMQtuUl2ZblLBPQ/dDtXN94hdBaCpgfDiHhEKjRj7AquLXW6YDI+DHgELgoBmLFa1LTOI5HWYAlYWm3ZvB9XbQm6tT0ZjL0lu6+1qNc7Jp2a6FyDDcmy1dzuIqw1OSJUw4uSYgqcLuQfn64+PX+VG9HwkL1OLiUCNmdC+WiVEW9Kubh6JJk2GiEWGJX8KAW4kq1U/XNKncpZLlZ0MUeXX0/ml2eVwiYnOj/pby6fGcSLDo0f/fidhngSTxUhad7hWwt7l0lXKLmZiRoNGpEKv5qKAMdMCIhMJekESvq6cC+veHM062ztm+0bt5oveesEA9YKiGVhgsL+6W44ibxQFQKVKJBrXv0dW+VV0hGrisSTOkKjp6aKlDxmJlh0gRvk1BR9ETAGaXuNRlcIkzKWTw9m337/MdRKP4Hbp6IojsCOMF0ZRomvwHsX6eZAgcAAA==
+var rule = {
+  title: '短剧在线',
+  host: 'https://duanju.best',
+  url: '/vodshow/fyclass--------fypage---.html',
+  searchUrl: '/vodsearch/**----------fypage---.html',
+  searchable: 2,
+  quickSearch: 0,
+  filterable: 0,
+  class_parse: '.nav-menu-items&&li;a&&Text;a&&href;.*/(.*?).html',
+  play_parse: true,
+  lazy: '',
+  limit: 6,
+  推荐: '.module-list;.module-items&&.module-item;a&&title;img&&data-src;.module-item-text&&Text;a&&href',
+  double: true,
+  一级: '.module-items .module-item;a&&title;img&&data-src;.module-item-text&&Text;a&&href',
+  二级: {
+    title: 'h1&&Text;.tag-link&&Text',
+    img: '.module-item-pic&&img&&data-src',
+    desc: '.video-info-items:eq(0)&&Text;.video-info-items:eq(1)&&Text;.video-info-items:eq(2)&&Text;.video-info-items:eq(3)&&Text',
+    content: '.vod_content&&Text',
+    tabs: '.module-tab-item',
+    tab_text: 'div--small&&Text',
+    lists: '.module-player-list:eq(#id)&&.scroll-content&&a',
+  },
+  搜索: '.module-items .module-search-item;a&&title;img&&data-src;.video-serial&&Text;a&&href',
+}

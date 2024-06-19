@@ -14,8 +14,6 @@ var rule = {
         'User-Agent': 'MOBILE_UA',
     },
     timeout: 5000,
-    hikerListCol: "text_1",
-    hikerClassListCol: "text_1",
     class_parse: '#nav a;a&&Text;a&&href;.*/(.*?)/',
     cate_exclude: '全部小说',
     play_parse: true,

@@ -1,1 +1,58 @@
-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
+// 永久网址：https://libvio.app
+Object.assign(muban.首图2.二级, {
+    title: 'h1&&Text;.data:eq(0)&&Text',
+    desc: '.data.hidden-xs&&Text;;;.data:eq(1)&&Text;.data:eq(4)&&Text',
+    content: '.detail-content&&Text',
+});
+var rule = {
+    title: 'LIBVIO[优]',
+    模板: '首图2',
+    host: 'https://www.libvio.app',
+    hostJs: 'print(HOST);let html=request(HOST,{headers:{"User-Agent":PC_UA}});let src=jsp.pdfh(html,"li:eq(0)&&a:eq(1)&&href");print(src);HOST=src',
+    // url:'/type/fyclass-fypage.html',
+    url: '/show/fyclassfyfilter.html',
+    filterable: 1,//是否启用分类筛选,
+    filter_url: '-{{fl.area}}-{{fl.by}}--{{fl.lang}}----fypage---{{fl.year}}',
+    filter: 'H4sIAAAAAAAAA+1YXU8TQRT9L/Pch5kFWuSvGB5Ws1EC1qSgSUOamAAGRWhClE0jRk34KAm1qxKEJS1/pjPt/gtnmY97V+NakqJtMm9zzrl3t2d27kl3Vwkjc/dXyWJQJXPErwQ+KZCy/ySQiO9H/E0s8XN/6VlwU1ZO6Y1mstZMaQlIraDY3kWLv+/wg+Ok8VJrGSpblxw1xEU7U6epX65Xj8RlN3s9RZm6fndHkrpCA6OJ7+9A08Bog62voGlg+8JDsX9q+hQwWvLxBPo0MBrv/gBNA/gtEf4tUaZvO+LxkelTwPat1+UO8s0T02qxdXJ43a+3+q8axozF9vqvP4mta9lmbmGxrdg4713tGVmB2nyqqoNRDfwKOhiXZ72rzpAHw6PetOZuloifAn4K8x7wHuYZ8AzzFHiKeHbP8nKJ+FngZzFfAr6E+SLwRczPAD+DefDLsF8Gfhn2y8Avw34Z+GXYLwO/cokf05JffgSPadBuDZovhnxM8jzKenMCFECzApoGdv6+HYCmgZ2VsMO3Q5ABo2lCsgJoCkHTAE020hRAU4icKIDOOf+yBuc8BXgDH1Rh+8TOLo/rv22fCM+T8ExfYmVBltrIimMRvdXK44WVZdjA9jrfNLG4/PBpJUjvOl8g3v8I37+H6rAhnReGeSGaH9p/Dsrc0N6LZK7xD59Nq8Uu5FzITWLIjVtYTY8yrDKxMlRoiNNjGRVGU8CN9uSPtuUp+KXYLwW/FPul4JdivxT8UuyXgl+K/VLwK5cuasYgauR5HEnW3PpNzmXGRGSGm9ExmNHiaGY072Ug7w9/3tcW98XDTb+b/jv9clFC0/9vb177CdukNH21FgAA',
+    headers: {
+        'User-Agent': 'UC_UA'
+    },
+    class_parse: '.stui-header__menu li:gt(0):lt(7);a&&Text;a&&href;/(\\d+).html',
+    pagecount: {"27": 1},
+    lazy: `js:
+		var html = JSON.parse(request(input).match(/r player_.*?=(.*?)</)[1]);
+		var url = html.url;
+		var from = html.from;
+		var jx =HOST+ request(HOST + '/static/player/' + from + '.js').match(/src="(.*?)'/)[1]
+log (jx)
+if (/(pan.quark.cn|www.aliyundrive.com|www.alipan.com)/.test(url)){
+let type="ali";
+if (input.includes("pan.quark.cn")){
+type="quark";
+} else if (input.includes("www.aliyundrive.com") || input.includes("www.alipan.com")){
+type="ali";
+}
+let confirm="";
+//let confirm="&confirm=0";
+input = getProxyUrl().replace('js',type)+'&type=push'+confirm+'&url='+encodeURIComponent(url);
+}else{
+ var play =request(jx + url, {
+            headers: {
+                'Referer': input
+            }
+        }).match(/var urls = '(.*?)'/)[1];
+			input = {
+				jx: 0,
+				url: play,
+				parse: 0
+			}
+		}
+	`,
+    // searchUrl:'/search/**----------fypage---.html',
+    searchUrl: '/index.php/ajax/suggest?mid=1&wd=**&limit=50',
+    detailUrl: '/detail/fyid.html', //非必填,二级详情拼接链接
+    搜索: 'json:list;name;pic;;id',
+    预处理: $js.toString(() => {
+        rule.tab_exclude = '猜你喜欢';
+    }),
+}
