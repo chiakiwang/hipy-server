@@ -1,5 +1,5 @@
 {
-    "wallpaper": "https://tuapi.eees.cc/api.php?category=fengjing&type=302",
+    "wallpaper": "http://drpy.jhppa.top:5705/pics",
     "dr_count": 188,
     "mode": 2,
     "spider": "http://drpy.jhppa.top:5705/liveslib",
@@ -3823,19 +3823,43 @@
 		"bilibili",
 		"renrenmi"
 	],
-    "lives": [
-        {
-            "group": "redirect",
-            "channels": [
-                {
-                    "name": "直播",
-                    "urls": [
-                        "proxy://do=live&type=txt&ext=aHR0cDovL2RycHkuamhwcGEudG9wOjU3MDUvbGl2ZXM="
-                    ]
-                }
-            ]
-        }
-    ],
+	"lives": [
+		{
+			"group": "redirect",
+			"channels": [
+				{
+					"name": "稳定github直播",
+					"urls": [
+						"proxy://do=live&type=txt&ext=https://ghproxy.net/https://raw.githubusercontent.com/ssili126/tv/main/itvlist.txt"
+					]
+				},
+				{
+					"name": "华数2",
+					"urls": [
+						"proxy://do=live&type=txt&ext=http://127.0.0.1:9978/api/v1/file/drpy_dzlive/lives/华数2.m3u"
+					]
+				},
+				{
+					"name": "杭州华数",
+					"urls": [
+						"proxy://do=live&type=txt&ext=http://127.0.0.1:9978/api/v1/file/drpy_dzlive/lives/杭州华数.m3u"
+					]
+				},
+				{
+					"name": "云星日记直播",
+					"urls": [
+						"proxy://do=live&type=txt&ext=http://itvbox.cc/云星日记/Ipv4.txt"
+					]
+				},
+				{
+					"name": "本地嗅探器直播",
+					"urls": [
+						"proxy://do=live&type=txt&ext=http://127.0.0.1:5708/ysp"
+					]
+				}
+			]
+		}
+	],
     "sniffer": {
         "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36 Edg/105.0.1343.27",
         "isVideoFormat": "http((?!http).){26,}\\.(m3u8|mp4|flv|avi|mkv|wmv|mpg|mpeg|mov|ts|3gp|rm|rmvb|asf|m4a|mp3|wma)",
